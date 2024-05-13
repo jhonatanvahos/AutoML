@@ -142,7 +142,8 @@ if __name__ == "__main__":
             # Carga del dataset y configuraciones
             preprocessor.load_dataset()
             # Descripción de los datos
-            preprocessor.descriptive_analysis()
+            #preprocessor.descriptive_analysis()
+           
             # Guardar un porcentaje de datos para predicciones
             preprocessor.split_data_for_predictions(path_predict)
             # Eliminar datos atipicos de las variables numericas
@@ -182,7 +183,7 @@ if __name__ == "__main__":
             
             # Guardar modelo ganador.
             grid_search_classification.save_best_model(best_model,path_models)
-
+            
         #---------------------------------------------------------------#
         #------------------ Sección de Predicción ----------------------#
         #---------------------------------------------------------------#    

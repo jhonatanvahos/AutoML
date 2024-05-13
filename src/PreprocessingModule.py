@@ -3,6 +3,7 @@ import numpy as np
 import sys
 from scipy.stats import zscore
 
+from sklearn.preprocessing import LabelEncoder
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.feature_selection import SelectKBest, f_regression
@@ -21,14 +22,19 @@ import seaborn as sns
 class DataPreprocessor:
     def __init__(self, config):
         self.config = config
-        self.path_file = self.config.get('data', None)
+        self.path_file = self.config.get('data_path', None)
+        self.sep = self.config.get('sep', ',')
         self.delete_columns = self.config.get('delete_columns')
         self.split = self.config.get('split')
         self.k = self.config.get('k_features')
-        self.numeric_imputer = SimpleImputer(strategy='mean')
-        self.categorical_imputer = SimpleImputer(strategy='most_frequent')
+
+        self.label_encoder = LabelEncoder()
+        self.numeric_imputer = SimpleImputer(strategy = self.config.get("numeric_imputer"))
+        self.categorical_imputer = SimpleImputer(strategy = self.config.get("categorical_imputer"))
+
         self.scaler_X = StandardScaler()
         self.scaler_y = StandardScaler()
+
         self.one_hot_encoder = OneHotEncoder(handle_unknown='ignore')
         self.feature_selector = SelectKBest(score_func = f_regression)
         self.transformers = {}
@@ -50,6 +56,8 @@ class DataPreprocessor:
         else:
             self.sampler = None
 
+        self.unprocessed_columns = [] # columnas no procesadas por no cumplir criterios de nulos
+
     # Función para cargar los datos y hacer depuración. 
     def load_dataset(self):
         print("---------------------------------------------------")
@@ -59,7 +67,7 @@ class DataPreprocessor:
         print("---------------------------------------------------")
         sys.stdout.flush()
         try:
-            self.df= pd.read_csv(self.path_file)
+            self.df= pd.read_csv(self.path_file, sep = self.sep)
             self.df.columns = self.df.columns.str.strip()
             self.df.columns = self.df.columns.str.replace(' ', '_')
 
@@ -141,12 +149,24 @@ class DataPreprocessor:
                 # Visualización de variables categóricas
                 print("Visualización de variables categóricas:")
                 sys.stdout.flush() 
-                for col in categorical_data.columns:
-                    plt.figure(figsize=(8, 6))
-                    sns.countplot(data=categorical_data, x=col, palette='viridis')
-                    plt.xticks(rotation=45)
-                    plt.title(f"Distribución de {col}")
+                num_plots = len(self.categorical_columns)
+                num_groups = (num_plots + 5) // 6  # Calcular el número de grupos de 6
+                for group in range(num_groups):
+                    start_index = group * 6
+                    end_index = min(start_index + 6, num_plots)
+                    num_variables = end_index - start_index
+                    num_rows = (num_variables + 1) // 3
+                    fig, axes = plt.subplots(num_rows, 3, figsize=(15, num_rows*5), squeeze=False)
+                    for i in range(start_index, end_index):
+                        row_index = (i - start_index) // 3
+                        col_index = (i - start_index) % 3
+                        col = self.categorical_columns[i]
+                        sns.countplot(data=categorical_data, x=col, hue=col, palette='viridis', ax=axes[row_index, col_index], legend=False)
+                        axes[row_index, col_index].set_title(f"Distribución de {col}")
+                        axes[row_index, col_index].tick_params(axis='x', rotation=45)
+                    plt.tight_layout()
                     plt.show()
+                    sys.stdout.flush()
 
     # Función para separar un % de los datos para realizar predicciones después de crear el modelo
     def split_data_for_predictions(self, save_path):
@@ -188,7 +208,9 @@ class DataPreprocessor:
 
         self.X.reset_index(drop=True, inplace=True)
         self.y.reset_index(drop=True, inplace=True)
-        
+        print("Cantidad de datos nuevos ", self.X.shape, self.y.shape)
+        sys.stdout.flush()   
+
         return self.X, self.y
     
     # Función para entrenar los transformadores: Imputar, Escalar, Codificar
@@ -245,6 +267,10 @@ class DataPreprocessor:
             self.scaler_y.fit(self.y.reshape(-1, 1))
             self.transformers['scaler_y'] = self.scaler_y
 
+        if self.model_type == 'Classification':
+            self.label_encoder.fit_transform(self.y)
+            self.transformers['label_encoder']  = self.label_encoder
+
         print("Codificar datos categóricos.")
         sys.stdout.flush()
         # Codificar variables categóricas
@@ -288,6 +314,17 @@ class DataPreprocessor:
   
         # Si el modelo es de clasificación realizar Balanceo de datos
         if self.model_type == "Classification":
+            print("Codificación de variable a predecir.")
+            sys.stdout.flush()
+            self.y = pd.Series(self.transformers['label_encoder'].transform(self.y))
+            # Mostramos las etiquetas codificadas
+            print("Etiquetas codificadas:", self.y)
+
+            # Mostramos el mapeo de etiquetas originales a códigos numéricos
+            print("Mapeo de etiquetas originales a códigos numéricos:")
+            for label, code in zip(self.transformers['label_encoder'].classes_, self.transformers['label_encoder'].transform(self.transformers['label_encoder'].classes_)):
+                print(f"{label}: {code}")
+
             print("Balanceo de datos: ")
             sys.stdout.flush()
             print(f"Datos balanceados usando {self.balance_method} con {self.sampler}")
@@ -308,7 +345,6 @@ class DataPreprocessor:
     def select_features(self):
         print("Selección de características: ")
         sys.stdout.flush()
-
         # Ajustar el objeto SelectKBest al conjunto de datos
         n_features = int(self.X.shape[1]*self.k)
         print('Cantidad caracteristicas a seleccionar: ', n_features)
