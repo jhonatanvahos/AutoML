@@ -3,15 +3,23 @@ import numpy as np
 import sys
 from scipy.stats import zscore
 
-from sklearn.preprocessing import LabelEncoder
+# Imputacion
 from sklearn.impute import SimpleImputer
+from sklearn.impute import KNNImputer
+
+# Escalado y codificacion
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.feature_selection import SelectKBest, f_regression
+from sklearn.preprocessing import LabelEncoder
 from sklearn.exceptions import NotFittedError
 
-from imblearn.over_sampling import SMOTE
+# Seleccion caracteristicas
+from sklearn.feature_selection import SelectKBest, f_regression, RFE, RFECV, mutual_info_classif, mutual_info_regression
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestRegressor
+
+#balanceo
+from imblearn.over_sampling import SMOTE, ADASYN
 from imblearn.under_sampling import RandomUnderSampler
-from imblearn.pipeline import Pipeline
 
 import joblib
 
@@ -167,6 +175,28 @@ class DataPreprocessor:
                     plt.tight_layout()
                     plt.show()
                     sys.stdout.flush()
+    
+    #Función para tratamiento de variables categóricas 
+    def procesar_variables_categoricas(self):
+        limite = 20
+        if self.categorical_columns is not None:
+            categorical_data = self.df[self.categorical_columns]
+            if not categorical_data.empty: 
+                # Convertir todas las categorías a minúsculas
+                categorical_data = categorical_data.apply(lambda x: x.str.lower() if x.dtype == 'object' else x)
+                
+                # Contar cuántos valores únicos existen
+                valores_unicos = categorical_data.nunique()
+                
+                # Encontrar columnas que superan el límite de categorías
+                columnas_con_limite = []
+                for columna, n_valores_unicos in valores_unicos.items():
+                    if n_valores_unicos > limite:
+                        columnas_con_limite.append(columna)
+
+                print(valores_unicos)
+                print(columnas_con_limite)
+                return categorical_data, valores_unicos, columnas_con_limite
 
     # Función para separar un % de los datos para realizar predicciones después de crear el modelo
     def split_data_for_predictions(self, save_path):
@@ -213,6 +243,45 @@ class DataPreprocessor:
 
         return self.X, self.y
     
+    # Función Z_Score ajustado
+    def adjusted_zscore(series):
+        median = np.median(series)
+        mad = np.median(np.abs(series - median))  # Mediana de las desviaciones absolutas
+        z_score_adjusted = 0.6745 * (series - median) / mad  # Factor de corrección
+        return z_score_adjusted
+
+    # Funcion para balanceo de datos
+    def balance_data(X, y, method):
+        if method == "over_sampling":
+            sampler = SMOTE(random_state=42)
+        elif method == "under_sampling":
+            sampler = RandomUnderSampler(random_state=42)
+        else:
+            raise ValueError("Método de balanceo no reconocido")
+        
+        X_resampled, y_resampled = sampler.fit_resample(X, y)
+        return X_resampled, y_resampled
+
+    # Funcion para imputar datos dinamicamente
+    def impute_missing_values(X, method="KNN"):
+        if method == "KNN":
+            imputer = KNNImputer(n_neighbors=5)
+        else:
+            raise ValueError("Método de imputación no reconocido")
+        
+        X_imputed = imputer.fit_transform(X)
+        return X_imputed
+        
+    # Funcion para codificar variables categóricas 
+    def encode_categorical_features(X, categorical_columns_label=[], categorical_columns_onehot=[]):
+        for col in categorical_columns_label:
+            le = LabelEncoder()
+            X[col] = le.fit_transform(X[col])
+        
+        X = pd.get_dummies(X, columns=categorical_columns_onehot, drop_first=True)
+        
+        return X
+
     # Función para entrenar los transformadores: Imputar, Escalar, Codificar
     def fit(self):
         print("---------------------------------------------------")
@@ -273,9 +342,14 @@ class DataPreprocessor:
 
         print("Codificar datos categóricos.")
         sys.stdout.flush()
-        # Codificar variables categóricas
-        self.one_hot_encoder.fit(self.X[self.categorical_columns])
-        self.transformers['one_hot_encoder'] = self.one_hot_encoder
+        if len(self.categorical_columns) > 0:
+            categorical_data = self.X[self.categorical_columns]
+            # Ajustar el codificador OneHotEncoder
+            self.one_hot_encoder.fit(categorical_data)
+            # Guardar el codificador en los transformadores
+            self.transformers['one_hot_encoder'] = self.one_hot_encoder
+        else:
+            print("No hay columnas categóricas para codificar.")
         
     # Función para aplicar las transformaciones a los datos.
     def transform(self):
@@ -341,6 +415,29 @@ class DataPreprocessor:
         
         return self.X
     
+    # Funcion para seleccionar las caracteristicas 2
+    def feature_selection_rfe(X, y, model_type="classification"):
+        if model_type == "classification":
+            model = LogisticRegression()
+        elif model_type == "regression":
+            model = Ridge()
+        else:
+            raise ValueError("Modelo no reconocido")
+
+        selector = RFE(model, n_features_to_select=5)  # Cambia el número de características
+        X_selected = selector.fit_transform(X, y)
+        return X_selected
+    
+    def feature_selection_mutual_info(X, y, model_type="classification"):
+        if model_type == "classification":
+            mi = mutual_info_classif(X, y)
+        elif model_type == "regression":
+            mi = mutual_info_regression(X, y)
+        else:
+            raise ValueError("Modelo no reconocido")
+        
+        return mi
+
     # Función para seleccionar las caracteristicas mas representativas
     def select_features(self):
         print("Selección de características: ")

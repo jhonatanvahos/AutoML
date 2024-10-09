@@ -1,6 +1,7 @@
 from src.RegressionModule import GridSearchModelRegression
 from src.ClassificationModule import GridSearchModelClassification
 from src.PreprocessingModule import DataPreprocessor
+from sklearn.pipeline import Pipeline
 import pandas as pd
 import json
 import sys
@@ -33,6 +34,8 @@ if __name__ == "__main__":
     grid_search_regression = GridSearchModelRegression(config)
     grid_search_classification = GridSearchModelClassification(config)
 
+    
+    """
     #---------------------------------------------------------------#
     #----------------------- Regresión -----------------------------#
     #---------------------------------------------------------------#
@@ -141,9 +144,10 @@ if __name__ == "__main__":
             
             # Carga del dataset y configuraciones
             preprocessor.load_dataset()
+            preprocessor.procesar_variables_categoricas()
+            
             # Descripción de los datos
-            #preprocessor.descriptive_analysis()
-           
+            preprocessor.descriptive_analysis()
             # Guardar un porcentaje de datos para predicciones
             preprocessor.split_data_for_predictions(path_predict)
             # Eliminar datos atipicos de las variables numericas
@@ -219,4 +223,4 @@ if __name__ == "__main__":
             sys.stdout.flush() 
             # Usar el modelo cargado para predecir
             grid_search_classification.prediction(X, y, model)
-            
+    """
