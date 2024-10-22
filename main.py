@@ -34,8 +34,6 @@ if __name__ == "__main__":
     grid_search_regression = GridSearchModelRegression(config)
     grid_search_classification = GridSearchModelClassification(config)
 
-    
-    """
     #---------------------------------------------------------------#
     #----------------------- Regresión -----------------------------#
     #---------------------------------------------------------------#
@@ -58,7 +56,7 @@ if __name__ == "__main__":
             # Guardar un porcentaje de datos para predicciones
             preprocessor.split_data_for_predictions(path_predict)
             # Eliminar datos atipicos de las variables numericas
-            preprocessor.remove_outliers_zscore()
+            preprocessor.remove_outliers_adjusted_zscore()
             # Ajustar el preprocesador a los datos
             preprocessor.fit()
             # Transformar los datos de entrenamiento
@@ -144,14 +142,12 @@ if __name__ == "__main__":
             
             # Carga del dataset y configuraciones
             preprocessor.load_dataset()
-            preprocessor.procesar_variables_categoricas()
-            
             # Descripción de los datos
             preprocessor.descriptive_analysis()
             # Guardar un porcentaje de datos para predicciones
             preprocessor.split_data_for_predictions(path_predict)
             # Eliminar datos atipicos de las variables numericas
-            preprocessor.remove_outliers_zscore()            
+            preprocessor.remove_outliers_adjusted_zscore()            
             # Ajustar el preprocesador a los datos
             preprocessor.fit()
             # Transformar los datos de entrenamiento
@@ -223,4 +219,4 @@ if __name__ == "__main__":
             sys.stdout.flush() 
             # Usar el modelo cargado para predecir
             grid_search_classification.prediction(X, y, model)
-    """
+    

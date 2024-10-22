@@ -9,10 +9,12 @@
     "numeric_imputer" : "mean",
     "categorical_imputer" : "most_frequent",
     "variable_imputer": "KNNImputer", 
+    "imputer_n_neighbors" : 5,
+
     "max_imputer": 0.3, 
     "Scaler": "seleccionar metodo de escalado",
 
-    "threshold_outlier" : 3,
+    "threshold_outlier" : 4,
     "balance_method" : "over_sampling",
     "balance_thershold" : 0.7,
     "k_features" : 0.5,

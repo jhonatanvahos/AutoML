@@ -25,7 +25,7 @@ Este proyecto permite generar modelos de Machine Learning supervisado para probl
       - `missing_threshold`: Umbral de decision de datos que pueden ser nulos para realizar imputacion, valores de (0.0 a 1.0)
       - `numeric_imputer`: Estrategia con la que se van a reemplazar los datos faltantes numéricos nulos ("mean", "median" ,          "most_frequent")
       - `categorical_imputer`: Estrategia con la que se van a reemplazar los datos faltantes categóricos ("most_frequent")
-      - `threshold_outlier`: Cantidad en desviació de estandar para identificar datos atipicos
+      - `threshold_outlier`: Cantidad en desviació de estandar para identificar datos atipicos valor normalmente entre 3 y 4
       - `balance_method`: Modo de balanceo de datos : over-sampling o under-sampling
       - `balance_thershold`: Umbral de decision para balancear los datos, valores entre 0.0 y 1.0
       - `k_features`: Porcentaje de caractaristicas representativas a seleccionar para entrenar el modelo. 

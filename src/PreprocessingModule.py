@@ -9,7 +9,7 @@ from sklearn.impute import KNNImputer
 
 # Escalado y codificacion
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder, OrdinalEncoder
 from sklearn.exceptions import NotFittedError
 
 # Seleccion caracteristicas
@@ -37,8 +37,9 @@ class DataPreprocessor:
         self.k = self.config.get('k_features')
 
         self.label_encoder = LabelEncoder()
-        self.numeric_imputer = SimpleImputer(strategy = self.config.get("numeric_imputer"))
-        self.categorical_imputer = SimpleImputer(strategy = self.config.get("categorical_imputer"))
+        self.numeric_imputer =  self.config.get("numeric_imputer")
+        self.categorical_imputer = self.config.get("categorical_imputer")
+        self.imputer_n_neighbors = self.config.get("imputer_n_neighbors")
 
         self.scaler_X = StandardScaler()
         self.scaler_y = StandardScaler()
@@ -177,7 +178,7 @@ class DataPreprocessor:
                     sys.stdout.flush()
     
     #Función para tratamiento de variables categóricas 
-    def procesar_variables_categoricas(self):
+    def process_categorical_variables(self):
         limite = 20
         if self.categorical_columns is not None:
             categorical_data = self.df[self.categorical_columns]
@@ -194,8 +195,6 @@ class DataPreprocessor:
                     if n_valores_unicos > limite:
                         columnas_con_limite.append(columna)
 
-                print(valores_unicos)
-                print(columnas_con_limite)
                 return categorical_data, valores_unicos, columnas_con_limite
 
     # Función para separar un % de los datos para realizar predicciones después de crear el modelo
@@ -222,65 +221,77 @@ class DataPreprocessor:
             print("Error al guardar los datos para predicciones:", e)
             sys.stdout.flush() 
 
-    # Función para remover los datos atipicos a través del z_score
-    def remove_outliers_zscore(self):
-        print("Eliminar valores atipicos")
+    # Función para remover datos atípicos con el z_core ajustado.
+    def remove_outliers_adjusted_zscore(self):
+        print("Eliminar valores atípicos con z-score ajustado")
         sys.stdout.flush()
-        # Calcular z-scores para las columnas numéricas
-        z_scores = zscore(self.X[self.numeric_columns])
 
-        # Identificar filas con valores atípicos
-        outlier_rows = (np.abs(z_scores) > self.threshold_outlier).any(axis=1)
+        # Calcular la mediana y MAD (desviación absoluta mediana) para las columnas numéricas
+        median_vals = np.median(self.X[self.numeric_columns], axis=0)
+        mad_vals = np.median(np.abs(self.X[self.numeric_columns] - median_vals), axis=0)
+
+        # Evitar divisiones por cero
+        mad_vals[mad_vals == 0] = 1e-6
+
+        # Calcular el z-score ajustado
+        z_scores_adjusted = 0.6745 * (self.X[self.numeric_columns] - median_vals) / mad_vals
+
+        # Identificar filas con valores atípicos (usando el umbral de outlier)
+        outlier_rows = (np.abs(z_scores_adjusted) > self.threshold_outlier).any(axis=1)
 
         # Eliminar filas con valores atípicos
         self.X = self.X[~outlier_rows]
         self.y = self.y[~outlier_rows]
 
+        # Reiniciar los índices
         self.X.reset_index(drop=True, inplace=True)
         self.y.reset_index(drop=True, inplace=True)
+
         print("Cantidad de datos nuevos ", self.X.shape, self.y.shape)
-        sys.stdout.flush()   
+        sys.stdout.flush()
 
         return self.X, self.y
-    
-    # Función Z_Score ajustado
-    def adjusted_zscore(series):
-        median = np.median(series)
-        mad = np.median(np.abs(series - median))  # Mediana de las desviaciones absolutas
-        z_score_adjusted = 0.6745 * (series - median) / mad  # Factor de corrección
-        return z_score_adjusted
+   
+    # Función para imputación variables categóricas
+    def impute_categorical_knn(self, n_neighbors=5):
+        print("Aplicar KNNImputer en variables categóricas")
+        sys.stdout.flush()
 
-    # Funcion para balanceo de datos
-    def balance_data(X, y, method):
-        if method == "over_sampling":
-            sampler = SMOTE(random_state=42)
-        elif method == "under_sampling":
-            sampler = RandomUnderSampler(random_state=42)
-        else:
-            raise ValueError("Método de balanceo no reconocido")
-        
-        X_resampled, y_resampled = sampler.fit_resample(X, y)
-        return X_resampled, y_resampled
+        categorical_data = self.X[self.categorical_columns]
 
-    # Funcion para imputar datos dinamicamente
-    def impute_missing_values(X, method="KNN"):
-        if method == "KNN":
-            imputer = KNNImputer(n_neighbors=5)
+        # Verificar si hay datos faltantes en las variables categóricas
+        if categorical_data.isnull().any().any():
+            # Verificar si el porcentaje de datos faltantes es menor que el umbral
+            if categorical_data.isnull().mean().mean() < self.missing_threshold:
+                # Codificar variables categóricas con OrdinalEncoder
+                ordinal_encoder = OrdinalEncoder()
+                X_categorical_encoded = ordinal_encoder.fit_transform(categorical_data)
+
+                # Crear el imputador para las columnas categóricas
+                knn_imputer_categorical = KNNImputer(n_neighbors=n_neighbors)
+
+                # Ajustar el imputador y transformar los datos
+                X_categorical_imputed = knn_imputer_categorical.fit_transform(X_categorical_encoded)
+
+                # Volver a decodificar las variables imputadas
+                X_categorical_imputed = ordinal_encoder.inverse_transform(X_categorical_imputed)
+
+                # Guardar los valores imputados en el DataFrame original
+                self.X[self.categorical_columns] = X_categorical_imputed
+
+                # Guardar el imputador en el diccionario de transformadores
+                self.transformers['categorical_knn_imputer'] = knn_imputer_categorical
+                
+                print("Imputación completada en variables categóricas")
+                print("Cantidad de datos después de imputar:", self.X.shape)
+            else:
+                print(f"Al menos una de las columnas categóricas tiene un porcentaje de datos faltantes mayor al {self.missing_threshold * 100}%.")
         else:
-            raise ValueError("Método de imputación no reconocido")
-        
-        X_imputed = imputer.fit_transform(X)
-        return X_imputed
-        
-    # Funcion para codificar variables categóricas 
-    def encode_categorical_features(X, categorical_columns_label=[], categorical_columns_onehot=[]):
-        for col in categorical_columns_label:
-            le = LabelEncoder()
-            X[col] = le.fit_transform(X[col])
-        
-        X = pd.get_dummies(X, columns=categorical_columns_onehot, drop_first=True)
-        
-        return X
+            print("No hay datos faltantes en las columnas categóricas, no se requiere imputación.")
+
+        sys.stdout.flush()
+
+        return self.X   
 
     # Función para entrenar los transformadores: Imputar, Escalar, Codificar
     def fit(self):
@@ -298,10 +309,17 @@ class DataPreprocessor:
         if numeric_data.isnull().any().any():
             # Verificar si el porcentaje de datos faltantes es menor que el umbral
             if numeric_data.isnull().mean().mean() < self.missing_threshold:
-                # Ajustar el imputador a todas las variables numéricas
-                self.numeric_imputer.fit(numeric_data)
-                # Guardar el imputador en el diccionario de transformadores
-                self.transformers['numeric_imputer'] = self.numeric_imputer
+                if self.numeric_imputer != "knn":
+                    # Ajustar el imputador a todas las variables numéricas
+                    numeric_simple_imputer = SimpleImputer(strategy = self.numeric_imputer)
+                    numeric_simple_imputer.fit(numeric_data)
+                    # Guardar el imputador en el diccionario de transformadores
+                    self.transformers['numeric_imputer'] = numeric_simple_imputer
+                else: 
+                    knn_imputer_numeric = KNNImputer(n_neighbors = self.imputer_n_neighbors)
+                    knn_imputer_numeric.fit(numeric_data)
+                    # Guardar el imputador en el diccionario de transformadores
+                    self.transformers['numeric_imputer'] = knn_imputer_numeric
             else:
                 print(f"Al menos una de las columnas numéricas tiene un porcentaje de datos faltantes mayor al {self.missing_threshold * 100}%")
             
@@ -315,10 +333,31 @@ class DataPreprocessor:
         if categorical_data.isnull().any().any():
             # Verificar si el porcentaje de datos faltantes es menor que el umbral
             if categorical_data.isnull().mean().mean() < self.missing_threshold:
-                # Ajustar el imputador a todas las variables categóricas
-                self.categorical_imputer.fit(categorical_data)
-                # Guardar el imputador en el diccionario de transformadores
-                self.transformers['categorical_imputer'] = self.categorical_imputer
+                if self.categorical_imputer != "knn":
+                    # Ajustar el imputador a todas las variables categóricas
+                    categorical_simple_imputer = SimpleImputer(strategy = self.categorical_imputer)
+                    categorical_simple_imputer.fit(categorical_data)
+                    # Guardar el imputador en el diccionario de transformadores
+                    self.transformers['categorical_imputer'] = categorical_simple_imputer
+                else:
+                    # Codificar variables categóricas con OrdinalEncoder
+                    ordinal_encoder = OrdinalEncoder()
+                    X_categorical_encoded = ordinal_encoder.fit_transform(categorical_data)
+
+                    # Crear el imputador para las columnas categóricas
+                    knn_imputer_categorical = KNNImputer(n_neighbors = self.imputer_n_neighbors)
+                    knn_imputer_categorical.fit(X_categorical_encoded)
+                    # Ajustar el imputador y transformar los datos
+                    X_categorical_imputed = knn_imputer_categorical.fit_transform(X_categorical_encoded)
+
+                    # Volver a decodificar las variables imputadas
+                    X_categorical_imputed = ordinal_encoder.inverse_transform(X_categorical_imputed)
+
+                    # Guardar los valores imputados en el DataFrame original
+                    self.X[self.categorical_columns] = X_categorical_imputed
+
+                    # Guardar el imputador en el diccionario de transformadores
+                    self.transformers['categorical_imputer'] = knn_imputer_categorical
             else:
                 print(f"Al menos una de las columnas categóricas tiene un porcentaje de datos faltantes mayor al {self.missing_threshold * 100}%")
         else:
@@ -368,8 +407,22 @@ class DataPreprocessor:
    
         # Imputar datos nulos en variables categóricas
         if 'categorical_imputer' in self.transformers:
-            self.X[self.categorical_columns] = self.transformers['categorical_imputer'].transform(self.X[self.categorical_columns])
+            if self.categorical_imputer != "knn":
+                self.X[self.categorical_columns] = self.transformers['categorical_imputer'].transform(self.X[self.categorical_columns])
+            else:
+                # Codificar variables categóricas con OrdinalEncoder
+                categorical_data = self.X[self.categorical_columns]
+                ordinal_encoder = OrdinalEncoder()
+                X_categorical_encoded = ordinal_encoder.fit_transform(categorical_data)
 
+                # Ajustar el imputador y transformar los datos
+                X_categorical_imputed = self.transformers['categorical_imputer'].transform(X_categorical_encoded)
+
+                # Volver a decodificar las variables imputadas
+                X_categorical_imputed = ordinal_encoder.inverse_transform(X_categorical_imputed)
+
+                # Guardar los valores imputados en el DataFrame original
+                self.X[self.categorical_columns] = X_categorical_imputed
 
         print("Escalar datos numéricos.")
         sys.stdout.flush()
@@ -415,20 +468,7 @@ class DataPreprocessor:
         
         return self.X
     
-    # Funcion para seleccionar las caracteristicas 2
-    def feature_selection_rfe(X, y, model_type="classification"):
-        if model_type == "classification":
-            model = LogisticRegression()
-        elif model_type == "regression":
-            model = Ridge()
-        else:
-            raise ValueError("Modelo no reconocido")
-
-        selector = RFE(model, n_features_to_select=5)  # Cambia el número de características
-        X_selected = selector.fit_transform(X, y)
-        return X_selected
     
-    def feature_selection_mutual_info(X, y, model_type="classification"):
         if model_type == "classification":
             mi = mutual_info_classif(X, y)
         elif model_type == "regression":
