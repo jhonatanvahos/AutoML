@@ -6,13 +6,14 @@ import sys
 import joblib
 
 #Modelos
-from sklearn.linear_model import LinearRegression, Ridge
+from sklearn.linear_model import LinearRegression, Ridge, LogisticRegression
 from lightgbm import LGBMClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, precision_recall_curve, auc
 from sklearn.model_selection import GridSearchCV
+from skopt import BayesSearchCV
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB, MultinomialNB, BernoulliNB
@@ -27,8 +28,9 @@ class GridSearchModelClassification:
         self.random_state = self.config.get('random_state' , 1234)
 
         self.cv = self.config.get('cv', 5)
-        self.scoring = self.config.get('scoring_classification', 'f1_score')
+        self.scoring = self.config.get('scoring_classification', 'f1')
         self.n_jobs = self.config.get('n_jobs', -1)
+        self.model_competition = self.config.get('model_competition', 'Grid_Search')
 
         for model_name, modelFlag in self.config['models_classification'].items():
             if modelFlag:
@@ -55,12 +57,8 @@ class GridSearchModelClassification:
 
             if model == 'random_forest':
                 estimator = RandomForestClassifier(random_state = self.random_state)
-            elif model == 'ada_boost':
-                estimator = AdaBoostClassifier(random_state = self.random_state, algorithm = 'SAMME')
-            elif model == 'gradient_boosting':
-                estimator = GradientBoostingClassifier(random_state = self.random_state)
-            elif model == 'lightGBM':
-                estimator = LGBMClassifier(verbose=-1,random_state = self.random_state)
+            if model == 'logisticRegression':
+                estimator = LogisticRegression(random_state = self.random_state)
             elif model == 'SVM':
                 estimator = SVC(random_state = self.random_state)
             elif model == 'KNN':
@@ -72,14 +70,27 @@ class GridSearchModelClassification:
             elif model == "BernoulliNB":
                 estimator = BernoulliNB()
 
-            # Grid_search
-            grid_search = GridSearchCV(estimator = estimator, param_grid = hiperparameters, scoring = self.scoring,
-                                        cv = self.cv, n_jobs = self.n_jobs)
-            
-            grid_search.fit(X, y)
-            mejores_hiperparametros = grid_search.best_params_
-            mejor_modelo = grid_search.best_estimator_
-            score = grid_search.best_score_
+            print('Model competition : ', self.model_competition)
+            if self.model_competition == 'Grid_Search':
+                # Grid_search
+                grid_search = GridSearchCV(estimator = estimator, param_grid = hiperparameters, scoring = self.scoring,
+                                            cv = self.cv, n_jobs = self.n_jobs)
+                
+                grid_search.fit(X, y)
+                mejores_hiperparametros = grid_search.best_params_
+                mejor_modelo = grid_search.best_estimator_
+                score = grid_search.best_score_
+
+            elif self.model_competition == 'Bayes_Search':
+                # Bayes_search
+                bayes_search = BayesSearchCV(estimator = estimator, search_spaces = hiperparameters, scoring = self.scoring,
+                                            cv = self.cv, n_jobs = self.n_jobs)
+                bayes_search.fit(X, y)
+                mejores_hiperparametros = bayes_search.best_params_
+                mejor_modelo = bayes_search.best_estimator_
+                score = bayes_search.best_score_
+            else: 
+                pass
             results[model_name] = {'mejor_modelo': mejor_modelo, 'mejores_hiperparametros': mejores_hiperparametros, f'score_{self.scoring}': score}
             
             print(f'score_{self.scoring}: ', score)

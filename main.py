@@ -52,15 +52,15 @@ if __name__ == "__main__":
             # Carga del dataset y configuraciones
             preprocessor.load_dataset()
             # Descripción de los datos
-            preprocessor.descriptive_analysis()
+            # preprocessor.descriptive_analysis()
             # Guardar un porcentaje de datos para predicciones
             preprocessor.split_data_for_predictions(path_predict)
             # Eliminar datos atipicos de las variables numericas
-            preprocessor.remove_outliers_adjusted_zscore()
+            # preprocessor.remove_outliers_adjusted_zscore()
             # Ajustar el preprocesador a los datos
-            preprocessor.fit()
+            # preprocessor.fit()
             # Transformar los datos de entrenamiento
-            preprocessor.transform()
+            # preprocessor.transform()
             # Seleccion de caracteristicas representativas 
             preprocessor.select_features()
             # Guardar transformadores
@@ -143,7 +143,7 @@ if __name__ == "__main__":
             # Carga del dataset y configuraciones
             preprocessor.load_dataset()
             # Descripción de los datos
-            preprocessor.descriptive_analysis()
+            # preprocessor.descriptive_analysis()
             # Guardar un porcentaje de datos para predicciones
             preprocessor.split_data_for_predictions(path_predict)
             # Eliminar datos atipicos de las variables numericas
@@ -156,7 +156,7 @@ if __name__ == "__main__":
             preprocessor.select_features()
             # Guardar transformadores
             preprocessor.save_transformers(path_transforms)
-       
+    
             # Obtener las variables predictoras X y a predecir y procesadas. 
             X,y = preprocessor.get_processed_dataframe() 
 

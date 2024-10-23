@@ -251,7 +251,7 @@ class DataPreprocessor:
         sys.stdout.flush()
 
         return self.X, self.y
-   
+
     # Función para imputación variables categóricas
     def impute_categorical_knn(self, n_neighbors=5):
         print("Aplicar KNNImputer en variables categóricas")
