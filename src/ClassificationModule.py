@@ -48,6 +48,7 @@ class GridSearchModelClassification:
         results = {}
         # Ciclo para recorrer cada uno de los modelos seleccionados en los parámetros
         for model_name, config in self.models.items():
+            print(model_name)
             start_time = time()
             model = config['model']
             hiperparameters = config['hiperparameters']

@@ -1,0 +1,69 @@
+/* Contenedor principal para centrar y alinear los elementos */
+.train-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f8f9fa;
+  }
+  
+  /* Título de la página */
+  .train-container h1 {
+    font-size: 2.5rem;
+    color: #007bff; /* Color azul para el título */
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Estilos para los labels de los inputs */
+  .train-container label {
+    font-size: 1.2rem;
+    color: #6c757d; /* Color gris para el texto */
+    margin-bottom: 10px;
+    display: block;
+  }
+  
+  /* Estilos para los inputs de texto */
+  .train-container input[type="text"] {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    width: 300px;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos del botón de continuar */
+  .train-container button {
+    background-color: #007bff; /* Color azul para el botón */
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+  
+  /* Efecto hover para el botón */
+  .train-container button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  /* Espaciado entre los campos */
+  .train-container .form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  /* Estilo condicional para ocultar el botón hasta que se cargue el dataset */
+  .train-container button.hidden {
+    display: none;
+  }
+  
