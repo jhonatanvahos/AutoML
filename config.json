@@ -11,16 +11,21 @@
     "variable_imputer": "KNNImputer", 
     "imputer_n_neighbors" : 5,
 
-    "max_imputer": 0.3, 
-    "Scaler": "seleccionar metodo de escalado",
+    "scaling_method_features" : "standard",
+    "scaling_method_target": "standard",
 
     "threshold_outlier" : 4,
-    "balance_method" : "over_sampling",
-    "balance_thershold" : 0.7,
-    "k_features" : 0.5,
-    "delete_columns" : [],
 
-    "model_competition" : "Grid_Search",
+    "balance_method" : "over_sampling",
+    "select_sampler" : "SMOTE",
+    "balance_thershold" : 0.7,
+
+    "k_features" : 0.5,
+    "feature_selector_method" : "select_k_best",
+
+    "pca_n_components" : 0.95,
+
+    "delete_columns" : [],
 
     "model_type" : "Classification",
     "function": "training", 
@@ -29,6 +34,8 @@
     "scoring_regression": "neg_mean_absolute_error",
     "scoring_classification" : "f1",
     "random_state": 1234,
+
+    "model_competition" : "Grid_Search",
 
     "models_regression": {
         "linearRegression" : false,

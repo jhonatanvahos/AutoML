@@ -1,7 +1,6 @@
 from src.RegressionModule import GridSearchModelRegression
 from src.ClassificationModule import GridSearchModelClassification
 from src.PreprocessingModule import DataPreprocessor
-from sklearn.pipeline import Pipeline
 import pandas as pd
 import json
 import sys
@@ -219,4 +218,3 @@ if __name__ == "__main__":
             sys.stdout.flush() 
             # Usar el modelo cargado para predecir
             grid_search_classification.prediction(X, y, model)
-    
