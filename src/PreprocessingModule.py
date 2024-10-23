@@ -1,30 +1,36 @@
+# Manipulación de dataframes
 import pandas as pd
 import numpy as np
-import sys
 from scipy.stats import zscore
+
+# Sistema
+import sys
 
 # Imputacion
 from sklearn.impute import SimpleImputer
 from sklearn.impute import KNNImputer
 
 # Escalado y codificacion
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.preprocessing import StandardScaler, OneHotEncoder, MinMaxScaler
 from sklearn.preprocessing import LabelEncoder, OrdinalEncoder
-from sklearn.exceptions import NotFittedError
 
 # Seleccion caracteristicas
 from sklearn.feature_selection import SelectKBest, f_regression, RFE, RFECV, mutual_info_classif, mutual_info_regression
-from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import LinearRegression  # Para RFE y RFECV
 
-#balanceo
-from imblearn.over_sampling import SMOTE, ADASYN
-from imblearn.under_sampling import RandomUnderSampler
+# Reducción de dimensionalidad
+from sklearn.decomposition import PCA
 
+# balanceo de datos
+from imblearn.over_sampling import SMOTE, ADASYN , RandomOverSampler
+from imblearn.under_sampling import RandomUnderSampler, ClusterCentroids, TomekLinks
+from imblearn.combine import SMOTEENN, SMOTETomek
+
+# Guardar objetos (Transformadores y Modelos)
 import joblib
 
+# graficas
 import matplotlib.pyplot as plt
-from matplotlib import style
 import seaborn as sns
 
 class DataPreprocessor:
@@ -34,37 +40,87 @@ class DataPreprocessor:
         self.sep = self.config.get('sep', ',')
         self.delete_columns = self.config.get('delete_columns')
         self.split = self.config.get('split')
-        self.k = self.config.get('k_features')
+        self.target = self.config.get('target_column', None)
+        self.model_type = self.config.get('model_type', None)
 
+        # Variables para datos atípicos
+        self.threshold_outlier = self.config.get('threshold_outlier', 3)
+
+        # Variables para Codificadores
         self.label_encoder = LabelEncoder()
+        self.one_hot_encoder = OneHotEncoder(handle_unknown='ignore')
+
+        # Variables para imputar datos
+        self.missing_threshold = self.config.get('missing_threshold', 0.1)
         self.numeric_imputer =  self.config.get("numeric_imputer")
         self.categorical_imputer = self.config.get("categorical_imputer")
         self.imputer_n_neighbors = self.config.get("imputer_n_neighbors")
 
-        self.scaler_X = StandardScaler()
-        self.scaler_y = StandardScaler()
-
-        self.one_hot_encoder = OneHotEncoder(handle_unknown='ignore')
-        self.feature_selector = SelectKBest(score_func = f_regression)
-        self.transformers = {}
-        self.missing_threshold = self.config.get('missing_threshold', 0.1)
-        self.target = self.config.get('target_column', None)
-        self.model_type = self.config.get('model_type', None)
-        self.threshold_outlier = self.config.get('threshold_outlier', 3)
-        self.lower_percentile = self.config.get('lower_percentile', 5)
-        self.upper_percentile = self.config.get('upper_percentile', 95)
-        self.seed = 11 # semilla para la separacion de los datos
-
         self.balance_threshold = self.config.get('balance_thershold',0.5)
         self.balance_method = self.config.get('balance_method', None)
+        self.select_sampler = self.config.get('select_sampler', None)
 
         if self.balance_method == 'over_sampling':
-            self.sampler = SMOTE()
+            if self.select_sampler == 'SMOTE':
+                self.sampler = SMOTE()
+            elif self.select_sampler == 'ADASYN':
+                self.samplter = ADASYN()
+            elif self.select_sampler == 'RandomOverSampler':
+                self.sampler = RandomOverSampler()
         elif self.balance_method == 'under_sampling':
-            self.sampler = RandomUnderSampler()
+            if self.select_sampler == 'RandomUnderSampler':
+                self.sampler = RandomUnderSampler()
+            elif self.select_sampler == 'ClusterCentroids':
+                self.sampler = ClusterCentroids()
+            elif self.select_sampler == 'TomekLinks':
+                self.sampler = TomekLinks()
+        elif self.balance_method == 'combine':
+            if self.select_sampler == 'SMOTEENN':
+                self.sampler = SMOTEENN()
+            elif self.select_sampler == 'SMOTETomek':
+                self.sampler = SMOTETomek()
         else:
             self.sampler = None
 
+        # Variables para escalar datos
+        self.scaling_method_target = self.config.get('scaling_method_target')
+        if self.scaling_method_target == 'standard':
+            self.scaler_y = StandardScaler()
+        elif self.scaling_method_target == 'minmax':
+            self.scaler_y = MinMaxScaler()
+        else: 
+            self.scaler_y = None
+
+        self.scaling_method_features = self.config.get('scaling_method_features')
+        if self.scaling_method_features == 'standard':
+            self.scaler_X = StandardScaler()
+        elif self.scaling_method_features == 'minmax':
+            self.scaler_X = MinMaxScaler()
+        else:
+            self.scaler_X = None
+
+        # Variables para selección de caracteristicas
+        self.k = self.config.get('k_features')
+        self.feature_selector_method = self.config.get('feature_selector_method')
+
+        if self.feature_selector_method == "select_k_best":
+            self.feature_selector = SelectKBest(score_func = f_regression)
+        elif self.feature_selector_method == "rfe":
+            model = LinearRegression() 
+            self.feature_selector = RFE(model)
+        elif self.feature_selector_method == "rfecv":
+            model = LinearRegression() 
+            self.feature_selector = RFECV(model, step=1, cv=5)
+        elif self.feature_selector_method == "mutual_info_classif":
+           self.feature_selector = SelectKBest(score_func=mutual_info_classif)  
+        elif self.feature_selector_method == "mutual_info_regression":
+            self.feature_selector = SelectKBest(score_func=mutual_info_regression)
+        else:
+            raise ValueError(f"Método de selección de características no reconocido: {self.feature_selector_method}")
+
+        # Variables creadas 
+        self.transformers = {} # para guardar las transformaciones 
+        self.seed = 11 # semilla para la separacion de los datos
         self.unprocessed_columns = [] # columnas no procesadas por no cumplir criterios de nulos
 
     # Función para cargar los datos y hacer depuración. 
@@ -220,7 +276,28 @@ class DataPreprocessor:
         except Exception as e:
             print("Error al guardar los datos para predicciones:", e)
             sys.stdout.flush() 
+ 
+    # Función para remover los datos atipicos a través del z_score
+    def remove_outliers_zscore(self):
+        print("Eliminar valores atipicos")
+        sys.stdout.flush()
+        # Calcular z-scores para las columnas numéricas
+        z_scores = zscore(self.X[self.numeric_columns])
 
+        # Identificar filas con valores atípicos
+        outlier_rows = (np.abs(z_scores) > self.threshold_outlier).any(axis=1)
+
+        # Eliminar filas con valores atípicos
+        self.X = self.X[~outlier_rows]
+        self.y = self.y[~outlier_rows]
+
+        self.X.reset_index(drop=True, inplace=True)
+        self.y.reset_index(drop=True, inplace=True)
+        
+        print("Cantidad de datos nuevos ", self.X.shape, self.y.shape)
+        sys.stdout.flush()   
+        return self.X, self.y
+    
     # Función para remover datos atípicos con el z_core ajustado.
     def remove_outliers_adjusted_zscore(self):
         print("Eliminar valores atípicos con z-score ajustado")
@@ -252,46 +329,49 @@ class DataPreprocessor:
 
         return self.X, self.y
    
-    # Función para imputación variables categóricas
-    def impute_categorical_knn(self, n_neighbors=5):
-        print("Aplicar KNNImputer en variables categóricas")
+    # Función para reducción de dimensionalidad
+    def apply_pca(self):
+        print("Aplicando PCA: ")
         sys.stdout.flush()
 
-        categorical_data = self.X[self.categorical_columns]
+        # Validar que sea un problema de regresión o clasificación
+        if self.model_type != 'Regression' and self.model_type != 'Classification':
+            raise ValueError("PCA solo puede ser aplicado en problemas de regresión o clasificación.")
 
-        # Verificar si hay datos faltantes en las variables categóricas
-        if categorical_data.isnull().any().any():
-            # Verificar si el porcentaje de datos faltantes es menor que el umbral
-            if categorical_data.isnull().mean().mean() < self.missing_threshold:
-                # Codificar variables categóricas con OrdinalEncoder
-                ordinal_encoder = OrdinalEncoder()
-                X_categorical_encoded = ordinal_encoder.fit_transform(categorical_data)
+        # Verificar si se definió un número de componentes o porcentaje de varianza
+        if 'pca_n_components' in self.config:
+            n_components = self.config.get('pca_n_components')
 
-                # Crear el imputador para las columnas categóricas
-                knn_imputer_categorical = KNNImputer(n_neighbors=n_neighbors)
+            # Si es un valor entre 0 y 1, se interpreta como varianza explicada
+            if 0 < n_components < 1:
+                print(f"Aplicando PCA para explicar al menos el {n_components*100}% de la varianza.")
+                sys.stdout.flush()
+                self.pca = PCA(n_components=n_components)
 
-                # Ajustar el imputador y transformar los datos
-                X_categorical_imputed = knn_imputer_categorical.fit_transform(X_categorical_encoded)
-
-                # Volver a decodificar las variables imputadas
-                X_categorical_imputed = ordinal_encoder.inverse_transform(X_categorical_imputed)
-
-                # Guardar los valores imputados en el DataFrame original
-                self.X[self.categorical_columns] = X_categorical_imputed
-
-                # Guardar el imputador en el diccionario de transformadores
-                self.transformers['categorical_knn_imputer'] = knn_imputer_categorical
-                
-                print("Imputación completada en variables categóricas")
-                print("Cantidad de datos después de imputar:", self.X.shape)
+            # Si es mayor que 1, se asume que es el número de componentes
+            elif n_components >= 1:
+                print(f"Aplicando PCA para reducir a {n_components} componentes.")
+                sys.stdout.flush()
+                self.pca = PCA(n_components=int(n_components))
+            
             else:
-                print(f"Al menos una de las columnas categóricas tiene un porcentaje de datos faltantes mayor al {self.missing_threshold * 100}%.")
+                raise ValueError("El valor de 'pca_n_components' debe ser un número positivo mayor que 0.")
         else:
-            print("No hay datos faltantes en las columnas categóricas, no se requiere imputación.")
+            raise ValueError("Por favor, defina 'pca_n_components' en el archivo de configuración.")
+        
+        # Ajustar PCA al conjunto de datos
+        self.pca.fit(self.X)
 
+        # Transformar los datos
+        self.X = self.pca.transform(self.X)
+
+        # Guardar el objeto PCA en los transformadores
+        self.transformers['pca'] = self.pca
+
+        print("PCA aplicado con éxito. Nueva forma de los datos: ", self.X.shape)
         sys.stdout.flush()
 
-        return self.X   
+        return self.X
 
     # Función para entrenar los transformadores: Imputar, Escalar, Codificar
     def fit(self):
@@ -371,9 +451,34 @@ class DataPreprocessor:
 
         # Si el modelo es de regresión también se escala la variable objetivo
         if self.model_type == 'Regression':
-            self.y = np.array(self.y)
-            self.scaler_y.fit(self.y.reshape(-1, 1))
-            self.transformers['scaler_y'] = self.scaler_y
+            # Convertir la variable objetivo a un array de numpy
+            self.y = np.array(self.y).reshape(-1, 1)
+            
+            if self.scaling_method_target == 'standard':
+                self.scaler_y.fit(self.y)
+                # Guardar en los transformadores la información del escalador
+                self.transformers['scaler_y'] = {'method': 'standard', 'scaler': self.scaler_y}       
+            elif self.scaling_method_target == 'minmax':
+                self.scaler_y.fit(self.y)
+                # Guardar en los transformadores la información del escalador
+                self.transformers['scaler_y'] = {'method': 'minmax', 'scaler': self.scaler_y}
+            elif self.scaling_method_target == 'log':
+                # Guardar en los transformadores la información de la transformación
+                self.transformers['scaler_y'] = {'method': 'log'}
+            
+            elif self.scaling_method_target == 'sqrt':
+                # Guardar en los transformadores la información de la transformación
+                self.transformers['scaler_y'] = {'method': 'sqrt'}
+            
+            elif self.scaling_method_target == 'cbrt':
+                # Guardar en los transformadores la información de la transformación
+                self.transformers['scaler_y'] = {'method': 'cbrt'}
+            
+            else:
+                raise ValueError(f"Método de escalado no reconocido: {self.scaling_method_target}")
+
+            print("Escalado de la variable objetivo completado.")
+            sys.stdout.flush()
 
         if self.model_type == 'Classification':
             self.label_encoder.fit_transform(self.y)
@@ -428,9 +533,23 @@ class DataPreprocessor:
         sys.stdout.flush()
         self.X[self.numeric_columns] = self.transformers['scaler_X'].transform(self.X[self.numeric_columns])
         if self.model_type == 'Regression':
-            self.y = np.array(self.y)
-            self.y = self.transformers['scaler_y'].transform(self.y.reshape(-1, 1)).ravel()
-        
+            print(f"Aplicando el método de escalado '{self.scaling_method_target}' a la variable objetivo.")
+            sys.stdout.flush()
+            if self.scaling_method_target == 'standard' or self.scaling_method_target == 'minmax':
+                self.y = np.array(self.y).reshape(-1, 1)
+                self.y = self.transformers['scaler_y']['scaler'].transform(self.y).ravel()
+            elif self.scaling_method_target == 'log':
+                self.y = np.log1p(self.y)
+            elif self.scaling_method_target == 'sqrt':
+                self.y = np.sqrt(self.y)
+            elif self.scaling_method_target == 'cbrt':
+                self.y = np.cbrt(self.y)
+            else:
+                raise ValueError(f"Método de escalado no reconocido: {self.scaling_method_target}")
+
+            print("Escalado de la variable objetivo completado.")
+            sys.stdout.flush()
+
         print("Codificar datos categóricos.")
         sys.stdout.flush()
         encoded_features = self.transformers['one_hot_encoder'].transform(self.X[self.categorical_columns])
@@ -467,16 +586,6 @@ class DataPreprocessor:
             sys.stdout.flush()  
         
         return self.X
-    
-    
-        if model_type == "classification":
-            mi = mutual_info_classif(X, y)
-        elif model_type == "regression":
-            mi = mutual_info_regression(X, y)
-        else:
-            raise ValueError("Modelo no reconocido")
-        
-        return mi
 
     # Función para seleccionar las caracteristicas mas representativas
     def select_features(self):
@@ -488,11 +597,22 @@ class DataPreprocessor:
         sys.stdout.flush()
         print('Cantidad caracteristicas inicial: ', self.X.shape[1])
         sys.stdout.flush()
-        self.feature_selector.k = n_features
-        self.feature_selector.fit(self.X, self.y)
+
+        if self.feature_selector_method == "rfe":
+            self.feature_selector.n_features_to_select = n_features
+            self.feature_selector.fit(self.X, self.y)
+            selected_features = self.X.iloc[:, self.feature_selector.support_]
+
+        elif self.feature_selector_method == "rfecv":
+            self.feature_selector.fit(self.X, self.y)
+            selected_features = self.X.iloc[:, self.feature_selector.support_]
+        else:
+            self.feature_selector.k = n_features
+            self.feature_selector.fit(self.X, self.y)
+            selected_features = self.X.iloc[:, self.feature_selector.get_support()]
+
 
         # Obtener las características más representativas
-        selected_features = self.X.iloc[:, self.feature_selector.get_support()]
         self.X = selected_features
 
         print('Caracteristicas seleccionadas: ',self.X.columns)
