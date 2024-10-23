@@ -27,8 +27,8 @@
     "function": "training", 
     "n_jobs": -1,
     "cv": 5,
-    "scoring_regression": "neg_mean_squared_error",
-    "scoring_classification" :"f1_micro",
+    "scoring_regression": "neg_mean_absolute_error",
+    "scoring_classification" :"f1_score",
     "random_state": 1234,
 
     "models_regression": {
@@ -70,7 +70,7 @@
         "lightGBM":{
             "n_estimators": [10,50,200,500],
             "max_depth": [3, 5, 10],
-            "learning_rate": [0.001, 0.1],
+            "learning_rate": [0.001, 0.01, 0.1],
             "num_leaves": [5, 10, 15]
         }
     },
@@ -80,14 +80,18 @@
         "random_forest": true,
         "SVM" : true,
         "KNN" : false,
-        "naive_bayes": true
+        "GaussianNB": true,
+        "MultinomialNB": true,
+        "BernoulliNB": true
     },
 
     "params_classification" : {
         "logisticRegression": {
             "multi_class": ["ovr", "multinomial"],
-            "solver" : ["liblinear","lbfgs"],
-            "class_weight" : ["balanced"]
+            "solver" : ["liblinear","lbfgs", "newton-cg", "newton-cholesky", "sag", "saga"],
+            "class_weight" : ["balanced"],
+            "max_iter" : 100,
+            "penalty" : "None"
         },
 
         "random_forest": {
@@ -96,8 +100,31 @@
             "max_depth" : [5, 10, 20, 30, 40, 50],
             "criterion" : ["gini", "entropy"]
         },
-        "SVM":"Kernel - lineal o no lineal",
-        "KNN":"metric",
-        "naive_bayes":["binomial","multinomial","gaussian"]
+
+        "SVM": {
+            "kernel" : ["linear", "rbf", "poly"],
+            "C": [0.1, 1, 10], 
+            "gamma": ["scale", "auto", 1.0],
+            "degree": 3,
+            "coef0": 0.0
+        },
+
+        "KNN" : {
+            "n_neighbors": [3, 5, 7, 9],
+            "weights": ["uniform", "distance"],
+            "metric": ["euclidean", "manhattan", "minkowski"],
+            "p": [1, 2]  
+        },
+
+        "GaussianNB" :{
+
+        },
+        "MultinomialNB" :{
+
+        },
+        "BernoulliNB" :{
+
+        }
+        
     }
 }

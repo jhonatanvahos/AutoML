@@ -13,6 +13,9 @@ from sklearn.ensemble import AdaBoostClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, precision_recall_curve, auc
 from sklearn.model_selection import GridSearchCV
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB, MultinomialNB, BernoulliNB
 
 class GridSearchModelClassification:
     def __init__(self, config):
@@ -24,7 +27,7 @@ class GridSearchModelClassification:
         self.random_state = self.config.get('random_state' , 1234)
 
         self.cv = self.config.get('cv', 5)
-        self.scoring = self.config.get('scoring_classification', 'f1_micro')
+        self.scoring = self.config.get('scoring_classification', 'f1_score')
         self.n_jobs = self.config.get('n_jobs', -1)
 
         for model_name, modelFlag in self.config['models_classification'].items():
@@ -49,7 +52,7 @@ class GridSearchModelClassification:
 
             print(f'hiperparametros a probar para {model} son: {hiperparameters}')
             sys.stdout.flush()
- 
+
             if model == 'random_forest':
                 estimator = RandomForestClassifier(random_state = self.random_state)
             elif model == 'ada_boost':
@@ -58,10 +61,20 @@ class GridSearchModelClassification:
                 estimator = GradientBoostingClassifier(random_state = self.random_state)
             elif model == 'lightGBM':
                 estimator = LGBMClassifier(verbose=-1,random_state = self.random_state)
+            elif model == 'SVM':
+                estimator = SVC(random_state = self.random_state)
+            elif model == 'KNN':
+                estimator = KNeighborsClassifier()
+            elif model == "GaussianNB":
+                estimator = GaussianNB()
+            elif model == "MultinomialNB":
+                estimator = MultinomialNB()
+            elif model == "BernoulliNB":
+                estimator = BernoulliNB()
 
             # Grid_search
             grid_search = GridSearchCV(estimator = estimator, param_grid = hiperparameters, scoring = self.scoring,
-                                       cv = self.cv, n_jobs = self.n_jobs)
+                                        cv = self.cv, n_jobs = self.n_jobs)
             
             grid_search.fit(X, y)
             mejores_hiperparametros = grid_search.best_params_
@@ -87,7 +100,7 @@ class GridSearchModelClassification:
         # Comparación del Score seleccionado (F1 score).
         best_model_name = None
         best_score = 0.0  
-      
+    
         for model_name, result in results.items():
             score = result[f'score_{self.scoring}']
             if score > best_score:

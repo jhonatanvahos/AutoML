@@ -24,7 +24,7 @@ class GridSearchModelRegression:
         self.random_state = self.config.get('random_state' , 1234)
 
         self.cv = self.config.get('cv', 5)
-        self.scoring = self.config.get('scoring_regression', 'neg_mean_squared_error')
+        self.scoring = self.config.get('scoring_regression', 'neg_mean_absolute_error')
         self.n_jobs = self.config.get('n_jobs', -1)
 
         for model_name, modelFlag in self.config['models_regression'].items():
