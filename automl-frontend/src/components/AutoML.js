@@ -4,8 +4,6 @@ import './AutoML.css';
 
 function AutoML() {
   const location = useLocation();
-  console.log("este es lo que recibe " , location.state)
-  
   const metrics  = location.state
 
   if (!metrics) {

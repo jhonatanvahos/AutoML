@@ -45,7 +45,9 @@ class TrainModel:
         preprocessor.fit()
         preprocessor.transform()
         preprocessor.select_features()
-        
+
+        # Guardar transformadores
+        preprocessor.save_transformers(path_transforms) 
         X, y = preprocessor.get_processed_dataframe()
         print(X, y)
         print("TERMINA OK todas las transformaciones")
@@ -57,16 +59,22 @@ class TrainModel:
         if model_type == 'Regression':
             results = grid_search_regression.grid_search(X, y)
             best_model_name = grid_search_regression.compete_models(results)
-            best_hyperparams = results[best_model_name]['mejores_hiperparametros']
             score = results[best_model_name][f'score_{scorinf_regression}']
-
-            return best_model_name, best_hyperparams, score
+            
+            #Guardar mejor modelo
+            best_model = results[best_model_name]['mejor_modelo']
+            grid_search_regression.save_best_model(best_model,path_models)
+            
+            return best_model_name, score
         
         elif model_type == 'Classification':
             results = grid_search_classification.grid_search(X, y)
             best_model_name = grid_search_classification.compete_models(results)
-            best_hyperparams= results[best_model_name]['mejores_hiperparametros']
             score = results[best_model_name][f'score_{scoring_classification}']     
-   
-            return best_model_name, best_hyperparams, score
+            
+            #Guardar mejor modelo
+            best_model = results[best_model_name]['mejor_modelo']
+            grid_search_classification.save_best_model(best_model, path_models)
+
+            return best_model_name, score
         

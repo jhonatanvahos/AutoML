@@ -674,6 +674,26 @@ class DataPreprocessor:
         except Exception as e:
             print(f"Error al guardar las transformaciones: {e}")
 
+    # Función para cargar los datos y hacer depuración. 
+    def load_dataset_prediction(self, path_file, target):
+        print(path_file)
+        print("---------------------------------------------------")
+        sys.stdout.flush()
+        print("--------------- Carga de datos -------------------")
+        sys.stdout.flush()
+        print("---------------------------------------------------")
+        sys.stdout.flush()
+        try:
+            df = pd.read_csv(path_file)
+            # Asignación de 'y' varialbe objetivo y 'X' variables predictora 
+            y = df[target]
+            X = df.drop(columns=[target])
+
+            return X, y
+
+        except Exception as e:
+            print("Error cargando el dataset:", e)
+
     # Función para cargar los transformadores.
     def load_transformers(self, filename):
         print("Cargando transformadores: ")
@@ -688,10 +708,9 @@ class DataPreprocessor:
             print(f"Error al cargar las transformacioens: {e}")
 
     # Función para aplicar los transformadores a los datos a predecir
-    def apply_transformers(self, transformers, X):
+    def apply_transformers(self, transformers, X, y):
         print("Aplicando transformadores: ")
         sys.stdout.flush()
-
         # Obtener columnas numericas y categoricas.
         numeric_columns = X.select_dtypes(include=['number']).columns
         categorical_columns = X.select_dtypes(include=['object', 'category']).columns
@@ -716,4 +735,4 @@ class DataPreprocessor:
             elif name == 'feature_selector':
                 X = X[transformers['feature_selector']]
 
-        return X
+        return X, y

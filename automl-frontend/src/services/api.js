@@ -33,3 +33,13 @@ export const trainModels = async () => {
     throw new Error('Error training model:', error);
   }
 };
+
+// Predecir con modelo 
+export const predictModels = async () => {
+  try {
+    const response = await axios.post(`${API_URL}/predict`); // Llama al backend que inicia el entrenamiento
+    return response.data; // Devuelve las predicciones
+  } catch (error) {
+    throw new Error('Error predict model:', error);
+  }
+};

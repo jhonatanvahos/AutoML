@@ -4,12 +4,12 @@ from pydantic import BaseModel
 from typing import List, Dict, Union
 import json
 from train import TrainModel
+from predict import PredictModel
 import shutil
 import os
 import logging
 import pandas as pd
 from pathlib import Path
-import subprocess
 
 logging.basicConfig(level=logging.INFO)
 
@@ -220,17 +220,24 @@ async def upload_dataset(file: UploadFile = File(...)):
 async def train_models():
     try:
         trainer = TrainModel("config.json")
-        model_name, hyperparams, score = trainer.run()
-
-        print(model_name)
-        print(hyperparams)
-        print(score)
+        model_name, score = trainer.run()
 
         model_results = {"model_name": model_name,
-                         "hyperparams" : hyperparams,
                          "score": score}
-        # Retornar la respuesta al frontend
+
         return model_results
+
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error training model: {str(e)}")
+    
+@app.post("/predict")
+async def predict_models():
+    try:
+        predict = PredictModel("config.json")
+        result = predict.run()
+        print(result)
+        return result
 
     except Exception as e:
         print(f"Error: {str(e)}")

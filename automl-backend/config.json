@@ -1,5 +1,5 @@
 {
-    "project_name": "Prueba",
+    "project_name": "proyecto",
     "target_column": "y",
     "dataset_path": "./uploaded_files/bank-full.csv",
     "split": 0.1,
@@ -39,7 +39,7 @@
         "random_forest": false,
         "SVM": false,
         "KNN": true,
-        "GaussianNB": true,
+        "GaussianNB": false,
         "MultinomialNB": false,
         "BernoulliNB": true
     },

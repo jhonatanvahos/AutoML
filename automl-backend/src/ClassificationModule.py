@@ -153,7 +153,9 @@ class GridSearchModelClassification:
 
         result = model.predict(X)
         proba = model.predict_proba(X)
-        
+
+        y = [0 if label == 'no' else 1 for label in y] # Cambiar por el transformador
+
         # Calcular metricas
         ac = accuracy_score(y, result)
         pc = precision_score(y, result)
