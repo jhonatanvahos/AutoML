@@ -44,12 +44,22 @@ export const saveModelSelection = async (modelName) => {
   }
 };
 
-// Predecir con modelo 
-export const predictModels = async () => {
+// Obtener lista de proyectos
+export const fetchProjects = async () => {
   try {
-    const response = await axios.post(`${API_URL}/predict`); // Llama al backend que inicia el entrenamiento
-    return response.data; // Devuelve las predicciones
+    const response = await axios.get(`${API_URL}/api/projects`);
+    return response.data; // Devuelve los proyectos
   } catch (error) {
-    throw new Error('Error predict model:', error);
+    throw new Error('Error fetching projects:', error);
+  }
+};
+
+// Realizar predicción
+export const predictModels = async (project, file) => {
+  try {
+    const response = await axios.post(`${API_URL}/api/predict`, { project, file }); // Enviar proyecto y archivo al backend
+    return response.data; // Devuelve el resultado de la predicción
+  } catch (error) {
+    throw new Error('Error predicting model:', error);
   }
 };

@@ -5,6 +5,7 @@ import Train from './components/Train';
 import Predict from './components/Predict';
 import ConfigForm from './components/ConfigForm';
 import AutoML from './components/AutoML';
+import ResultPredict from './components/ResultPredict';
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                 <Route path="/predict" element={<Predict />} />
                 <Route path="/ConfigForm" element={<ConfigForm />} />
                 <Route path='/automl' element={<AutoML />} />
+                <Route path='/resultpredict' element={<ResultPredict />} />
             </Routes>
         </BrowserRouter>
     );
