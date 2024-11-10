@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import UploadDatasetForm from './UploadDatasetForm';
 import { useNavigate } from 'react-router-dom';
-import './Train.css'; // Importa el archivo de estilos
+import '../styles/Train.css';
 
 function Train() {
   const navigate = useNavigate();
@@ -9,13 +9,15 @@ function Train() {
   const [targetColumn, setTargetColumn] = useState('');
   const [isUploaded, setIsUploaded] = useState(false);
   const [datasetPath, setDatasetPath] = useState('');
+  const [columns, setColumns] = useState([]); 
 
   const handleProjectNameChange = (e) => setProjectName(e.target.value);
   const handleTargetColumnChange = (e) => setTargetColumn(e.target.value);
-  
-  const handleFileUploadSuccess = (path) => {
+
+  const handleFileUploadSuccess = (path, columns) => {
     setIsUploaded(true);
     setDatasetPath(path);
+    setColumns(columns); 
   };
 
   const saveConfig = async () => {
@@ -31,12 +33,14 @@ function Train() {
           dataset_path: datasetPath,
         }),
       });
-
+  
       if (!response.ok) {
         throw new Error('Failed to save config');
       }
-
+  
       const data = await response.json();
+      console.log(data)
+      setDatasetPath(data.dataset_path); // Actualiza el estado con la nueva ruta del dataset
       console.log(data.message);
     } catch (error) {
       console.error("Error saving config:", error);
@@ -45,13 +49,18 @@ function Train() {
   };
 
   const handleContinue = async () => {
+    console.log(datasetPath)
     if (!projectName || !targetColumn || !datasetPath) {
       alert("Please fill in all the fields");
       return;
     }
 
     await saveConfig();
-    navigate('/ConfigForm');
+    // Crear una nueva lista de columnas excluyendo targetColumn
+    const filteredColumns = columns.filter(column => column !== targetColumn);
+
+    // Pasar projectName, filteredColumns y targetColumn a ConfigForm
+    navigate('/ConfigForm', { state: {columns: filteredColumns } });
   };
 
   return (
@@ -71,11 +80,18 @@ function Train() {
 
       <div className="form-group">
         <label>Target Column:</label>
-        <input
-          type="text"
-          value={targetColumn}
-          onChange={handleTargetColumnChange}
-        />
+        {isUploaded ? (
+          <select value={targetColumn} onChange={handleTargetColumnChange}>
+            <option value="">Select Target Column</option>
+            {columns.map((column) => (
+              <option key={column} value={column}>
+                {column}
+              </option>
+            ))}
+          </select>
+        ) : (
+          <p>Upload a dataset to select the target column</p>
+        )}
       </div>
 
       {isUploaded && (

@@ -28,9 +28,16 @@ class TrainModel:
     def run(self):
         # Cargar parámetros
         config = self.load_params()
-        path_predict = 'uploaded_files/predict_' + config.get('project_name')
-        path_models = 'models/' +config.get('project_name') 
-        path_transforms = 'transforms/' +config.get('project_name')
+        path_predict = 'projects/' + config.get('project_name') + '/predict' 
+        path_models = 'projects/' + config.get('project_name') + '/models'
+        path_transforms = 'projects/' + config.get('project_name') + '/transforms'
+
+        if not os.path.exists(path_models):
+            os.makedirs(path_models)
+
+        if not os.path.exists(path_transforms):
+            os.makedirs(path_transforms)
+        path_transforms += '/transform'
 
         # Instanciar clases
         preprocessor = DataPreprocessor(config)
@@ -46,35 +53,19 @@ class TrainModel:
         preprocessor.transform()
         preprocessor.select_features()
 
-        # Guardar transformadores
+        # Guardar transformadores 
         preprocessor.save_transformers(path_transforms) 
         X, y = preprocessor.get_processed_dataframe()
         print(X, y)
         print("TERMINA OK todas las transformaciones")
         
         model_type = config.get("model_type")
-        scorinf_regression = config.get('scoring_regression', 'neg_mean_absolute_error') 
-        scoring_classification = config.get('scoring_classification', 'f1')
 
         if model_type == 'Regression':
-            results = grid_search_regression.grid_search(X, y)
-            best_model_name = grid_search_regression.compete_models(results)
-            score = results[best_model_name][f'score_{scorinf_regression}']
-            
-            #Guardar mejor modelo
-            best_model = results[best_model_name]['mejor_modelo']
-            grid_search_regression.save_best_model(best_model,path_models)
-            
-            return best_model_name, score
+            results = grid_search_regression.grid_search(X, y, path_models)
+            return results
         
         elif model_type == 'Classification':
-            results = grid_search_classification.grid_search(X, y)
-            best_model_name = grid_search_classification.compete_models(results)
-            score = results[best_model_name][f'score_{scoring_classification}']     
-            
-            #Guardar mejor modelo
-            best_model = results[best_model_name]['mejor_modelo']
-            grid_search_classification.save_best_model(best_model, path_models)
-
-            return best_model_name, score
+            results = grid_search_classification.grid_search(X, y, path_models)
+            return results
         

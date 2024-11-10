@@ -24,8 +24,8 @@ function UploadDatasetForm({ onSuccess }) {
       setUploadMessage(response.message);
 
       if (response.message === "File uploaded successfully") {
-        // Pasamos el file_path al componente padre
-        onSuccess(response.file_path);
+        // Pasamos el file_path y las columnas
+        onSuccess(response.file_path, response.columns);
       }
     } catch (error) {
       console.error("Error uploading file:", error);

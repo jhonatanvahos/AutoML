@@ -27,9 +27,9 @@ class PredictModel:
     def run(self):
         # Cargar parámetros
         config = self.load_params()
-        path_predict = 'uploaded_files/predict_' + config.get('project_name')
-        path_models = 'models/' +config.get('project_name') 
-        path_transforms = 'transforms/' +config.get('project_name')
+        path_predict = 'projects/' + config.get('project_name') + '/predict' 
+        path_models = 'projects/' + config.get('project_name') + '/model'
+        path_transforms = 'projects/' + config.get('project_name') + '/transform'
 
         # Instanciar clases
         preprocessor = DataPreprocessor(config)
@@ -73,5 +73,4 @@ class PredictModel:
             
             print("OK")
             
-
             return "OK"

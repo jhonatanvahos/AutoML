@@ -54,7 +54,8 @@ class DataPreprocessor:
         self.missing_threshold = self.config.get('missing_threshold', 0.1)
         self.numeric_imputer =  self.config.get("numeric_imputer")
         self.categorical_imputer = self.config.get("categorical_imputer")
-        self.imputer_n_neighbors = self.config.get("imputer_n_neighbors")
+        self.imputer_n_neighbors_n = self.config.get("imputer_n_neighbors_n")
+        self.imputer_n_neighbors_c = self.config.get("imputer_n_neighbors_c")
 
         self.balance_threshold = self.config.get('balance_thershold',0.5)
         self.balance_method = self.config.get('balance_method', None)
@@ -432,7 +433,7 @@ class DataPreprocessor:
                     # Guardar el imputador en el diccionario de transformadores
                     self.transformers['numeric_imputer'] = numeric_simple_imputer
                 else: 
-                    knn_imputer_numeric = KNNImputer(n_neighbors = self.imputer_n_neighbors)
+                    knn_imputer_numeric = KNNImputer(n_neighbors = self.imputer_n_neighbors_n)
                     knn_imputer_numeric.fit(numeric_data)
                     # Guardar el imputador en el diccionario de transformadores
                     self.transformers['numeric_imputer'] = knn_imputer_numeric
@@ -461,7 +462,7 @@ class DataPreprocessor:
                     X_categorical_encoded = ordinal_encoder.fit_transform(categorical_data)
 
                     # Crear el imputador para las columnas categóricas
-                    knn_imputer_categorical = KNNImputer(n_neighbors = self.imputer_n_neighbors)
+                    knn_imputer_categorical = KNNImputer(n_neighbors = self.imputer_n_neighbors_c)
                     knn_imputer_categorical.fit(X_categorical_encoded)
                     # Ajustar el imputador y transformar los datos
                     X_categorical_imputed = knn_imputer_categorical.fit_transform(X_categorical_encoded)

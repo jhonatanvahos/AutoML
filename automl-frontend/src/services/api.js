@@ -34,6 +34,16 @@ export const trainModels = async () => {
   }
 };
 
+// Guardar la selección del modelo para predicción
+export const saveModelSelection = async (modelName) => {
+  try {
+    const response = await axios.post(`${API_URL}/save-model-selection`, { selectedModel: modelName });
+    return response.data; // Devuelve el mensaje de éxito del backend
+  } catch (error) {
+    throw new Error('Error saving model selection:', error);
+  }
+};
+
 // Predecir con modelo 
 export const predictModels = async () => {
   try {

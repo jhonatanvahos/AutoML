@@ -41,11 +41,12 @@ class GridSearchModelClassification:
                     print(f"No se encontraron hiperparámetros para el modelo {model_name}.")
 
     # Función para la busqueda de grilla. 
-    def grid_search(self, X, y): 
+    def grid_search(self, X, y, path_models): 
         print("Busqueda de grilla: ")
         sys.stdout.flush() 
 
         results = {}
+        results_format = {}
         # Ciclo para recorrer cada uno de los modelos seleccionados en los parámetros
         for model_name, config in self.models.items():
             print(model_name)
@@ -102,7 +103,18 @@ class GridSearchModelClassification:
             print("Tiempo transcurrido durante el entrenamiento:", elapsed_time/60, "minutos")
             sys.stdout.flush()
 
-        return results
+            filename = path_models + "/" + model_name
+            
+            self.save_model(results[model_name]['mejor_modelo'],filename)
+            
+            # Modifica el diccionario para que solo incluya el nombre del modelo y no el objeto completo
+            results_format[model_name] = {
+                'mejor_modelo': type(mejor_modelo).__name__,  # Solo el nombre del modelo
+                'mejores_hiperparametros': mejores_hiperparametros,
+                'score': score
+            }
+
+        return results_format
 
     # Función para la selección del mejor modelo
     def compete_models(self, results):
@@ -122,16 +134,13 @@ class GridSearchModelClassification:
         return best_model_name
 
     # Funcion para guardar el mejor modelo
-    def save_best_model(self, best_model, filename):
-        print("\nGuardar modelo ganador: ")
-        sys.stdout.flush()
-    
+    def save_model(self, best_model, filename):
         try:
             # Guarda el diccionario en un archivo usando joblib
             joblib.dump(best_model, filename)
-            print(f"El mejor modelo se guardó en '{filename}'.")
+            print(f"El modelo se guardó en '{filename}'.")
         except Exception as e:
-            print(f"Error al guardar el mejor modelo: {e}")
+            print(f"Error al guardar el modelo: {e}")
 
     # Función para cargar modelo.
     def load_model(self, filename):
