@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { predictModels, fetchProjects } from '../services/api';
+import '../styles/Predict.css';
 
 function Predict() {
   const [projects, setProjects] = useState([]); // Para almacenar la lista de proyectos
@@ -54,37 +55,50 @@ function Predict() {
   };
 
   return (
-    <div>
-      <h1>Página de Predicción</h1>
-      
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Seleccionar Proyecto:</label>
-          <select value={selectedProject} onChange={handleProjectChange} required>
-            <option value="">--Seleccionar Proyecto--</option>
-            {projects.map((project, index) => (
-              <option key={index} value={project}>
-                {project}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label>Seleccionar archivo para predicción:</label>
-          <select value={selectedFile} onChange={(e) => setSelectedFile(e.target.value)} required>
-            <option value="predict">Archivo de Testeo</option>
-            {/* Aquí podrías agregar más opciones si quieres permitir cargar archivos externos */}
-          </select>
-        </div>
-
-        <div>
-          <button type="submit" disabled={loading}>
-            {loading ? "Realizando predicción..." : "Realizar Predicción"}
-          </button>
-        </div>
-      </form>
+  <div className="predict-container">
+  <header className="header">
+    <div className="logo-container">
+      <img src="logo.png" alt="PredictLab Logo" className="logo" />
+      <h1>PredictLab</h1>
     </div>
+  </header>
+
+    <h2 className="predict-title">Página de Predicción</h2>
+
+    <form onSubmit={handleSubmit} className="predict-form">
+      <div className="form-group">
+        <label>Seleccionar Proyecto:</label>
+        <select value={selectedProject} onChange={handleProjectChange} required>
+          <option value="">--Seleccionar Proyecto--</option>
+          {projects.map((project, index) => (
+            <option key={index} value={project}>
+              {project}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="form-group">
+        <label>Seleccionar archivo para predicción:</label>
+        <select value={selectedFile} onChange={(e) => setSelectedFile(e.target.value)} required>
+          <option value="predict">Archivo de Testeo</option>
+        </select>
+      </div>
+
+      <div className="form-group">
+        <button type="submit" className="predict-button" disabled={loading}>
+          {loading ? "Realizando predicción..." : "Realizar Predicción"}
+        </button>
+      </div>
+    </form>
+
+    <footer className="footer">
+    <p>© 2024 PredictLab. Todos los derechos reservados.</p>
+    <p>by: Jhonatan Stick Gomez Vahos</p>
+    <p>Sebastian Saldarriaga Arias</p>
+    </footer>
+
+  </div>
   );
 }
 

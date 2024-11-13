@@ -1,0 +1,129 @@
+/* Contenedor principal para la página de predicción */
+.predict-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #e0f2f1; /* Fondo gris suave */
+  padding: 0;
+  font-family: 'Roboto Mono', monospace; /* Fuente tecnológica */
+}
+
+h1, h2 {
+  color: #00796b; /* Color azulverdoso */
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+h2.predict-title {
+  font-size: 1.5rem;
+}
+
+/* Estilo del formulario de predicción */
+.predict-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 400px;
+  margin: 30px auto;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Grupo de campos del formulario */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-group label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #00796b;
+}
+
+.form-group select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #333;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+}
+
+.form-group select:focus {
+  border-color: #00796b;
+  outline: none;
+}
+
+/* Estilo para el botón de predicción */
+.predict-button {
+  width: 100%;
+  background-color: #00796b; /* Azulverdoso */
+  color: white;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.predict-button:hover {
+  background-color: #004d40; /* Azulverdoso más oscuro en hover */
+}
+
+.predict-button:active {
+  background-color: #003d33; /* Cambio al hacer clic */
+}
+
+.predict-button:disabled {
+  background-color: #9e9e9e;
+  cursor: not-allowed;
+}
+
+/* Pie de página */
+.footer {
+  margin-top: auto; /* Empuja el footer al final */
+  width: 100%;
+  background-color: #00796b;  /* Azulverdoso */
+  padding: 15px;
+  text-align: center;
+  font-size: 1rem;
+  color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+}
+
+.footer p {
+  margin: 0;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .predict-container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2.predict-title {
+    font-size: 1.3rem;
+  }
+
+  .predict-form {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .predict-button {
+    font-size: 1rem;
+  }
+}

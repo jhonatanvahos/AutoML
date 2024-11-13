@@ -1,69 +1,184 @@
-/* Contenedor principal para centrar y alinear los elementos */
+/* Contenedor principal */
 .train-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    gap: 20px;
-    padding: 20px;
-    background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #e0f2f1;
+  padding: 0px;
+  font-family: 'Roboto Mono', monospace;
+}
+
+/* Encabezado */
+.header {
+  width: 100%;
+  background-color: #00796b !important;
+  color: #ffffff;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 40px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.header h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+/* Título de configuración */
+.train-title {
+  font-size: 2.2rem;
+  color: #00796b;
+  text-align: center;
+  margin: 30px 0;
+  font-weight: 700;
+}
+
+/* Formulario */
+.form-group-horizontal {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.form-group-horizontal label {
+  font-size: 1rem;
+  color: #333;
+  margin-right: 10px;
+  width: 150px; /* Ajuste opcional para ancho uniforme */
+}
+
+.input-field,
+.input-select {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  max-width: 400px;
+}
+
+.input-field:focus,
+.input-select:focus {
+  outline: none;
+  border-color: #00796b;
+}
+
+/* Botón de carga centrado */
+.upload-button-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.upload-button-container button {
+  font-size: 1.1rem;
+  padding: 12px 24px;
+  background-color: #00796b;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.upload-button-container button:hover {
+  background-color: #005d54;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 18px;
+  border-radius: 8px;
+  z-index: 1000;
+  text-align: center;
+  width: 300px;
+}
+
+.popup.success {
+  background-color: #00796b;
+}
+
+.popup.error {
+  background-color: red;
+}
+
+/* Botón de Continuar centrado */
+.continue-button {
+  display: block;
+  margin: 30px auto;
+  background-color: #00796b;
+  color: #ffffff;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.continue-button:hover {
+  background-color: #005d54;
+}
+
+/* Pie de página */
+.footer {
+  margin-top: auto;
+  width: 100%;
+  background-color: #00796b;
+  padding: 15px;
+  text-align: center;
+  font-size: 1rem;
+  color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+}
+
+.footer p {
+  margin: 0;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .train-title {
+    font-size: 2rem;
   }
-  
-  /* Título de la página */
-  .train-container h1 {
-    font-size: 2.5rem;
-    color: #007bff; /* Color azul para el título */
-    margin-bottom: 20px;
-    text-align: center;
+
+  .header h1 {
+    font-size: 1.5rem;
   }
-  
-  /* Estilos para los labels de los inputs */
-  .train-container label {
-    font-size: 1.2rem;
-    color: #6c757d; /* Color gris para el texto */
-    margin-bottom: 10px;
-    display: block;
-  }
-  
-  /* Estilos para los inputs de texto */
-  .train-container input[type="text"] {
-    padding: 10px;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: 1px solid #ced4da;
-    width: 300px;
-    margin-bottom: 20px;
-  }
-  
-  /* Estilos del botón de continuar */
-  .train-container button {
-    background-color: #007bff; /* Color azul para el botón */
-    color: #fff;
-    font-size: 1.2rem;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.2s;
-  }
-  
-  /* Efecto hover para el botón */
-  .train-container button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-  }
-  
-  /* Espaciado entre los campos */
-  .train-container .form-group {
-    margin-bottom: 20px;
-    display: flex;
+
+  .form-group-horizontal {
     flex-direction: column;
     align-items: flex-start;
   }
-  
-  /* Estilo condicional para ocultar el botón hasta que se cargue el dataset */
-  .train-container button.hidden {
-    display: none;
+
+  .form-group-horizontal label {
+    width: auto;
+    margin-bottom: 5px;
   }
-  
+
+  .upload-button-container button,
+  .continue-button {
+    width: 100%;
+    max-width: 400px;
+  }
+}

@@ -1,57 +1,132 @@
+/* Contenedor principal */
 .home-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100vh; /* Ocupar toda la altura de la pantalla */
-  gap: 20px; /* Espacio entre las tarjetas */
+  min-height: 100vh;
+  background-color: #e0f2f1;  /* Fondo gris suave */
+  padding: 0;
+  font-family: 'Roboto Mono', monospace;  /* Fuente tecnológica */
 }
 
+/* Encabezado */
+.header {
+  width: 100%;
+  background-color: #00796b !important;  /* Aseguramos que el fondo azulverdoso se aplique */
+  color: #ffffff;
+  padding: 15px;
+  display: flex;
+  justify-content: center; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 60px; /* Ajusta el tamaño según prefieras */
+  height: auto;
+  margin-right: 10px; /* Espacio entre el logo y el texto */
+}
+
+.header h1 {
+  font-size: 2.5rem;  /* Aumento tamaño de título */
+  font-weight: bold;
+  color: #ffffff;
+}
+
+/* Título de la página */
 .home-title {
   font-size: 2.5rem;
-  color: #007bff; /* Color azul del título */
+  color: #00796b;  /* Azulverdoso */
   text-align: center;
-  margin-bottom: 40px;
+  margin: 40px 0;
+  font-weight: 700;
 }
 
+/* Contenedor de tarjetas */
 .cards-container {
   display: flex;
-  gap: 20px; /* Espacio entre las tarjetas */
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 15px;
 }
 
+/* Estilo de las tarjetas */
 .card {
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;  /* Fondo blanco para las tarjetas */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 200px;
+  width: 220px;
   text-align: center;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 .card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  background-color: #00796b;  /* Azulverdoso de fondo al hacer hover */
+  color: white;  /* Cambia el color del texto a blanco */
 }
 
 .card h2 {
   margin-bottom: 10px;
-  color: #007bff; /* Color del título de la tarjeta */
+  color: #00796b;  /* Azulverdoso */
+  font-size: 1.4rem;
+  font-weight: 600;
 }
 
 .card p {
-  color: #6c757d; /* Color del texto */
+  color: #6c757d;
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
+/* Cambiar color del título y texto a blanco cuando se hace hover */
+.card:hover h2, 
+.card:hover p {
+  color: #ffffff;  /* Blanco para texto en el hover */
+}
+
+/* Pie de página */
 .footer {
-  margin-top: auto;
-  padding: 10px;
+  margin-top: auto; /* Empuja el footer al final */
+  width: 100%;
+  background-color: #00796b;  /* Azulverdoso */
+  padding: 15px;
   text-align: center;
   font-size: 1rem;
-  color: #6c757d;
+  color: #ffffff;
+  border-top: 1px solid #e0e0e0;
 }
 
 .footer p {
   margin: 0;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .cards-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .home-title {
+    font-size: 2rem;
+  }
+
+  .header {
+    font-size: 1.5rem;
+  }
 }

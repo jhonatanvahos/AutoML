@@ -1,75 +1,109 @@
-/* Estilos generales */
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f5f5f5;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
+/* Contenedor principal */
+.automl-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #e0f2f1;  /* Fondo gris suave */
+  padding: 0;
+  font-family: 'Roboto Mono', monospace;  /* Fuente tecnológica */
 }
 
 h1, h2 {
-  color: #333;
-  font-weight: bold;
+  color: #00796b; /* Color azulverdoso */
+  font-weight: 600;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  font-size: 2rem;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+h2 {
+  font-size: 1.5rem;
 }
 
-li {
-  background-color: #e9ecef;
-  margin: 10px 0;
+/* Selección del modelo */
+.model-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.model-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #ffffff;
   padding: 15px;
   border-radius: 8px;
-  border: 1px solid #ccc;
-  display: flex;
-  justify-content: space-between;
-  font-size: 18px;
-  color: #333;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-li span {
-  font-weight: bold;
+.model-option:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
-/* Tarjeta individual para cada modelo */
-.model-card {
-  background-color: #fff;
-  padding: 20px;
-  margin: 15px 0;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.model-option input[type="radio"] {
+  margin-right: 10px;
 }
 
-/* Botón para regresar a Home */
-.button-home {
+.model-option span {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Forzar estilo específico para el botón de guardar */
+button.button-home {
   display: block;
   width: 100%;
-  background-color: #007BFF;
+  background-color: #00796b; /* Azulverdoso */
   color: white;
-  padding: 10px 20px;
+  padding: 12px 20px;
   margin-top: 30px;
   text-align: center;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 8px;
+  font-size: 1.1rem;
   cursor: pointer;
   text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 
-.button-home:hover {
-  background-color: #0056b3;
+button.button-home:hover {
+  background-color: #004d40; /* Azulverdoso más oscuro en hover */
+}
+
+button.button-home:active {
+  background-color: #003d33; /* Cambio al hacer clic */
+}
+
+/* Estilo específico para el enlace de retorno */
+.button-home.link {
+  background-color: #00796b;
+  color: white; /* Asegurar que el texto también sea blanco en el link */
+  padding: 12px 20px;
+  margin-top: 10px;
+  text-decoration: none;  /* Evitar subrayado en el enlace */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.button-home.link:hover {
+  background-color: #004d40; /* Azulverdoso más oscuro en hover */
+  color: white;
+}
+
+.button-home.link:active {
+  background-color: #003d33;
+  color: white;
 }
 
 /* Spinner para mostrar cuando los datos están cargando */
 .loading-spinner {
   border: 16px solid #f3f3f3;
-  border-top: 16px solid #007BFF;
+  border-top: 16px solid #00796b;
   border-radius: 50%;
   width: 120px;
   height: 120px;
@@ -77,7 +111,52 @@ li span {
   margin: 20px auto;
 }
 
+/* Pie de página */
+.footer {
+  margin-top: auto; /* Empuja el footer al final */
+  width: 100%;
+  background-color: #00796b;  /* Azulverdoso */
+  padding: 15px;
+  text-align: center;
+  font-size: 1rem;
+  color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+}
+
+.footer p {
+  margin: 0;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  .button-home {
+    font-size: 1rem;
+  }
+
+  .model-option {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .model-selection {
+    gap: 10px;
+  }
 }

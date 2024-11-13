@@ -4,6 +4,8 @@ import pandas as pd
 import json
 import sys
 import joblib
+from pathlib import Path
+from datetime import datetime
 
 #Modelos
 from sklearn.linear_model import LinearRegression, Ridge, LogisticRegression
@@ -39,7 +41,7 @@ class GridSearchModelClassification:
                     self.models[model_name] = {'model': model_name, 'hiperparameters': hiperparameters}
                 else:
                     print(f"No se encontraron hiperparámetros para el modelo {model_name}.")
-
+    
     # Función para la busqueda de grilla. 
     def grid_search(self, X, y, path_models): 
         print("Busqueda de grilla: ")
@@ -47,13 +49,15 @@ class GridSearchModelClassification:
 
         results = {}
         results_format = {}
+        # Archivo temporal para almacenar el estado del entrenamiento
+        status_file = Path("training_status.json")
         # Ciclo para recorrer cada uno de los modelos seleccionados en los parámetros
         for model_name, config in self.models.items():
             print(model_name)
-            start_time = time()
+            start_time = self.start_model_training(model_name, status_file)
+            
             model = config['model']
             hiperparameters = config['hiperparameters']
-
             print(f'hiperparametros a probar para {model} son: {hiperparameters}')
             sys.stdout.flush()
 
@@ -98,9 +102,8 @@ class GridSearchModelClassification:
             print(f'score_{self.scoring}: ', score)
             sys.stdout.flush()
 
-            end_time = time()
-            elapsed_time = end_time - start_time
-            print("Tiempo transcurrido durante el entrenamiento:", elapsed_time/60, "minutos")
+            elapsed_time = self.finish_model_training( model_name, start_time, status_file)
+            print("Tiempo transcurrido durante el entrenamiento:", elapsed_time, "minutos")
             sys.stdout.flush()
 
             filename = path_models / model_name
@@ -111,11 +114,36 @@ class GridSearchModelClassification:
             results_format[model_name] = {
                 'mejor_modelo': type(mejor_modelo).__name__,  # Solo el nombre del modelo
                 'mejores_hiperparametros': mejores_hiperparametros,
-                'score': score
+                'score': score,
+                'elapsed_time_minutes': round(elapsed_time / 60, 2)
             }
-
+                
         return results_format
+    
+    def start_model_training(self, model_name, status_file):
+        # Inicia el registro del modelo actual y la hora de inicio
+        start_time = datetime.now()
+        with status_file.open("w") as f:
+            json.dump({
+                "timestamp": start_time.isoformat(),
+                "current_model": model_name,
+                "progress": "Entrenamiento iniciado",
+                "elapsed_time_minutes": 0
+            }, f)
+        return start_time
 
+    def finish_model_training(self, model_name, start_time, status_file):
+        # Calcula el tiempo transcurrido y guarda el estado final
+        elapsed_time = (datetime.now() - start_time).total_seconds() / 60  # en minutos
+        with status_file.open("w") as f:
+            json.dump({
+                "timestamp": datetime.now().isoformat(),
+                "current_model": model_name,
+                "progress": "Entrenamiento completedo",
+                "elapsed_time_minutes": round(elapsed_time, 2)
+            }, f)
+        return elapsed_time
+    
     # Función para la selección del mejor modelo
     def compete_models(self, results):
         print("\nCompetencia de Modelos")

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import UploadDatasetForm from './UploadDatasetForm';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Train.css';
@@ -9,7 +9,8 @@ function Train() {
   const [targetColumn, setTargetColumn] = useState('');
   const [isUploaded, setIsUploaded] = useState(false);
   const [datasetPath, setDatasetPath] = useState('');
-  const [columns, setColumns] = useState([]); 
+  const [columns, setColumns] = useState([]);
+  const [popupMessage, setPopupMessage] = useState(""); // Nuevo estado para manejar el popup
 
   const handleProjectNameChange = (e) => setProjectName(e.target.value);
   const handleTargetColumnChange = (e) => setTargetColumn(e.target.value);
@@ -17,8 +18,21 @@ function Train() {
   const handleFileUploadSuccess = (path, columns) => {
     setIsUploaded(true);
     setDatasetPath(path);
-    setColumns(columns); 
+    setColumns(columns);
+    setPopupMessage("File uploaded successfully!"); // Mostrar mensaje de éxito
   };
+
+  const handleFileUploadError = (errorMessage) => {
+    setPopupMessage(errorMessage); // Mostrar mensaje de error
+  };
+
+  // Este efecto limpia el mensaje después de un tiempo
+  useEffect(() => {
+    if (popupMessage) {
+      const timer = setTimeout(() => setPopupMessage(""), 3000); // Desaparece en 3 segundos
+      return () => clearTimeout(timer); // Limpia el temporizador cuando el mensaje cambia o el componente se desmonta
+    }
+  }, [popupMessage]);
 
   const saveConfig = async () => {
     try {
@@ -33,15 +47,13 @@ function Train() {
           dataset_path: datasetPath,
         }),
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to save config');
       }
-  
+
       const data = await response.json();
-      console.log(data)
-      setDatasetPath(data.dataset_path); // Actualiza el estado con la nueva ruta del dataset
-      console.log(data.message);
+      setDatasetPath(data.dataset_path);
     } catch (error) {
       console.error("Error saving config:", error);
       alert("There was an error saving the configuration.");
@@ -49,54 +61,81 @@ function Train() {
   };
 
   const handleContinue = async () => {
-    console.log(datasetPath)
     if (!projectName || !targetColumn || !datasetPath) {
       alert("Please fill in all the fields");
       return;
     }
 
     await saveConfig();
-    // Crear una nueva lista de columnas excluyendo targetColumn
-    const filteredColumns = columns.filter(column => column !== targetColumn);
 
-    // Pasar projectName, filteredColumns y targetColumn a ConfigForm
-    navigate('/ConfigForm', { state: {columns: filteredColumns } });
+    const filteredColumns = columns.filter(column => column !== targetColumn);
+    navigate('/ConfigForm', { state: { columns: filteredColumns } });
   };
 
   return (
     <div className="train-container">
-      <h1>Project Setup</h1>
-      
-      <div className="form-group">
-        <label>Project Name:</label>
-        <input
-          type="text"
-          value={projectName}
-          onChange={handleProjectNameChange}
-        />
-      </div>
+      <header className="header">
+        <div className="logo-container">
+          <img src="logo.png" alt="PredictLab Logo" className="logo" />
+          <h1>PredictLab</h1>
+        </div>
+      </header>
 
-      <UploadDatasetForm onSuccess={handleFileUploadSuccess} />
+      <main className="train-content">
+        <h2 className="train-title">Configuración del Proyecto</h2>
 
-      <div className="form-group">
-        <label>Target Column:</label>
-        {isUploaded ? (
-          <select value={targetColumn} onChange={handleTargetColumnChange}>
-            <option value="">Select Target Column</option>
-            {columns.map((column) => (
-              <option key={column} value={column}>
-                {column}
-              </option>
-            ))}
-          </select>
-        ) : (
-          <p>Upload a dataset to select the target column</p>
+        <div className="form-group-horizontal">
+          <label>Nombre del Proyecto:</label>
+          <input
+            type="text"
+            value={projectName}
+            onChange={handleProjectNameChange}
+            placeholder="Ingresa el nombre del proyecto"
+            className="input-field"
+          />
+        </div>
+
+        <div className="upload-button-container">
+          <UploadDatasetForm
+            onSuccess={handleFileUploadSuccess}
+            onError={handleFileUploadError}
+          />
+        </div>
+
+        <div className="form-group-horizontal">
+          <label>Columna Objetivo:</label>
+          {isUploaded ? (
+            <select value={targetColumn} onChange={handleTargetColumnChange} className="input-select">
+              <option value="">Selecciona la columna objetivo</option>
+              {columns.map((column) => (
+                <option key={column} value={column}>
+                  {column}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <p className="upload-message">Sube un conjunto de datos para seleccionar la columna objetivo</p>
+          )}
+        </div>
+
+        {isUploaded && (
+          <button className="continue-button" onClick={handleContinue}>
+            Continuar con la Configuración
+          </button>
         )}
-      </div>
 
-      {isUploaded && (
-        <button onClick={handleContinue}>Continue to Configuration</button>
-      )}
+        {popupMessage && (
+          <div className="popup">
+            {popupMessage}
+          </div>
+        )}
+      </main>
+
+      <footer className="footer">
+        <p>© 2024 PredictLab. Todos los derechos reservados.</p>
+        <p>by: Jhonatan Stick Gomez Vahos</p>
+        <p>Sebastian Saldarriaga Arias</p>
+      </footer>
     </div>
   );
 }

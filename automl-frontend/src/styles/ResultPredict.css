@@ -1,171 +1,151 @@
-/* Estilos generales */
-.container {
-  max-width: 900px; /* Ampliamos un poco el ancho */
-  margin: 40px auto;
-  padding: 30px;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  font-family: 'Roboto', sans-serif;
-  background: linear-gradient(135deg, #f5f5f5, #e8e8e8); /* Fondo con un sutil gradiente */
-}
-
-/* Encabezados */
-h1, h2 {
-  color: #333;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-h2 {
-  font-size: 24px; /* Tamaño mayor para el subtítulo */
-}
-
-/* Lista de predicciones */
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  background-color: #f7f7f7;
-  margin: 15px 0;
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid #e0e0e0;
+/* Contenedor principal para la página de resultados de predicción */
+.resultpredict-container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  font-size: 18px;
+  min-height: 100vh;
+  background-color: #e0f2f1; /* Fondo gris suave */
+  padding: 0;
+  font-family: 'Roboto Mono', monospace;
+}
+
+h1, h2 {
+  color: #00796b; /* Azulverdoso */
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+h2.predict-title {
+  font-size: 1.5rem;
+}
+
+/* Estilo para mostrar métricas */
+.resultpredict-container p {
   color: #333;
-  transition: background-color 0.3s, transform 0.2s; /* Efectos suaves */
-}
-
-li:hover {
-  background-color: #eef2f5;
-  transform: translateY(-2px); /* Efecto de hover */
-}
-
-li span {
-  font-weight: 600; /* Acentuamos el texto en los spans */
+  font-size: 1.1rem;
+  margin: 5px 0;
 }
 
 /* Tabla de resultados */
 table {
-  width: 100%;
+  width: 90%;
+  max-width: 1000px;
+  margin: 20px 0;
   border-collapse: collapse;
-  margin-top: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-th, td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-th {
-  background-color: #007BFF;
+table thead {
+  background-color: #00796b;
   color: white;
-  font-weight: bold;
 }
 
-tr:hover {
-  background-color: #f1f1f1; /* Efecto hover para las filas */
-}
-
-/* Tarjeta individual para cada modelo */
-.model-card {
-  background-color: #fff;
-  padding: 20px;
-  margin: 15px 0;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efectos suaves */
-}
-
-.model-card:hover {
-  transform: translateY(-5px); /* Efecto de hover en las tarjetas */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-/* Botón para regresar a Home */
-.button-home {
-  display: block;
-  width: 100%;
-  background-color: #007BFF;
-  color: white;
-  padding: 12px 25px;
-  margin-top: 30px;
+table th,
+table td {
+  padding: 12px 15px;
   text-align: center;
-  border: none;
-  border-radius: 8px;
-  font-size: 18px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  color: #333;
+  border-bottom: 1px solid #ddd;
 }
 
-.button-home:hover {
-  background-color: #0056b3;
-}
-
-/* Spinner para mostrar cuando los datos están cargando */
-.loading-spinner {
-  border: 16px solid #f3f3f3;
-  border-top: 16px solid #007BFF;
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  animation: spin 2s linear infinite;
-  margin: 20px auto;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+table tbody tr:hover {
+  background-color: #f1f1f1;
 }
 
 /* Paginación */
 .pagination {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin: 20px 0;
+  list-style: none;
+  padding: 0;
 }
 
-.pagination a {
-  background-color: #007BFF;
-  color: white;
-  padding: 10px 20px;
+.pagination li {
   margin: 0 5px;
+}
+
+.pagination li a {
+  color: #00796b;
+  padding: 8px 12px;
   text-decoration: none;
   border-radius: 5px;
+  border: 1px solid #00796b;
   transition: background-color 0.3s ease;
 }
 
-.pagination a:hover {
-  background-color: #0056b3;
+.pagination li a:hover {
+  background-color: #004d40;
+  color: #ffffff;
 }
 
-.pagination .active {
-  background-color: #0056b3;
-}
-/* Botón para regresar a Home */
-.button-home {
-  display: block;
-  width: 100%;
-  background-color: #007BFF;
+.pagination .active a {
+  background-color: #004d40;
   color: white;
-  padding: 10px 20px;
-  margin-top: 30px;
-  text-align: center;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
+  border-color: #004d40;
+}
+
+/* Botón para volver al inicio */
+.button-home {
+  margin: 20px 0;
+  padding: 12px 20px;
+  background-color: #00796b;
+  color: white;
   text-decoration: none;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
 }
 
 .button-home:hover {
-  background-color: #0056b3;
+  background-color: #004d40;
+}
+
+/* Pie de página */
+.footer {
+  margin-top: auto; /* Empuja el footer al final */
+  width: 100%;
+  background-color: #00796b;  /* Azulverdoso */
+  padding: 15px;
+  text-align: center;
+  font-size: 1rem;
+  color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+}
+
+
+.footer p {
+  margin: 0;
+  font-size: 1rem;
+  color: white; /* Asegura que los párrafos también tengan el color blanco */
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .resultpredict-container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2.predict-title {
+    font-size: 1.3rem;
+  }
+
+  table th,
+  table td {
+    font-size: 0.9rem;
+    padding: 8px 10px;
+  }
+
+  .button-home {
+    font-size: 1rem;
+  }
 }

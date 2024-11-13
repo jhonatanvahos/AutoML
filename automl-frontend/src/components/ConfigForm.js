@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate , useLocation} from 'react-router-dom'; 
 import { updateConfig, trainModels } from '../services/api';
+import LoadingScreen from './LoadingScreen';
 import '../styles/ConfigForm.css';
 
 function ConfigForm() {
@@ -100,6 +101,10 @@ function ConfigForm() {
   const navigate = useNavigate();
   const location = useLocation();
   const { columns } = location.state;
+  const [loadingStatus, setLoadingStatus] = useState({
+    message: 'Entrenamiento en proceso, por favor espere...',
+    progress: 0,
+  });
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -184,10 +189,19 @@ function ConfigForm() {
   };
 
   if (loading) {
-    return <div className="loading">Training in progress, please wait...</div>;
+    return <LoadingScreen message={loadingStatus.message} progress={loadingStatus.progress} />;
   }
 
   return (
+  <div className="form-container">
+    <header className="header">
+      <div className="logo-container">
+        <img src="logo.png" alt="PredictLab Logo" className="logo" />
+        <h1>PredictLab</h1>
+      </div>
+    </header>
+    
+    <h2 className="home-title">Parámetros para el entrenamiento</h2>
     <form onSubmit={handleSubmit}>
       {/* Sección para seleccionar columnas a eliminar */}
       <fieldset>
@@ -657,8 +671,15 @@ function ConfigForm() {
         </div>
       )}
 
-      <button type="submit">Guardar configuración y Entrenar modelos</button>
+      <button type="submit">Entrenar modelos</button>
     </form>
+
+    <footer className="footer">
+      <p>© 2024 PredictLab. Todos los derechos reservados.</p>
+      <p>by: Jhonatan Stick Gomez Vahos</p>
+      <p>Sebastian Saldarriaga Arias</p>
+    </footer>
+  </div>
   );
 }
 

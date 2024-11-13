@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { uploadDataset } from '../services/api';
 
-function UploadDatasetForm({ onSuccess }) {
+function UploadDatasetForm({ onSuccess, onError }) {
   const [file, setFile] = useState(null);
-  const [uploadMessage, setUploadMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -19,17 +19,20 @@ function UploadDatasetForm({ onSuccess }) {
     const formData = new FormData();
     formData.append("file", file);
 
+    setIsLoading(true); // Indicar que la carga está en progreso
+
     try {
       const response = await uploadDataset(formData);
-      setUploadMessage(response.message);
 
       if (response.message === "File uploaded successfully") {
-        // Pasamos el file_path y las columnas
+        // Pasar el file_path y las columnas a la función onSuccess
         onSuccess(response.file_path, response.columns);
       }
     } catch (error) {
       console.error("Error uploading file:", error);
-      setUploadMessage("Error uploading file");
+      onError("Error uploading file"); // Pasar el error al componente padre
+    } finally {
+      setIsLoading(false); // Finaliza el estado de carga
     }
   };
 
@@ -40,9 +43,10 @@ function UploadDatasetForm({ onSuccess }) {
           Select dataset (CSV or XLSX):
           <input type="file" onChange={handleFileChange} accept=".csv,.xlsx" />
         </label>
-        <button type="submit">Upload</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Uploading..." : "Upload"}
+        </button>
       </form>
-      {uploadMessage && <p>{uploadMessage}</p>}
     </div>
   );
 }

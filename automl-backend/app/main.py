@@ -2,15 +2,15 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from uuid import uuid4
-from pydantic import BaseModel
-from typing import List, Dict, Union
+from sse_starlette import EventSourceResponse
 import json
 import os
 import logging
 from pathlib import Path
 import pandas as pd
 import shutil
+import asyncio
+import time
 
 # Imports de otros módulos
 from app.train import TrainModel
@@ -42,6 +42,7 @@ config_path = Path('app/config.json')
 
 project_directory = None
 config_project = "config_project.json"
+status_file = Path("training_status.json")
 
 # Funciones auxiliares
 def create_project_directory(project_name: str) -> str:
@@ -145,6 +146,47 @@ async def train_models():
     except Exception as e:
         logging.error(f"Error: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error training model: {str(e)}")
+"""
+@app.get("/train/status")
+async def get_training_status():
+    if status_file.exists():
+        with status_file.open("r") as f:
+            return json.load(f)
+    else:
+        raise HTTPException(status_code=404, detail="Training status not found")
+"""
+# Función que lee el archivo y lo devuelve como un JSON
+def get_training_status_from_file():
+    if status_file.exists():
+        with status_file.open("r") as f:
+            return json.load(f)
+    else:
+        raise HTTPException(status_code=404, detail="Training status not found")
+
+# Función que emite el estado del entrenamiento usando SSE
+async def training_status_event():
+    while True:
+        try:
+            # Obtener el estado de entrenamiento desde el archivo
+            status_data = get_training_status_from_file()
+
+            # Enviar los datos correctamente como un JSON, sin 'data:'
+            yield f"{json.dumps(status_data)}\n\n"  # Asegúrate de enviar 'data:'
+
+            # Esperar 1 segundo entre cada envío
+            await asyncio.sleep(1)
+        except asyncio.CancelledError:
+            # Manejar el caso en el que el cliente se desconecta (al cancelar la conexión)
+            print("Cliente desconectado. Cerrando la conexión SSE.")
+            break
+        except Exception as e:
+            # Si ocurre un error, lo registramos y continuamos
+            print(f"Error al enviar los datos: {e}")
+            yield f"data: {json.dumps({'error': str(e)})}\n\n"
+
+@app.get("/train/status")
+async def train_status():
+    return EventSourceResponse(training_status_event())
 
 @app.post("/save-model-selection")
 async def save_model_selection(selection: ModelSelection):

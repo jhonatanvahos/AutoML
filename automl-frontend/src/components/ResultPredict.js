@@ -24,8 +24,15 @@ function ResultPredict() {
   const currentResults = result.predictions.slice(indexOfFirstResult, indexOfLastResult);
 
   return (
-    <div>
-      <h2>Prediction Results</h2>
+  <div className="resultpredict-container">
+  <header className="header">
+    <div className="logo-container">
+      <img src="logo.png" alt="PredictLab Logo" className="logo" />
+      <h1>PredictLab</h1>
+    </div>
+  </header>
+
+    <h2 className="predict-title">Resultados de la predicción</h2>
 
       {/* Mostrar métricas dinámicamente */}
       <div>
@@ -92,6 +99,13 @@ function ResultPredict() {
       />
 
       <Link to="/" className="button-home">Return to Home</Link>
+      
+      <footer className="footer">
+      <p>© 2024 PredictLab. Todos los derechos reservados.</p>
+      <p>by: Jhonatan Stick Gomez Vahos</p>
+      <p>Sebastian Saldarriaga Arias</p>
+      </footer>
+
     </div>
   );
 }

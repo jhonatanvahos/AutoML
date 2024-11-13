@@ -63,3 +63,14 @@ export const predictModels = async (project, file) => {
     throw new Error('Error predicting model:', error);
   }
 };
+
+// Función para obtener el estado de entrenamiento desde el backend
+export const fetchTrainingStatus = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/train/status`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching training status:", error);
+    throw error;
+  }
+};
