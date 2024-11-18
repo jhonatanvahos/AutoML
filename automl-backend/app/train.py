@@ -1,4 +1,5 @@
 import json
+import sys
 import logging
 from pathlib import Path
 from app.src.RegressionModule import GridSearchModelRegression
@@ -28,7 +29,7 @@ class TrainModel:
     def create_project_directories(self, config):
         """Crea los directorios necesarios para el proyecto."""
         project_path = Path(f'projects/{config.get("project_name")}')
-        path_predict = project_path / 'predict'
+        path_predict = project_path / 'predict.csv'
         path_models = project_path / 'models'
         path_transforms = project_path / 'transforms'
 
@@ -64,7 +65,16 @@ class TrainModel:
         # Guardar transformadores
         preprocessor.save_transformers(path_transforms)
         X, y = preprocessor.get_processed_dataframe()
-        
+        print("Diccionario actualizado: ", config)
+        sys.stdout.flush()
+
+        try:
+            with open(self.config_file, "w") as file:
+                json.dump(config, file, indent=4)  # Guarda con formato legible
+            print(f"Configuración guardada en {self.config_file}.")
+        except Exception as e:
+            print(f"Error al guardar la configuración: {e}")
+
         # Selección del modelo
         model_type = config.get("model_type")
         if model_type == 'Regression':
@@ -77,3 +87,12 @@ class TrainModel:
 
         logging.info("Entrenamiento completado con éxito.")
         return results
+
+    def save_config_to_file(self, file_path="config.json"):
+        """Guarda el diccionario de configuración en un archivo JSON."""
+        try:
+            with open(file_path, "w") as file:
+                json.dump(self.config_file, file, indent=4)  # Guarda con formato legible
+            print(f"Configuración guardada en {file_path}.")
+        except Exception as e:
+            print(f"Error al guardar la configuración: {e}")

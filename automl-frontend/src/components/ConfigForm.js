@@ -44,7 +44,6 @@ function ConfigForm() {
       SVM: false,
       KNN: false,
       GaussianNB: false,
-      MultinomialNB: false,
       BernoulliNB: true
     },
     params_regression: {
@@ -91,7 +90,6 @@ function ConfigForm() {
         metric: ["euclidean", "manhattan", "minkowski"],
         p: [1, 2]},
       GaussianNB:{},
-      MultinomialNB:{},
       BernoulliNB:{}
     },
     advanced_options: false

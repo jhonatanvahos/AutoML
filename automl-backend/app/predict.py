@@ -6,8 +6,9 @@ from app.src.ClassificationModule import GridSearchModelClassification
 from app.src.PreprocessingModule import DataPreprocessor
 
 class PredictModel:
-    def __init__(self, config_file):
+    def __init__(self, config_file, file_name):
         self.config_file = Path(config_file)
+        self.file_name = file_name
 
     def load_params(self):
         """Carga los parámetros del archivo de configuración JSON."""
@@ -28,24 +29,49 @@ class PredictModel:
     def create_project_directories(self, config):
         """Crea las rutas necesarias para el proyecto y devuelve las rutas de los datos y modelos."""
         project_path = Path(f'projects/{config.get("project_name")}')
-        path_predict = project_path / 'predict'
         path_models = project_path / 'models'
         path_transforms = project_path / 'transforms'
 
+        if self.file_name == "predict":
+            path_predict = project_path / 'predict.csv'
+        else:
+            path_predict = Path(self.file_name)
+
         return path_predict, path_models, path_transforms / 'transform'
 
-    def load_and_transform_data(self, preprocessor, path_predict, target, path_transforms):
+    def load_and_transform_data(self, preprocessor, path_predict, target, path_transforms, trained_features):
         """Carga y transforma los datos usando los transformadores ya entrenados."""
         logging.info("Cargando datos para predicción.")
-        X, y = preprocessor.load_dataset_prediction(path_predict, target)
-        X_origin = X.copy()
-        y_origin = y.copy()
+        logging.info(f"path datos: {path_predict}")
+        logging.info(f"target: {target}")
+        df = preprocessor.load_dataset_prediction(path_predict)
+        logging.info(f"tamaño de los datos {df.shape}")
+        
+        if self.file_name == "predict":
+            y = df[target]
+            X = df.drop(columns=[target])
+    
+            X_origin = X.copy()
+            y_origin = y.copy()
 
-        logging.info("Cargando transformadores.")
-        transformers = preprocessor.load_transformers(path_transforms)
+            logging.info("Cargando transformadores.")
+            transformers = preprocessor.load_transformers(path_transforms)
 
-        logging.info("Aplicando transformadores.")
-        X, y = preprocessor.apply_transformers(transformers, X, y)
+            logging.info("Aplicando transformadores.")
+            X = preprocessor.apply_transformers(transformers, X, trained_features)
+        
+        else:
+            X = df    
+            y = None
+            X_origin = X.copy()
+            y_origin = None
+
+            logging.info("Cargando transformadores.")
+            transformers = preprocessor.load_transformers(path_transforms)
+
+            logging.info("Aplicando transformadores.")
+            X = preprocessor.apply_transformers(transformers, X, trained_features)
+       
         return X_origin, y_origin, X, y, transformers
 
     def run(self):
@@ -66,27 +92,38 @@ class PredictModel:
         model_type = config.get("model_type")
         selected_model = config.get("selected_model") 
         target = config.get("target_column")
+        trained_features = config.get("trained_features")
         path_models = path_models / selected_model
 
         if model_type == 'Regression':
             # Cargar datos y realizar predicciones para regresión
-            X_origin, y_origin, X, y, tranforms = self.load_and_transform_data(preprocessor, path_predict, target, path_transforms)
+            X_origin, y_origin, X, y, tranforms = self.load_and_transform_data(preprocessor, path_predict, target, path_transforms, trained_features)
 
             # Cargar modelo y realizar predicción
             logging.info("Cargando el modelo de regresión.")
             model = grid_search_regression.load_model(path_models)
-            logging.info("Realizando predicciones.")
-            result = grid_search_regression.prediction(X_origin, y_origin, X, y, tranforms, model)
+            
+            if self.file_name == "predict":
+                logging.info("Realizando predicciones.")
+                result = grid_search_regression.prediction(X_origin, y_origin, X, y, tranforms, model)
+            else:
+                logging.info("Realizando predicciones.")
+                result = grid_search_regression.predict_real_data(X_origin, X, tranforms, model)
 
         elif model_type == 'Classification':
             # Cargar datos y realizar predicciones para clasificación
-            X_origin, y_origin, X, y, tranforms= self.load_and_transform_data(preprocessor, path_predict, target, path_transforms)
+            X_origin, y_origin, X, y, tranforms= self.load_and_transform_data(preprocessor, path_predict, target, path_transforms, trained_features)
 
             # Cargar modelo y realizar predicción
             logging.info("Cargando el modelo de clasificación.")
             model = grid_search_classification.load_model(path_models)
-            logging.info("Realizando predicciones.")
-            result = grid_search_classification.prediction(X_origin, y_origin, X, y, model)
+            
+            if self.file_name == "predict":
+                logging.info("Realizando predicciones.")
+                result = grid_search_classification.prediction(X_origin, y_origin, X, y, model)
+            else:
+                logging.info("Realizando predicciones.")
+                result = grid_search_classification.predict_real_data(X_origin, X, model)
 
         else:
             logging.error(f"Tipo de modelo '{model_type}' no reconocido.")

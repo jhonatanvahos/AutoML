@@ -1,7 +1,7 @@
 {
-    "project_name": "asdcaxz",
-    "target_column": "y",
-    "dataset_path": "projects/asdcaxz/bank-full.csv",
+    "project_name": "Regre",
+    "target_column": "charges",
+    "dataset_path": "projects/Regre/insurance.csv",
     "split": 0.1,
     "missing_threshold": 0.1,
     "numeric_imputer": "mean",
@@ -14,11 +14,11 @@
     "balance_method": "over_sampling",
     "select_sampler": "SMOTE",
     "balance_threshold": 0.7,
-    "k_features": 0.5,
+    "k_features": 0.9,
     "feature_selector_method": "select_k_best",
-    "pca_n_components": 0.9,
+    "pca_n_components": 0.95,
     "delete_columns": [],
-    "model_type": "Classification",
+    "model_type": "Regression",
     "function": "training",
     "n_jobs": -1,
     "cv": 5,
@@ -28,8 +28,8 @@
     "model_competition": "Grid_Search",
     "models_regression": {
         "linearRegression": true,
-        "ridge": false,
-        "random_forest": false,
+        "ridge": true,
+        "random_forest": true,
         "ada_boost": false,
         "gradient_boosting": false,
         "lightGBM": false
@@ -38,9 +38,8 @@
         "logisticRegression": false,
         "random_forest": false,
         "SVM": false,
-        "KNN": true,
+        "KNN": false,
         "GaussianNB": false,
-        "MultinomialNB": false,
         "BernoulliNB": true
     },
     "params_regression": {
@@ -234,8 +233,15 @@
             ]
         },
         "GaussianNB": {},
-        "MultinomialNB": {},
         "BernoulliNB": {}
     },
-    "advanced_options": false
+    "advanced_options": false,
+    "trained_features": [
+        "age",
+        "sex",
+        "bmi",
+        "children",
+        "smoker",
+        "region"
+    ]
 }

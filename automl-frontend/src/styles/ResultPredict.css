@@ -7,6 +7,7 @@
   background-color: #e0f2f1; /* Fondo gris suave */
   padding: 0;
   font-family: 'Roboto Mono', monospace;
+  padding-bottom: 65px;
 }
 
 h1, h2 {
@@ -27,11 +28,20 @@ h2.predict-title {
   margin: 5px 0;
 }
 
+/* Contenedor principal para la tabla */
+.table-container {
+  width: 100%;
+  overflow-x: auto; /* Habilita el desplazamiento horizontal */
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
 /* Tabla de resultados */
 table {
-  width: 90%;
-  max-width: 1000px;
-  margin: 20px 0;
+  min-width: 600px; /* Ancho mínimo para la tabla */
+  max-width: 100%; /* Limita el ancho para que se ajuste al contenedor */
+  margin: 0 auto; /* Centra la tabla dentro del contenedor */
   border-collapse: collapse;
   background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -39,18 +49,29 @@ table {
   overflow: hidden;
 }
 
+/* Estilo para la cabecera de la tabla */
 table thead {
   background-color: #00796b;
   color: white;
 }
 
-table th,
-table td {
-  padding: 12px 15px;
+/* Ajuste del padding y tamaño de texto en las celdas */
+table th {
+  padding: 8px 10px;
   text-align: center;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  color: #f1f1f1;
+  white-space: nowrap;
+  border-bottom: 1px solid #ddd;
+}
+
+table td {
+  padding: 8px 10px;
+  text-align: center;
+  font-size: 0.9rem;
   color: #333;
   border-bottom: 1px solid #ddd;
+  white-space: nowrap; /* Evita que el texto se desborde */
 }
 
 table tbody tr:hover {

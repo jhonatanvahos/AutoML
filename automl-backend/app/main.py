@@ -235,12 +235,14 @@ async def predict_models(request: PredictRequest):
         project_name = request.project
         file_name = request.file
 
+        logging.info(f"Proyecto cargado: {project_name}")
+        logging.info(f"Nombre de archivo cargado: {file_name}")
         # Configura la ruta del proyecto
         project_path = os.path.join(PROJECTS_DIRECTORY, project_name)
         config_file = os.path.join(project_path, config_project)
   
         # Inicializa el objeto de predicción
-        predictor = PredictModel(config_file)
+        predictor = PredictModel(config_file, file_name)
         
         # Ejecutar predicción (puedes ajustar esta parte según las necesidades de tu lógica)
         result = predictor.run()

@@ -198,3 +198,64 @@ class GridSearchModelRegression:
         result_predict = convert_to_serializable(result_predict)
 
         return result_predict
+    
+    def predict_real_data(self, X_origin, X, transformers, model):
+        """
+        Realiza predicciones en datos reales (sin variable objetivo).
+        
+        Args:
+            X_origin (pd.DataFrame): Datos originales (sin la columna objetivo).
+            model: Modelo previamente entrenado.
+        
+        Returns:
+            dict: Resultados de las predicciones incluyendo los datos originales y las predicciones.
+        """
+        print("\nRealizando predicciones en datos reales:")
+        sys.stdout.flush()
+
+        # Si se aplicó el escalamiento de datos de y invertir el transformador para obtener el valor real.
+        if 'scaler_y' in transformers:
+            transformer = transformers['scaler_y']['scaler']
+            print(transformer)
+            result = model.predict(X)
+            print(result)
+            result_real = transformer.inverse_transform(result.reshape(-1, 1))
+        else:
+            result = model.predict(X)
+            result_real = result
+        
+        # Crear DataFrame con resultados
+        df_result = pd.DataFrame({'prediccion': result_real.ravel()})
+        
+        # Incluir las variables originales (X_origin)
+        for idx, col in enumerate(X_origin.columns):
+            df_result[col] = X_origin.iloc[:, idx].values
+
+        print("Predicciones completadas.")
+        sys.stdout.flush()
+        print(df_result)
+        sys.stdout.flush()
+
+        # Construir el diccionario con los resultados
+        result_predict = {
+            "data" : "real",
+            "model_type": "regression",  
+            "total_predictions": df_result.shape[0],
+            "predictions": df_result.to_dict(orient="records")  # Convertir el DataFrame a lista de diccionarios
+        }
+
+        # Convertir a tipos serializables
+        def convert_to_serializable(obj):
+            if isinstance(obj, (np.int64, np.int32)):
+                return int(obj)
+            elif isinstance(obj, (np.float64, np.float32)):
+                return float(obj)
+            elif isinstance(obj, list):
+                return [convert_to_serializable(item) for item in obj]
+            elif isinstance(obj, dict):
+                return {key: convert_to_serializable(value) for key, value in obj.items()}
+            return obj
+
+        result_predict = convert_to_serializable(result_predict)
+
+        return result_predict

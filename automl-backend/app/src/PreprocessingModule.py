@@ -6,6 +6,7 @@ from scipy.stats import zscore
 # Sistema
 import sys
 import os 
+import json
 
 # Imputacion
 from sklearn.impute import SimpleImputer
@@ -206,6 +207,11 @@ class DataPreprocessor:
             # Asignación de 'y' varialbe objetivo y 'X' variables predictora 
             self.y = self.df[target_column]
             self.X = self.df.drop(columns=[target_column])
+            
+            print("Columnas de entranamiento a guardar: ", list(self.X.columns))
+            sys.stdout.flush()
+            # Actualizando el diccionario self.config
+            self.config["trained_features"] = list(self.X.columns)
 
             # Identificar variables numéricas y categóricas
             self.numeric_columns = self.X.select_dtypes(include=['number','float64','float64','int32','int64']).columns
@@ -676,7 +682,7 @@ class DataPreprocessor:
             print(f"Error al guardar las transformaciones: {e}")
 
     # Función para cargar los datos y hacer depuración. 
-    def load_dataset_prediction(self, path_file, target):
+    def load_dataset_prediction(self, path_file):
         print(path_file)
         print("---------------------------------------------------")
         sys.stdout.flush()
@@ -684,17 +690,49 @@ class DataPreprocessor:
         sys.stdout.flush()
         print("---------------------------------------------------")
         sys.stdout.flush()
+        
+        df  = pd.DataFrame
         try:
-            df = pd.read_csv(path_file)
-            # Asignación de 'y' varialbe objetivo y 'X' variables predictora 
-            y = df[target]
-            X = df.drop(columns=[target])
+            # Obtener la extensión del archivo
+            file_extension = os.path.splitext(path_file)[1].lower()
+            try:
+                # Si el archivo es un CSV, probar con diferentes separadores
+                if file_extension == '.csv':
+                    separators = [",", ";", "|"]
+                    for sep in separators:
+                        try:
+                            # Leer las primeras filas para probar el separador
+                            temp_df = pd.read_csv(path_file, sep=sep, nrows=5)
+                            
+                            # Validar que el archivo está correctamente separado (más de 1 columna)
+                            if len(temp_df.columns) > 1:
+                                df = pd.read_csv(path_file, sep=sep)
+                                print(f"Archivo CSV cargado correctamente con separador '{sep}'")
+                                break  # Si se carga correctamente, salir del bucle
+                            else:
+                                print(f"Separador '{sep}' no parece ser el correcto. Intentando con otro.")
+                        
+                        except pd.errors.ParserError:
+                            print(f"Separador '{sep}' no funcionó, probando con otro.")
+                    else:
+                        raise ValueError("Ninguno de los separadores funcionó para el archivo CSV.")
+                
+                # Si el archivo es un Excel
+                elif file_extension in ['.xls', '.xlsx']:
+                    df = pd.read_excel(path_file)
+                    print("Archivo Excel cargado correctamente.")
+                
+                # Si el archivo no es ni CSV ni Excel, lanzar un error
+                else:
+                    raise ValueError(f"Tipo de archivo no soportado: {file_extension}")
 
-            return X, y
-
+            except Exception as e:
+                print(f"Error al cargar el archivo: {e}")
         except Exception as e:
             print("Error cargando el dataset:", e)
-
+        
+        return df
+    
     # Función para cargar los transformadores.
     def load_transformers(self, filename):
         print("Cargando transformadores: ")
@@ -709,19 +747,43 @@ class DataPreprocessor:
             print(f"Error al cargar las transformacioens: {e}")
 
     # Función para aplicar los transformadores a los datos a predecir
-    def apply_transformers(self, transformers, X, y):
+    def apply_transformers(self, transformers, X, trained_features):
+        """
+        Aplicar los transformadores a los datos a predecir y asegurar compatibilidad con las columnas entrenadas.
+        
+        :param transformers: Diccionario con los transformadores ajustados.
+        :param X: DataFrame con los datos a predecir.
+        :param trained_features: Lista de características usadas durante el entrenamiento.
+        :return: DataFrame transformado.
+        """
         print("Aplicando transformadores: ")
         sys.stdout.flush()
-        # Obtener columnas numericas y categoricas.
+        
+        # Asegurar que las columnas coincidan con las del entrenamiento
+        missing_columns = [col for col in trained_features if col not in X.columns]
+        extra_columns = [col for col in X.columns if col not in trained_features]
+        
+        # Eliminar columnas adicionales no usadas en el entrenamiento
+        if extra_columns:
+            print(f"Advertencia: Eliminando columnas no entrenadas: {extra_columns}")
+            X = X.drop(columns=extra_columns)
+        
+        # Agregar columnas faltantes con valores nulos o cero
+        if missing_columns:
+            print(f"Advertencia: Agregando columnas faltantes con valores cero: {missing_columns}")
+            for col in missing_columns:
+                X[col] = 0  # Usa 0 como valor predeterminado; ajusta según las necesidades del modelo.
+        
+        # Obtener columnas numéricas y categóricas
         numeric_columns = X.select_dtypes(include=['number']).columns
         categorical_columns = X.select_dtypes(include=['object', 'category']).columns
 
-        # Revisar los transformadores, de acuerdo a las llaves aplicar sobre los datos
+        # Aplicar transformadores a los datos
         for name, transformer in transformers.items():
             if 'numeric_imputer' in name:
                 X[numeric_columns] = transformers['numeric_imputer'].transform(X[numeric_columns])
             elif 'categorical_imputer' in name:
-               X[categorical_columns] = transformers['categorical_imputer'].transform(X[categorical_columns])
+                X[categorical_columns] = transformers['categorical_imputer'].transform(X[categorical_columns])
             elif name == 'scaler_X':
                 X[numeric_columns] = transformer.transform(X[numeric_columns])
             elif name == 'one_hot_encoder':
@@ -731,9 +793,25 @@ class DataPreprocessor:
 
                 encoded_features = transformer.transform(X[categorical_columns])
                 encoded_df = pd.DataFrame(encoded_features.toarray(), columns=encoded_feature_names)
+                
+                # Reemplazar las columnas categóricas con las codificadas
                 X.drop(columns=categorical_columns, inplace=True)
                 X = pd.concat([X, encoded_df], axis=1)
+            
             elif name == 'feature_selector':
-                X = X[transformers['feature_selector']]
+                # Validar las columnas para el selector de características
+                missing_selector_columns = [
+                    col for col in transformers['feature_selector'] if col not in X.columns
+                ]
 
-        return X, y
+                if missing_selector_columns:
+                    print(f"Advertencia: Agregando columnas faltantes para el selector de características: {missing_selector_columns}")
+                    for col in missing_selector_columns:
+                        X[col] = 0  # Agrega las columnas faltantes con valores cero.
+
+                print(X[list(transformers['feature_selector'])])
+                print("Aqui va bien")
+                # Reordenar columnas para que coincidan con el orden del selector
+                X = X[list(transformers['feature_selector'])]
+                print("Aqui va bien x 2")
+        return X

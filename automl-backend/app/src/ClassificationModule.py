@@ -190,7 +190,7 @@ class GridSearchModelClassification:
 
         # Realizar predicción
         result = model.predict(X)
-        proba = model.predict_proba(X)
+        #proba = model.predict_proba(X)
 
         # Transformar y (asegurarse de que los valores estén en formato numérico)
         y = [0 if label == 'no' else 1 for label in y]
@@ -209,9 +209,7 @@ class GridSearchModelClassification:
 
         # Crear DataFrame con resultados
         df_result = pd.DataFrame({'y': y, 'prediccion': result.ravel()})
-        for i in range(proba.shape[1]):
-            df_result[f'probability_class_{i}'] = proba[:, i]
-
+        
         # Incluir las variables originales (X_origin)
         for idx, col in enumerate(X_origin.columns):
             df_result[col] = X_origin.iloc[:, idx].values
@@ -231,6 +229,7 @@ class GridSearchModelClassification:
 
         # Construir el diccionario con los resultados
         result_predict = {
+            "data" : "test",
             "model_type": "classification",
             "accuracy": ac,
             "precision": pc,
@@ -239,6 +238,62 @@ class GridSearchModelClassification:
             "correct_predictions": count_true,
             "incorrect_predictions": count_false,
             "prediction_accuracy": count_true / df_result.shape[0],
+            "predictions": df_result.to_dict(orient="records")  # Convertir el DataFrame a lista de diccionarios
+        }
+
+        # Convertir a tipos serializables
+        def convert_to_serializable(obj):
+            if isinstance(obj, (np.int64, np.int32)):
+                return int(obj)
+            elif isinstance(obj, (np.float64, np.float32)):
+                return float(obj)
+            elif isinstance(obj, list):
+                return [convert_to_serializable(item) for item in obj]
+            elif isinstance(obj, dict):
+                return {key: convert_to_serializable(value) for key, value in obj.items()}
+            return obj
+
+        result_predict = convert_to_serializable(result_predict)
+
+        return result_predict
+    
+    def predict_real_data(self, X_origin, X, model):
+        """
+        Realiza predicciones en datos reales (sin variable objetivo).
+        
+        Args:
+            X_origin (pd.DataFrame): Datos originales (sin la columna objetivo).
+            model: Modelo previamente entrenado.
+        
+        Returns:
+            dict: Resultados de las predicciones incluyendo los datos originales y las predicciones.
+        """
+        print("\nRealizando predicciones en datos reales:")
+        sys.stdout.flush()
+
+        # Realizar predicción
+        predictions = model.predict(X)
+        
+        # Si el modelo tiene probabilidad, puedes agregarlo opcionalmente
+        # probabilities = model.predict_proba(X_origin)
+
+        # Crear DataFrame con resultados
+        df_result = pd.DataFrame({'prediccion': predictions.ravel()})
+        
+        # Incluir las variables originales (X_origin)
+        for idx, col in enumerate(X_origin.columns):
+            df_result[col] = X_origin.iloc[:, idx].values
+
+        print("Predicciones completadas.")
+        sys.stdout.flush()
+        print(df_result)
+        sys.stdout.flush()
+
+        # Construir el diccionario con los resultados
+        result_predict = {
+            "data" : "real",
+            "model_type": "classification",  # Cambia según el tipo de modelo
+            "total_predictions": df_result.shape[0],
             "predictions": df_result.to_dict(orient="records")  # Convertir el DataFrame a lista de diccionarios
         }
 
