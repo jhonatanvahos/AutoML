@@ -1,7 +1,7 @@
 {
-    "project_name": "Regre",
+    "project_name": "Regresi\u00f3n",
     "target_column": "charges",
-    "dataset_path": "projects/Regre/insurance.csv",
+    "dataset_path": "projects/Regresi\u00f3n/insurance.csv",
     "split": 0.1,
     "missing_threshold": 0.1,
     "numeric_imputer": "mean",
@@ -14,7 +14,7 @@
     "balance_method": "over_sampling",
     "select_sampler": "SMOTE",
     "balance_threshold": 0.7,
-    "k_features": 0.9,
+    "k_features": 0.8,
     "feature_selector_method": "select_k_best",
     "pca_n_components": 0.95,
     "delete_columns": [],
@@ -30,8 +30,8 @@
         "linearRegression": true,
         "ridge": true,
         "random_forest": true,
-        "ada_boost": false,
-        "gradient_boosting": false,
+        "ada_boost": true,
+        "gradient_boosting": true,
         "lightGBM": false
     },
     "models_classification": {

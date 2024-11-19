@@ -182,6 +182,10 @@ class DataPreprocessor:
             sys.stdout.flush()
             self.df.drop(columns = self.delete_columns, inplace = True)
             
+            print("Estandarizar conlumnas categoricas en minusculas")
+            sys.stdout.flush()
+            self.df = self.df.apply(lambda x: x.str.lower() if x.dtype == 'object' else x)
+            
             print("Eliminar conlumnas con valores unicos, todos los valores diferentes y duplicados: ")
             sys.stdout.flush()
             # Columnas con un único valor.
@@ -731,6 +735,10 @@ class DataPreprocessor:
         except Exception as e:
             print("Error cargando el dataset:", e)
         
+        print("Estandarizar conlumnas categoricas en minusculas")
+        sys.stdout.flush()
+        df = df.apply(lambda x: x.str.lower() if x.dtype == 'object' else x)
+
         return df
     
     # Función para cargar los transformadores.

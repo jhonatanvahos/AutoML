@@ -1,0 +1,88 @@
+/* Contenedor principal */
+.train-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #e0f2f1;
+    padding: 0;
+    font-family: 'Roboto Mono', monospace;
+    padding-bottom: 80px;
+  }
+  
+  /* Tabla de datos */
+  .data-table {
+    width: 90%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .data-table th, .data-table td {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .data-table th {
+    background-color: #00796b;
+    color: #ffffff;
+    font-weight: bold;
+  }
+  
+  .data-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .data-table tr:hover {
+    background-color: #d0f0e0;
+  }
+  
+  /* Botón de Continuar */
+  .continue-button {
+    display: block;
+    margin: 30px auto;
+    background-color: #00796b;
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .continue-button:hover {
+    background-color: #005d54;
+  }
+  
+  /* Header y Footer */
+  .header, .footer {
+    width: 100%;
+    background-color: #00796b;
+    color: #ffffff;
+    text-align: center;
+    padding: 15px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .logo {
+    width: 40px;
+    height: auto;
+    margin-right: 10px;
+  }
+  
+  .train-title {
+    font-size: 2.2rem;
+    color: #00796b;
+    margin: 30px 0;
+    font-weight: 700;
+  }
+  

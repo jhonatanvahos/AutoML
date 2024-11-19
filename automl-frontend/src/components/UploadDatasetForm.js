@@ -12,7 +12,7 @@ function UploadDatasetForm({ onSuccess, onError }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!file) {
-      alert("Please select a file first!");
+      alert("Por favor seleccione un archivo primero!");
       return;
     }
 
@@ -29,8 +29,8 @@ function UploadDatasetForm({ onSuccess, onError }) {
         onSuccess(response.file_path, response.columns);
       }
     } catch (error) {
-      console.error("Error uploading file:", error);
-      onError("Error uploading file"); // Pasar el error al componente padre
+      console.error("Erro cargando el archivo:", error);
+      onError("Error cargando el archivo"); // Pasar el error al componente padre
     } finally {
       setIsLoading(false); // Finaliza el estado de carga
     }
@@ -40,11 +40,11 @@ function UploadDatasetForm({ onSuccess, onError }) {
     <div>
       <form onSubmit={handleSubmit}>
         <label>
-          Select dataset (CSV or XLSX):
+          Seleccione los datos en formato (CSV o XLSX):
           <input type="file" onChange={handleFileChange} accept=".csv,.xlsx" />
         </label>
         <button type="submit" disabled={isLoading}>
-          {isLoading ? "Uploading..." : "Upload"}
+          {isLoading ? "Cargando..." : "Cargar"}
         </button>
       </form>
     </div>

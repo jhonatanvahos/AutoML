@@ -199,12 +199,15 @@ class GridSearchModelClassification:
         ac = accuracy_score(y, result)
         pc = precision_score(y, result)
         f1 = f1_score(y, result)
+        cm = confusion_matrix(y, result)
 
         print("Accuracy: ", ac)
         sys.stdout.flush()
         print("Precision: ", pc)
         sys.stdout.flush()
         print("F1_Score: ", f1)
+        sys.stdout.flush()
+        print("Matriz de confusion: ", cm.tolist())
         sys.stdout.flush()
 
         # Crear DataFrame con resultados
@@ -238,6 +241,9 @@ class GridSearchModelClassification:
             "correct_predictions": count_true,
             "incorrect_predictions": count_false,
             "prediction_accuracy": count_true / df_result.shape[0],
+            "confusion_matrix": cm.tolist(),  # Matriz de confusión como lista para JSON
+            "actual_values": y,  # Valores reales
+            "predicted_values": result.tolist(),  # Valores predichos
             "predictions": df_result.to_dict(orient="records")  # Convertir el DataFrame a lista de diccionarios
         }
 

@@ -175,11 +175,14 @@ class GridSearchModelRegression:
 
         # Construir el diccionario con los resultados
         result_predict = {
+            "data" : "test",
             "model_type" : "regression",
             "Error cuadrático medio": mse,
             "Error absoluto medio": mae,
             "R2": r2,
             "total_predictions": df_result.shape[0],
+            "actual_values": y.tolist(),  # Valores reales
+            "predicted_values": result_real.ravel().tolist(),  # Valores predichos
             "predictions": df_result.to_dict(orient="records")  # Convertir el DataFrame a lista de diccionarios
         }
 

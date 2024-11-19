@@ -68,7 +68,7 @@ function Predict() {
   };
 
   const handleFileUploadSuccess = (filePath, columns) => {
-    alert(`Archivo subido exitosamente: ${filePath}`);
+    alert(`Archivo cargado exitosamente: ${filePath}`);
     setUploadedFilePath(filePath);
   };
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
+import Plot from 'react-plotly.js';
 import '../styles/ResultPredict.css';
 
 function ResultPredict() {
@@ -9,6 +10,7 @@ function ResultPredict() {
 
   // Verifica si es clasificación o regresión
   const isClassification = result.model_type === "classification";
+  const isTest = result.data === "test";
 
   // Lógica de paginación
   const [currentPage, setCurrentPage] = useState(0);
@@ -18,39 +20,17 @@ function ResultPredict() {
     setCurrentPage(event.selected);
   };
 
-  // Calcular los resultados a mostrar para la página actual
   const indexOfLastResult = (currentPage + 1) * resultsPerPage;
   const indexOfFirstResult = indexOfLastResult - resultsPerPage;
   const currentResults = result.predictions.slice(indexOfFirstResult, indexOfLastResult);
 
-  // Función para generar el CSV
   const downloadCSV = () => {
-    const headers = Object.keys(result.predictions[0]).filter((key) => key !== 'match'); // Excluye 'match' si no es necesario
-
-    const rows = result.predictions.map((prediction) => 
-      headers.map((header) => {
-        // Asegura que todos los valores, incluso los 0, sean incluidos
-        let value = prediction[header] === undefined || prediction[header] === null ? '' : prediction[header];
-
-        // Si es un valor numérico, elimina los separadores de miles (si es que hay)
-        if (typeof value === 'number') {
-          value = value.toFixed(2);  // Asegura que siempre tenga dos decimales, ajusta según lo necesites
-        } else if (typeof value === 'string') {
-          // Reemplaza comas por puntos si es necesario para evitar problemas con el CSV
-          value = value.replace(/,/g, '');  // Elimina cualquier coma en los números
-        }
-
-        return value;
-      })
+    const headers = Object.keys(result.predictions[0]).filter((key) => key !== 'match');
+    const rows = result.predictions.map((prediction) =>
+      headers.map((header) => prediction[header] ?? '')
     );
 
-    // Genera el contenido del CSV
-    const csvContent = [
-      headers.join(','), // Encabezados
-      ...rows.map((row) => row.join(',')) // Filas
-    ].join('\n');
-
-    // Crear el archivo blob y disparar la descarga
+    const csvContent = [headers.join(','), ...rows.map((row) => row.join(','))].join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
 
@@ -61,6 +41,78 @@ function ResultPredict() {
     link.click();
     document.body.removeChild(link);
   };
+
+  // Datos para el gráfico de regresión
+  const regressionData = {
+    labels: result.predictions.map((_, idx) => idx + 1),
+    datasets: [
+      {
+        label: 'Valores reales',
+        data: result.actual_values,
+        borderColor: 'rgba(75,192,192,1)',
+        borderWidth: 1,
+        fill: false,
+      },
+      {
+        label: 'Valores predichos',
+        data: result.predicted_values,
+        borderColor: 'rgba(255,99,132,1)',
+        borderWidth: 1,
+        fill: false,
+      },
+    ],
+  };
+
+  // Comprobar si la matriz de confusión está definida antes de intentar acceder a ella
+  const confusionMatrixData = result.confusion_matrix || null;
+
+  // Si la matriz de confusión está definida, procesar los datos para el gráfico
+  let confusionMatrixContent = null;
+  if (isClassification && confusionMatrixData) {
+    const xLabels = ['Predicción: Negativo', 'Predicción: Positivo'];
+    const yLabels = ['Real: Negativo', 'Real: Positivo'];
+
+    // Calcular los porcentajes y crear etiquetas de texto
+    const total = confusionMatrixData.flat().reduce((a, b) => a + b, 0);
+    const confusionMatrixPercentages = confusionMatrixData.map(row =>
+      row.map(value => (value / total) * 100)  // Convertir a porcentaje respecto al total
+    );
+
+    const textLabels = confusionMatrixData.map((row, i) =>
+      row.map((value, j) => `${value} (${confusionMatrixPercentages[i][j].toFixed(2)}%)`)
+    );
+
+    confusionMatrixContent = (
+      <div className="heatmap-container">
+        <Plot
+          data={[
+            {
+              z: confusionMatrixData,
+              x: xLabels,
+              y: yLabels,
+              type: 'heatmap',
+              colorscale: 'YlGnBu',
+              colorbar: {
+                title: 'Frecuencia',
+              },
+              text: textLabels, // Mostrar los valores y porcentajes como texto
+              hoverinfo: 'text', // Mostrar texto al pasar el ratón
+              textfont: {
+                color: 'black',  // Cambia el color del texto a negro (o el color que prefieras)
+                size: 16,        // Asegúrate de que el tamaño del texto sea adecuado
+              },
+            },
+          ]}
+          layout={{
+            title: 'Matriz de Confusión',
+            xaxis: { title: 'Predicción' },
+            yaxis: { title: 'Real' },
+            margin: { t: 50, b: 50, l: 50, r: 50 },
+          }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="resultpredict-container">
@@ -73,65 +125,110 @@ function ResultPredict() {
 
       <h2 className="predict-title">Resultados de la predicción</h2>
 
-      {/* Mostrar métricas dinámicamente */}
       <div>
         {isClassification ? (
           <>
-            <p><strong>Accuracy:</strong> {result.accuracy}</p>
-            <p><strong>Precision:</strong> {result.precision}</p>
-            <p><strong>F1 Score:</strong> {result.f1_score}</p>
-            <p><strong>Total Predictions:</strong> {result.total_predictions}</p>
-            <p><strong>Correct Predictions:</strong> {result.correct_predictions}</p>
-            <p><strong>Incorrect Predictions:</strong> {result.incorrect_predictions}</p>
-            <p><strong>Prediction Accuracy:</strong> {(result.prediction_accuracy * 100).toFixed(2)}%</p>
+            <p><strong>Total predicciones: </strong>{result.total_predictions}</p>
+
+            {/* Mostrar solo si isTest es true */}
+            {isTest && (
+              <>
+                <p><strong>Exactitud:</strong> {result.accuracy}
+                  <span className="info-icon" title="Fórmula: Accuracy = (TP + TN) / (TP + TN + FP + FN)">ℹ️</span>
+                </p>
+                <p><strong>Precisión:</strong> {result.precision}
+                  <span className="info-icon" title="Fórmula: Precision = TP / (TP + FP)">ℹ️</span>
+                </p>
+                <p><strong>Puntuación F1:</strong> {result.f1_score}
+                  <span className="info-icon" title="Fórmula: F1 = 2 * (Precision * Recall) / (Precision + Recall)">ℹ️</span>
+                </p>
+
+                {/* Mostrar la matriz de confusión solo si es clasificación */}
+                {confusionMatrixContent}
+              </>
+            )}
           </>
         ) : (
           <>
-            <p><strong>Mean Squared Error (MSE):</strong> {result["Error cuadrático medio"]}</p>
-            <p><strong>Mean Absolute Error (MAE):</strong> {result["Error absoluto medio"]}</p>
-            <p><strong>R-Squared (R²):</strong> {result["R2"]}</p>
+            <p><strong>Total predicciones: </strong>{result.total_predictions}</p>
+
+            {/* Mostrar solo si isTest es true */}
+            {isTest && (
+              <>
+                <p><strong>(MSE) Error cuadrático medio:</strong> {result["Error cuadrático medio"]}
+                  <span className="info-icon" title="Fórmula: MSE = (1/n) * Σ(yi - ŷi)², donde yi es el valor real y ŷi es el valor predicho">ℹ️</span>
+                </p>
+                <p><strong>(MAE) Error absoluto medio:</strong> {result["Error absoluto medio"]}
+                  <span className="info-icon" title="Fórmula: MAE = (1/n) * Σ|yi - ŷi|, donde yi es el valor real y ŷi es el valor predicho">ℹ️</span>
+                </p>
+                <p><strong>(R²) Coeficiente de determinación:</strong> {result["R2"]}
+                  <span className="info-icon" title="Fórmula: R² = 1 - (Σ(yi - ŷi)² / Σ(yi - ȳ)²), donde yi es el valor real y ȳ es la media de los valores reales">ℹ️</span>
+                </p>
+              </>
+            )}
+
+            {/* Mostrar la gráfica de regresión solo si isTest es true */}
+            {isTest && (
+              <div className="regression-container">
+                <Plot
+                  data={[
+                    {
+                      x: regressionData.labels,
+                      y: result.actual_values,
+                      type: 'scatter',
+                      mode: 'lines+markers',
+                      name: 'Valores reales',
+                      line: { color: 'rgba(75,192,192,1)', width: 2 },
+                    },
+                    {
+                      x: regressionData.labels,
+                      y: result.predicted_values,
+                      type: 'scatter',
+                      mode: 'lines+markers',
+                      name: 'Valores predichos',
+                      line: { color: 'rgba(255,99,132,1)', width: 2 },
+                    },
+                  ]}
+                  layout={{
+                    title: 'Regresión: Valores reales vs. Predichos',
+                    xaxis: { title: 'Índice' },
+                    yaxis: { title: 'Valores' },
+                    margin: { t: 50, b: 50, l: 50, r: 50 },
+                  }}
+                />
+              </div>
+            )}
           </>
         )}
       </div>
 
-      {/* Tabla de resultados */}
+
       <div className="table-container">
         <table>
           <thead>
             <tr>
-              <th>Index</th>
-              {Object.keys(currentResults[0]).map((key) => {
-                if (key !== 'match') {
-                  return <th key={key}>{key.replace(/_/g, ' ').toUpperCase()}</th>;
-                }
-                return null;
-              })}
+              <th>Indice</th>
+              {Object.keys(currentResults[0]).map((key) => key !== 'match' && <th key={key}>{key.replace(/_/g, ' ').toUpperCase()}</th>)}
             </tr>
           </thead>
           <tbody>
             {currentResults.map((prediction, index) => (
               <tr key={index}>
                 <td>{indexOfFirstResult + index + 1}</td>
-                {Object.keys(prediction).map((key) => {
-                  if (key !== 'match') {
-                    return <td key={key}>{prediction[key]}</td>;
-                  }
-                  return null;
-                })}
+                {Object.keys(prediction).map((key) => key !== 'match' && <td key={key}>{prediction[key]}</td>)}
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      {/* Botón de descarga */}
+
       <button onClick={downloadCSV} className="button-download">
         Descargar Resultados (CSV)
       </button>
 
-      {/* Paginación */}
       <ReactPaginate
-        previousLabel={"Previous"}
-        nextLabel={"Next"}
+        previousLabel={"Anterior"}
+        nextLabel={"Siguiente"}
         breakLabel={"..."}
         pageCount={Math.ceil(result.predictions.length / resultsPerPage)}
         marginPagesDisplayed={2}
@@ -141,8 +238,8 @@ function ResultPredict() {
         activeClassName={"active"}
       />
 
-      <Link to="/" className="button-home">Return to Home</Link>
-      
+      <Link to="/" className="button-home">Regresar al inicio</Link>
+
       <footer className="footer">
         <p>© 2024 PredictLab. Todos los derechos reservados.</p>
         <p>by: Jhonatan Stick Gomez Vahos</p>

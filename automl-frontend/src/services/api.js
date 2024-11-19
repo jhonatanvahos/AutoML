@@ -74,3 +74,13 @@ export const fetchTrainingStatus = async () => {
     throw error;
   }
 };
+
+export const fetchDatasetPreview = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/preview-dataset`, {});
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching dataset preview:', error);
+    throw error;
+  }
+};

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import UploadDatasetForm from './UploadDatasetForm';
+import DatasetVisualization from './DatasetVisualization';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Train.css';
 
@@ -11,6 +12,7 @@ function Train() {
   const [datasetPath, setDatasetPath] = useState('');
   const [columns, setColumns] = useState([]);
   const [popupMessage, setPopupMessage] = useState(""); // Nuevo estado para manejar el popup
+  const [showVisualization, setShowVisualization] = useState(false);
 
   const handleProjectNameChange = (e) => setProjectName(e.target.value);
   const handleTargetColumnChange = (e) => setTargetColumn(e.target.value);
@@ -19,7 +21,7 @@ function Train() {
     setIsUploaded(true);
     setDatasetPath(path);
     setColumns(columns);
-    setPopupMessage("File uploaded successfully!"); // Mostrar mensaje de éxito
+    setPopupMessage("Carga de datos exitosa!"); // Mostrar mensaje de éxito
   };
 
   const handleFileUploadError = (errorMessage) => {
@@ -68,9 +70,19 @@ function Train() {
 
     await saveConfig();
 
-    const filteredColumns = columns.filter(column => column !== targetColumn);
-    navigate('/ConfigForm', { state: { columns: filteredColumns } });
+    setShowVisualization(true);
+
   };
+
+  if (showVisualization) {
+    return (
+      <DatasetVisualization
+        targetColumn={targetColumn}
+        columns={columns}
+        onContinue={() => setShowVisualization(false)}
+      />
+    );
+  }
 
   return (
     <div className="train-container">
@@ -120,7 +132,7 @@ function Train() {
 
         {isUploaded && (
           <button className="continue-button" onClick={handleContinue}>
-            Continuar con la Configuración
+            Continuar
           </button>
         )}
 

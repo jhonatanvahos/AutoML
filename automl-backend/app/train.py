@@ -57,7 +57,8 @@ class TrainModel:
         # Preprocesamiento de datos
         preprocessor.load_dataset()
         preprocessor.split_data_for_predictions(path_predict)
-        preprocessor.remove_outliers_adjusted_zscore()
+        preprocessor.remove_outliers_zscore()
+        #preprocessor.remove_outliers_adjusted_zscore()
         preprocessor.fit()
         preprocessor.transform()
         preprocessor.select_features()

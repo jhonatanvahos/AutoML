@@ -1,15 +1,16 @@
 # Proyecto de Generación de Modelos de Machine Learning Supervisado
 
-Este proyecto permite generar modelos de Machine Learning supervisado para problemas de regresión y clasificación.
+Este proyecto permite generar modelos de Machine Learning supervisado para problemas de regresión y clasificación. Cuenta con un backend desarrollado en Python utilizando FastAPI y un frontend desarrollado con React.
 
 ## Instrucciones de uso
 
 1. **Crear un Entorno Virtual:**
-   - Se recomienda utilizar una versión de Python 3.9.6. Puedes crear un entorno virtual siguiendo las instrucciones en [este enlace](https://docs.python.org/es/3/tutorial/venv.html).
+   - Se recomienda utilizar una versión de Python 3.9 o superior. Puedes crear un entorno virtual siguiendo las instrucciones en [este enlace](https://docs.python.org/es/3/tutorial/venv.html).
 
 2. **Instalar Dependencias:**
-   - Una vez activado el entorno virtual, instala las dependencias del archivo `requirements.txt` utilizando el siguiente comando:
+   - Una vez activado el entorno virtual, instala las dependencias del backend del archivo `requirements.txt` utilizando el siguiente comando:
      ```bash
+     cd AutoML/automl-backend
      pip install -r requirements.txt
      ```
 3. **Configuración del Proyecto:**

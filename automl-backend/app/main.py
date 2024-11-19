@@ -43,6 +43,7 @@ config_path = Path('app/config.json')
 project_directory = None
 config_project = "config_project.json"
 status_file = Path("training_status.json")
+data = pd.DataFrame()
 
 # Funciones auxiliares
 def create_project_directory(project_name: str) -> str:
@@ -98,6 +99,7 @@ async def get_config():
 @app.post("/upload-dataset")
 async def upload_dataset(file: UploadFile = File(...)):
     """Sube y valida un archivo de dataset."""
+    global data
     logging.info(f"Received file: {file.filename}")
     if file.size > MAX_FILE_SIZE:
         raise HTTPException(status_code=400, detail="File too large")
@@ -130,10 +132,27 @@ async def upload_dataset(file: UploadFile = File(...)):
         else:
             raise HTTPException(status_code=400, detail="Unsupported file type")
         
+        data = df.copy()
         return {"message": "File uploaded successfully", "file_path": temp_file_path, "columns": df.columns.tolist()}
     except Exception as e:
         logging.error(f"Error: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error uploading file: {str(e)}")
+
+@app.get("/preview-dataset")
+async def preview_dataset():
+    global data
+
+    numeric_columns = data.select_dtypes(include=['number']).columns.tolist()
+    categorical_columns = data.select_dtypes(include=['object', 'category']).columns.tolist()
+    try:
+        response = {
+            "dataPreview": data.to_dict(orient='records'),
+            "numericColumns": numeric_columns,
+            "categoricalColumns": categorical_columns
+        }
+        return response
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error previewing dataset: {str(e)}")
 
 #------------------------ Entrenamiento ----------------------
 @app.post("/train")
@@ -148,7 +167,7 @@ async def train_models():
         raise HTTPException(status_code=500, detail=f"Error training model: {str(e)}")
 """
 @app.get("/train/status")
-async def get_training_status():
+async def get_training_status()
     if status_file.exists():
         with status_file.open("r") as f:
             return json.load(f)

@@ -8,6 +8,7 @@
   padding: 0;
   font-family: 'Roboto Mono', monospace;
   padding-bottom: 65px;
+  box-sizing: border-box;
 }
 
 h1, h2 {
@@ -28,7 +29,31 @@ h2.predict-title {
   margin: 5px 0;
 }
 
-/* Contenedor principal para la tabla */
+/* Contenedor principal para las gráficas */
+.chart-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 30px auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+/* Estilo para las gráficas (como HeatMap, bar, etc.) */
+.chart-container .chart {
+  width: 100%;
+  max-width: 1000px; /* Asegura que las gráficas no se salgan del contenedor */
+  height: 400px; /* Altura fija para las gráficas */
+  margin: 20px auto;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Contenedor para la tabla */
 .table-container {
   width: 100%;
   overflow-x: auto; /* Habilita el desplazamiento horizontal */
@@ -139,7 +164,6 @@ table tbody tr:hover {
   border-top: 1px solid #e0e0e0;
 }
 
-
 .footer p {
   margin: 0;
   font-size: 1rem;
@@ -169,4 +193,42 @@ table tbody tr:hover {
   .button-home {
     font-size: 1rem;
   }
+
+  /* Ajustar gráficas en pantallas pequeñas */
+  .chart-container {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .chart-container .chart {
+    width: 100%;
+    height: 300px; /* Reducir la altura en pantallas pequeñas */
+  }
+}
+
+.heatmap-container {
+  width: 100%;
+  height: auto;
+  max-width: 800px;
+  margin: 20px auto; /* Espacio en los lados */
+  padding: 20px; /* Espacio interno alrededor del gráfico */
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: auto; /* Permite desplazamiento si es necesario */
+}
+
+.heatmap-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.info-icon {
+  font-size: 16px;
+  cursor: pointer; /* Cambia el cursor al pasar sobre el icono */
+  color: #007bff; /* Cambia el color del icono */
+}
+
+.info-icon:hover {
+  color: #0056b3; /* Cambia el color al pasar el ratón por encima */
 }
