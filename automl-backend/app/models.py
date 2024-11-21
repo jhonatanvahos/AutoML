@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import List, Dict, Union
 
-# Clase base para la configuración del proyecto
+# Clase base para la configuración inicial del proyecto
 class ConfigDataHome(BaseModel):
     project_name: str
     target_column: str
@@ -11,7 +11,9 @@ class ConfigDataHome(BaseModel):
 class ModelParams(BaseModel):
     pass
 
-# Parámetros para cada modelo de regresión
+#----------------------------------------------------------------------------------------------
+#----------------------- Parámetros para cada modelo de regresión -----------------------------
+#----------------------------------------------------------------------------------------------
 class LinearRegressionParams(ModelParams):
     fit_intercept: List[bool]
 
@@ -39,7 +41,9 @@ class LightGBMParams(ModelParams):
     learning_rate: List[float]
     num_leaves: List[int]
 
-# Parámetros para cada modelo de clasificación
+#----------------------------------------------------------------------------------------------
+#----------------------- Parámetros para cada modelo de clasificacióna ------------------------
+#----------------------------------------------------------------------------------------------
 class LogisticRegressionParams(ModelParams):
     multi_class: List[str]
     solver: List[str]

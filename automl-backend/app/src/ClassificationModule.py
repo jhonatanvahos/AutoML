@@ -1,320 +1,323 @@
-from time import time
+import logging
 import numpy as np
 import pandas as pd
-import json
-import sys
 import joblib
-from pathlib import Path
 from datetime import datetime
-
-#Modelos
-from sklearn.linear_model import LinearRegression, Ridge, LogisticRegression
-from lightgbm import LGBMClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble import AdaBoostClassifier
-from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, precision_recall_curve, auc
-from sklearn.model_selection import GridSearchCV
-from skopt import BayesSearchCV
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.naive_bayes import GaussianNB, MultinomialNB, BernoulliNB
+from sklearn.naive_bayes import GaussianNB, BernoulliNB
+from sklearn.model_selection import GridSearchCV
+from skopt import BayesSearchCV
+from sklearn.metrics import (
+    accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
+)
 
 class GridSearchModelClassification:
+    """
+    Clase para la búsqueda de hiperparámetros y evaluación de modelos de clasificación.
+    """
     def __init__(self, config):
+        """
+        Inicializa la clase con la configuración proporcionada.
+
+        Args:
+            config (dict): Diccionario de configuración con los modelos y parámetros.
+        """
         self.config = config
         self.models = {}
-        self.cv = None
-        self.scoring = None
-        self.n_jobs = None
-        self.random_state = self.config.get('random_state' , 1234)
+        self.cv = config.get('cv', 5)
+        self.scoring = config.get('scoring_classification', 'f1')
+        self.n_jobs = config.get('n_jobs', -1)
+        self.random_state = config.get('random_state', 1234)
+        self.model_competition = config.get('model_competition', 'Grid_Search')
 
-        self.cv = self.config.get('cv', 5)
-        self.scoring = self.config.get('scoring_classification', 'f1')
-        self.n_jobs = self.config.get('n_jobs', -1)
-        self.model_competition = self.config.get('model_competition', 'Grid_Search')
-
-        for model_name, modelFlag in self.config['models_classification'].items():
-            if modelFlag:
+        # Configuración de modelos y parámetros
+        for model_name, model_flag in self.config['models_classification'].items():
+            if model_flag:
                 if model_name in self.config["params_classification"]:
                     hiperparameters = self.config["params_classification"][model_name] 
                     self.models[model_name] = {'model': model_name, 'hiperparameters': hiperparameters}
                 else:
-                    print(f"No se encontraron hiperparámetros para el modelo {model_name}.")
-    
-    # Función para la busqueda de grilla. 
-    def grid_search(self, X, y, path_models): 
-        print("Busqueda de grilla: ")
-        sys.stdout.flush() 
+                   logging.warning(f"No se encontraron hiperparámetros para el modelo {model_name}.")
 
+    def grid_search(self, X, y, path_models):
+        """
+        Realiza la búsqueda de hiperparámetros utilizando GridSearchCV o BayesSearchCV.
+
+        Args:
+            X (pd.DataFrame): Datos de entrada.
+            y (pd.Series): Etiquetas de salida.
+            path_models (Path): Ruta para guardar los modelos entrenados.
+
+        Returns:
+            dict: Resultados del modelo con los mejores hiperparámetros y métricas.
+        """
+        logging.info("Iniciando búsqueda de hiperparámetros.")
         results = {}
-        results_format = {}
-        # Archivo temporal para almacenar el estado del entrenamiento
-        status_file = Path("training_status.json")
-        # Ciclo para recorrer cada uno de los modelos seleccionados en los parámetros
         for model_name, config in self.models.items():
-            print(model_name)
-            start_time = self.start_model_training(model_name, status_file)
-            
-            model = config['model']
+            start_time = datetime.now()
             hiperparameters = config['hiperparameters']
-            print(f'hiperparametros a probar para {model} son: {hiperparameters}')
-            sys.stdout.flush()
+            logging.info("--------------------------------------------------------------")
+            logging.info(f"Probando hiperparámetros para {model_name}: {hiperparameters}")
 
-            if model == 'random_forest':
-                estimator = RandomForestClassifier(random_state = self.random_state)
-            if model == 'logisticRegression':
-                estimator = LogisticRegression(random_state = self.random_state)
-            elif model == 'SVM':
-                estimator = SVC(random_state = self.random_state)
-            elif model == 'KNN':
-                estimator = KNeighborsClassifier()
-            elif model == "GaussianNB":
-                estimator = GaussianNB()
-            elif model == "MultinomialNB":
-                estimator = MultinomialNB()
-            elif model == "BernoulliNB":
-                estimator = BernoulliNB()
+            # Selección del modelo
+            estimator = self._select_model(model_name)
 
-            print('Model competition : ', self.model_competition)
-            if self.model_competition == 'Grid_Search':
-                # Grid_search
-                grid_search = GridSearchCV(estimator = estimator, param_grid = hiperparameters, scoring = self.scoring,
-                                            cv = self.cv, n_jobs = self.n_jobs)
-                
-                grid_search.fit(X, y)
-                mejores_hiperparametros = grid_search.best_params_
-                mejor_modelo = grid_search.best_estimator_
-                score = grid_search.best_score_
+            # Selección del método de búsqueda
+            search = self._select_search_method(estimator, hiperparameters)
 
-            elif self.model_competition == 'Bayes_Search':
-                # Bayes_search
-                bayes_search = BayesSearchCV(estimator = estimator, search_spaces = hiperparameters, scoring = self.scoring,
-                                            cv = self.cv, n_jobs = self.n_jobs)
-                bayes_search.fit(X, y)
-                mejores_hiperparametros = bayes_search.best_params_
-                mejor_modelo = bayes_search.best_estimator_
-                score = bayes_search.best_score_
-            else: 
-                pass
-            results[model_name] = {'mejor_modelo': mejor_modelo, 'mejores_hiperparametros': mejores_hiperparametros, f'score_{self.scoring}': score}
-            
-            print(f'score_{self.scoring}: ', score)
-            sys.stdout.flush()
+            # Entrenamiento y evaluación
+            search.fit(X, y)
+            mejores_hiperparametros = search.best_params_
+            mejor_modelo = search.best_estimator_
+            score = search.best_score_
 
-            elapsed_time = self.finish_model_training( model_name, start_time, status_file)
-            print("Tiempo transcurrido durante el entrenamiento:", elapsed_time, "minutos")
-            sys.stdout.flush()
+            elapsed_time = (datetime.now() - start_time).total_seconds() / 60
 
-            filename = path_models / model_name
-            
-            self.save_model(results[model_name]['mejor_modelo'],filename)
-            
-            # Modifica el diccionario para que solo incluya el nombre del modelo y no el objeto completo
-            results_format[model_name] = {
-                'mejor_modelo': type(mejor_modelo).__name__,  # Solo el nombre del modelo
+            # Guardar modelo y resultados
+            self.save_model(mejor_modelo, path_models / f"{model_name}.pkl")
+            results[model_name] = {
+                'mejor_modelo': type(mejor_modelo).__name__,
                 'mejores_hiperparametros': mejores_hiperparametros,
                 'score': score,
-                'elapsed_time_minutes': round(elapsed_time / 60, 2)
+                'elapsed_time_minutes': elapsed_time
             }
-                
-        return results_format
-    
-    def start_model_training(self, model_name, status_file):
-        # Inicia el registro del modelo actual y la hora de inicio
-        start_time = datetime.now()
-        with status_file.open("w") as f:
-            json.dump({
-                "timestamp": start_time.isoformat(),
-                "current_model": model_name,
-                "progress": "Entrenamiento iniciado",
-                "elapsed_time_minutes": 0
-            }, f)
-        return start_time
+            
+            logging.info(f"Modelo: {model_name}")
+            logging.info(f"Mejores hiperparámetros: {mejores_hiperparametros}")
+            logging.info(f"Score_{self.scoring}: {score}")
+            logging.info(f"Tiempo transcurrido: {elapsed_time:.2f} minutos")
 
-    def finish_model_training(self, model_name, start_time, status_file):
-        # Calcula el tiempo transcurrido y guarda el estado final
-        elapsed_time = (datetime.now() - start_time).total_seconds() / 60  # en minutos
-        with status_file.open("w") as f:
-            json.dump({
-                "timestamp": datetime.now().isoformat(),
-                "current_model": model_name,
-                "progress": "Entrenamiento completedo",
-                "elapsed_time_minutes": round(elapsed_time, 2)
-            }, f)
-        return elapsed_time
-    
-    # Función para la selección del mejor modelo
-    def compete_models(self, results):
-        print("\nCompetencia de Modelos")
-        sys.stdout.flush() 
+        return results
 
-        # Comparación del Score seleccionado (F1 score).
-        best_model_name = None
-        best_score = 0.0  
-        
-        for model_name, result in results.items():
-            score = result[f'score_{self.scoring}']
-            if score > best_score:
-                best_score = score
-                best_model_name = model_name
+    def _select_model(self, model_name):
+        """
+        Selecciona el modelo correspondiente.
 
-        return best_model_name
+        Args:
+            model_name (str): Nombre del modelo.
 
-    # Funcion para guardar el mejor modelo
-    def save_model(self, best_model, filename):
+        Returns:
+            sklearn.base.BaseEstimator: Instancia del modelo.
+        """
+        if model_name == 'random_forest':
+            return RandomForestClassifier(random_state=self.random_state)
+        elif model_name == 'logisticRegression':
+            return LogisticRegression(random_state=self.random_state)
+        elif model_name == 'SVM':
+            return SVC(random_state=self.random_state)
+        elif model_name == 'KNN':
+            return KNeighborsClassifier()
+        elif model_name == "GaussianNB":
+            return GaussianNB()
+        elif model_name == "BernoulliNB":
+            return BernoulliNB()
+        else:
+            raise ValueError(f"Modelo no reconocido: {model_name}")
+
+    def _select_search_method(self, estimator, hiperparameters):
+        """
+        Selecciona el método de búsqueda según la configuración.
+
+        Args:
+            estimator: Modelo estimador.
+            hiperparameters (dict): Espacio de búsqueda de hiperparámetros.
+
+        Returns:
+            GridSearchCV or BayesSearchCV: Objeto de búsqueda configurado.
+        """
+        if self.model_competition == 'Grid_Search':
+            return GridSearchCV(estimator=estimator, param_grid=hiperparameters, scoring=self.scoring, cv=self.cv, n_jobs=self.n_jobs)
+        elif self.model_competition == 'Bayes_Search':
+            return BayesSearchCV(estimator=estimator, search_spaces=hiperparameters, scoring=self.scoring, cv=self.cv, n_jobs=self.n_jobs)
+        else:
+            raise ValueError(f"Método de búsqueda no soportado: {self.model_competition}")
+
+    def save_model(self, model, filename):
+        """
+        Guarda el modelo en un archivo.
+
+        Args:
+            model: Modelo a guardar.
+            filename (Path): Ruta del archivo.
+        """
         try:
-            # Guarda el diccionario en un archivo usando joblib
-            joblib.dump(best_model, filename)
-            print(f"El modelo se guardó en '{filename}'.")
+            joblib.dump(model, filename)
+            logging.info(f"Modelo guardado en {filename}.")
         except Exception as e:
-            print(f"Error al guardar el modelo: {e}")
+            logging.error(f"Error al guardar el modelo: {e}")
 
-    # Función para cargar modelo.
     def load_model(self, filename):
-        print("\nCargar Modelo: ")
-        sys.stdout.flush() 
+        """
+        Carga un modelo desde un archivo.
 
+        Args:
+            filename (Path): Ruta del archivo.
+
+        Returns:
+            Modelo cargado.
+        """
         try:
-            # Carga el diccionario del archivo usando joblib
             model = joblib.load(filename)
-            print(f"El modelo se cargaron desde '{filename}'.")
+            logging.info(f"Modelo cargado desde {filename}.")
             return model
         except Exception as e:
-            print(f"Error al cargar el modelo: {e}")
+            logging.error(f"Error al cargar el modelo: {e}")
+            return None
 
-    # Fución para realizar la predicción.
-    def prediction(self, X_origin, y_origin, X, y, model):
-        print("\nRealizar predicciones: ")
-        sys.stdout.flush()
-
-        # Realizar predicción
-        result = model.predict(X)
-        #proba = model.predict_proba(X)
-
-        # Transformar y (asegurarse de que los valores estén en formato numérico)
-        y = [0 if label == 'no' else 1 for label in y]
-
-        # Calcular métricas
-        ac = accuracy_score(y, result)
-        pc = precision_score(y, result)
-        f1 = f1_score(y, result)
-        cm = confusion_matrix(y, result)
-
-        print("Accuracy: ", ac)
-        sys.stdout.flush()
-        print("Precision: ", pc)
-        sys.stdout.flush()
-        print("F1_Score: ", f1)
-        sys.stdout.flush()
-        print("Matriz de confusion: ", cm.tolist())
-        sys.stdout.flush()
-
-        # Crear DataFrame con resultados
-        df_result = pd.DataFrame({'y': y, 'prediccion': result.ravel()})
-        
-        # Incluir las variables originales (X_origin)
-        for idx, col in enumerate(X_origin.columns):
-            df_result[col] = X_origin.iloc[:, idx].values
-
-        df_result['match'] = df_result['y'] == df_result['prediccion']
-        print(df_result)
-        sys.stdout.flush()
-
-        count_true = df_result["match"].astype(int).sum()
-        count_false = df_result.shape[0] - df_result["match"].astype(int).sum()
-        print('Acertó:', count_true)
-        sys.stdout.flush()
-        print('Se equivocó:', count_false)
-        sys.stdout.flush()
-        print('%: ', count_true / df_result.shape[0])
-        sys.stdout.flush()
-
-        # Construir el diccionario con los resultados
-        result_predict = {
-            "data" : "test",
-            "model_type": "classification",
-            "accuracy": ac,
-            "precision": pc,
-            "f1_score": f1,
-            "total_predictions": df_result.shape[0],
-            "correct_predictions": count_true,
-            "incorrect_predictions": count_false,
-            "prediction_accuracy": count_true / df_result.shape[0],
-            "confusion_matrix": cm.tolist(),  # Matriz de confusión como lista para JSON
-            "actual_values": y,  # Valores reales
-            "predicted_values": result.tolist(),  # Valores predichos
-            "predictions": df_result.to_dict(orient="records")  # Convertir el DataFrame a lista de diccionarios
-        }
-
-        # Convertir a tipos serializables
-        def convert_to_serializable(obj):
-            if isinstance(obj, (np.int64, np.int32)):
-                return int(obj)
-            elif isinstance(obj, (np.float64, np.float32)):
-                return float(obj)
-            elif isinstance(obj, list):
-                return [convert_to_serializable(item) for item in obj]
-            elif isinstance(obj, dict):
-                return {key: convert_to_serializable(value) for key, value in obj.items()}
-            return obj
-
-        result_predict = convert_to_serializable(result_predict)
-
-        return result_predict
-    
-    def predict_real_data(self, X_origin, X, model):
+    def prediction(self, X_origin, X, y, transformers, target, model):
         """
-        Realiza predicciones en datos reales (sin variable objetivo).
-        
+        Realiza predicciones en un conjunto de datos de prueba y calcula métricas de evaluación.
+
         Args:
-            X_origin (pd.DataFrame): Datos originales (sin la columna objetivo).
+            X_origin (pd.DataFrame): Datos originales (sin escalar ni transformar).
+            y_origin (array-like): Valores originales de la variable objetivo.
+            X (array-like): Datos preprocesados (escalados o transformados).
+            y (array-like): Valores de la variable objetivo transformados (numéricos).
             model: Modelo previamente entrenado.
-        
+
         Returns:
-            dict: Resultados de las predicciones incluyendo los datos originales y las predicciones.
+            dict: Resultados de la predicción, métricas y detalles del desempeño.
         """
-        print("\nRealizando predicciones en datos reales:")
-        sys.stdout.flush()
+        logging.info("Iniciando predicción en datos de testeo...")
+        try:
+            # Realizar predicciones
+            predictions = model.predict(X)
+            logging.info("Predicciones realizadas.")
 
-        # Realizar predicción
-        predictions = model.predict(X)
-        
-        # Si el modelo tiene probabilidad, puedes agregarlo opcionalmente
-        # probabilities = model.predict_proba(X_origin)
+            # Decodificar las etiquetas reales y las predicciones
+            label_encoder = transformers["label_encoder_y"]
+            y_decoded = label_encoder.inverse_transform(y)
+            predictions_decoded = label_encoder.inverse_transform(predictions) 
+            logging.info("Etiquetas originales obtenidas.")
 
-        # Crear DataFrame con resultados
-        df_result = pd.DataFrame({'prediccion': predictions.ravel()})
-        
-        # Incluir las variables originales (X_origin)
-        for idx, col in enumerate(X_origin.columns):
-            df_result[col] = X_origin.iloc[:, idx].values
+            # Calcular métricas
+            metrics = {
+                "accuracy": accuracy_score(y, predictions),
+                "precision": precision_score(y, predictions),
+                "f1_score": f1_score(y, predictions),
+                "confusion_matrix": confusion_matrix(y, predictions).tolist()
+            }
+            logging.info("Cálculo de métricas completado.")
 
-        print("Predicciones completadas.")
-        sys.stdout.flush()
-        print(df_result)
-        sys.stdout.flush()
+            # Crear DataFrame de resultados
+            df_result = pd.DataFrame({
+                target: y_decoded, 
+                f"prediccion_{target}": predictions_decoded 
+            })
 
-        # Construir el diccionario con los resultados
-        result_predict = {
-            "data" : "real",
-            "model_type": "classification",  # Cambia según el tipo de modelo
-            "total_predictions": df_result.shape[0],
-            "predictions": df_result.to_dict(orient="records")  # Convertir el DataFrame a lista de diccionarios
-        }
+            for col in X_origin.columns:
+                df_result[col] = X_origin[col].values
+            df_result['match'] = df_result[target] == df_result[f"prediccion_{target}"]
 
-        # Convertir a tipos serializables
-        def convert_to_serializable(obj):
-            if isinstance(obj, (np.int64, np.int32)):
-                return int(obj)
-            elif isinstance(obj, (np.float64, np.float32)):
-                return float(obj)
-            elif isinstance(obj, list):
-                return [convert_to_serializable(item) for item in obj]
-            elif isinstance(obj, dict):
-                return {key: convert_to_serializable(value) for key, value in obj.items()}
-            return obj
+            # Calcular aciertos y errores
+            count_true = df_result['match'].sum()
+            count_false = len(df_result) - count_true
 
-        result_predict = convert_to_serializable(result_predict)
+            # Construir resultados en formato serializable
+            result_predict = {
+                "data": "test",
+                "model_type": "classification",
+                **metrics,
+                "total_predictions": len(df_result),
+                "correct_predictions": count_true,
+                "incorrect_predictions": count_false,
+                "prediction_accuracy": count_true / len(df_result),
+                "predictions": df_result.to_dict(orient="records")
+            }
 
-        return result_predict
+            # Convertir resultados a tipos serializables
+            result_predict = self._convert_to_serializable(result_predict)
+            logging.info("Resultados de predicción procesados exitosamente.")
+            logging.info("Detalles de las predicciones y métricas:")
+            logging.info(f"Modelo: {result_predict['model_type']}")
+            logging.info(f"Total de predicciones: {result_predict['total_predictions']}")
+            logging.info(f"Métricas de rendimiento:")
+            logging.info(f"  accuracy: {metrics['accuracy']}")
+            logging.info(f"  precision: {metrics['precision']}")
+            logging.info(f"  f1_score: {metrics['f1_score']}")
+            logging.info(f"  confusion_matrix: {metrics['confusion_matrix']}")
+            logging.info("Primeras 5 predicciones:")
+            for record in result_predict['predictions'][:5]:  
+                logging.info(record)
+
+            return result_predict
+
+        except Exception as e:
+            logging.error(f"Error durante la predicción: {str(e)}", exc_info=True)
+            raise
+
+    def predict_real_data(self, X_origin, X, transformers, target, model):
+        """
+        Realiza predicciones en un conjunto de datos reales sin valores objetivo.
+
+        Args:
+            X_origin (pd.DataFrame): Datos originales (sin escalar ni transformar).
+            X (array-like): Datos preprocesados (escalados o transformados).
+            model: Modelo previamente entrenado.
+
+        Returns:
+            dict: Resultados de las predicciones incluyendo los datos originales.
+        """
+        logging.info("Iniciando predicción en datos reales.")
+        try:
+            # Realizar predicciones
+            predictions = model.predict(X)
+
+            # Decodificar las etiquetas reales y las predicciones
+            label_encoder = transformers["label_encoder_y"]
+            predictions_decoded = label_encoder.inverse_transform(predictions) 
+            logging.info("Etiquetas originales obtenidas.")
+
+            # Crear DataFrame con resultados
+            df_result = pd.DataFrame({f"prediccion_{target}": predictions_decoded})
+            for col in X_origin.columns:
+                df_result[col] = X_origin[col].values
+
+            logging.info("Predicción completada.")
+
+            # Construir resultados en formato serializable
+            result_predict = {
+                "data": "real",
+                "model_type": "classification",
+                "total_predictions": len(df_result),
+                "predictions": df_result.to_dict(orient="records")
+            }
+
+            # Convertir resultados a tipos serializables
+            result_predict = self._convert_to_serializable(result_predict)
+            logging.info("Resultados de predicción procesados exitosamente.")
+            logging.info("Detalles de las predicciones y métricas:")
+            logging.info(f"Modelo: {result_predict['model_type']}")
+            logging.info(f"Total de predicciones: {result_predict['total_predictions']}")
+            logging.info("Primeras 5 predicciones:")
+            for record in result_predict['predictions'][:5]:
+                logging.info(record)
+
+            return result_predict
+
+        except Exception as e:
+            logging.error(f"Error durante la predicción en datos reales: {str(e)}", exc_info=True)
+            raise
+
+    def _convert_to_serializable(self, obj):
+        """
+        Convierte objetos a tipos serializables para JSON.
+
+        Args:
+            obj: Objeto a convertir.
+
+        Returns:
+            Objeto convertido a tipos básicos serializables.
+        """
+        if isinstance(obj, (np.int64, np.int32)):
+            return int(obj)
+        elif isinstance(obj, (np.float64, np.float32)):
+            return float(obj)
+        elif isinstance(obj, list):
+            return [self._convert_to_serializable(item) for item in obj]
+        elif isinstance(obj, dict):
+            return {key: self._convert_to_serializable(value) for key, value in obj.items()}
+        return obj

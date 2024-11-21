@@ -1,7 +1,7 @@
 {
-    "project_name": "Regresi\u00f3n",
-    "target_column": "charges",
-    "dataset_path": "projects/Regresi\u00f3n/insurance.csv",
+    "project_name": "C-BankFull",
+    "target_column": "y",
+    "dataset_path": "projects/C-BankFull/bank-full.csv",
     "split": 0.1,
     "missing_threshold": 0.1,
     "numeric_imputer": "mean",
@@ -16,9 +16,9 @@
     "balance_threshold": 0.7,
     "k_features": 0.8,
     "feature_selector_method": "select_k_best",
-    "pca_n_components": 0.95,
+    "pca_n_components": 0.9,
     "delete_columns": [],
-    "model_type": "Regression",
+    "model_type": "Classification",
     "function": "training",
     "n_jobs": -1,
     "cv": 5,
@@ -28,18 +28,18 @@
     "model_competition": "Grid_Search",
     "models_regression": {
         "linearRegression": true,
-        "ridge": true,
-        "random_forest": true,
-        "ada_boost": true,
-        "gradient_boosting": true,
+        "ridge": false,
+        "random_forest": false,
+        "ada_boost": false,
+        "gradient_boosting": false,
         "lightGBM": false
     },
     "models_classification": {
-        "logisticRegression": false,
-        "random_forest": false,
+        "logisticRegression": true,
+        "random_forest": true,
         "SVM": false,
-        "KNN": false,
-        "GaussianNB": false,
+        "KNN": true,
+        "GaussianNB": true,
         "BernoulliNB": true
     },
     "params_regression": {
@@ -238,10 +238,20 @@
     "advanced_options": false,
     "trained_features": [
         "age",
-        "sex",
-        "bmi",
-        "children",
-        "smoker",
-        "region"
+        "job",
+        "marital",
+        "education",
+        "default",
+        "balance",
+        "housing",
+        "loan",
+        "contact",
+        "day",
+        "month",
+        "duration",
+        "campaign",
+        "pdays",
+        "previous",
+        "poutcome"
     ]
 }
