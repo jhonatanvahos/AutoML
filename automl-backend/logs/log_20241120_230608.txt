@@ -1,0 +1,170 @@
+2024-11-20 23:06:24,564 - INFO - Recibido el archivo: insurance.csv
+2024-11-20 23:06:24,565 - INFO - Archivo guardado en: uploads/insurance.csv
+2024-11-20 23:06:24,572 - INFO - CSV cargado exitosamente con el separador: ','
+2024-11-20 23:06:27,808 - INFO - Directorio del proyecto creado en: projects/R-Insurance
+2024-11-20 23:06:27,809 - INFO - JSON guardado en: app/config.json
+2024-11-20 23:06:27,809 - INFO - --------------------------------------------------------------
+2024-11-20 23:06:27,810 - INFO - PROYECTO R-INSURANCE
+2024-11-20 23:06:27,810 - INFO - --------------------------------------------------------------
+2024-11-20 23:06:27,832 - INFO - Datos para la previsualización cargados existosamente
+2024-11-20 23:06:54,173 - INFO - JSON guardado en: app/config.json
+2024-11-20 23:06:54,177 - INFO - --------------------------------------------------------------
+2024-11-20 23:06:54,178 - INFO - --------------- ENTRENAMIENTO DE MODELOS ---------------------
+2024-11-20 23:06:54,178 - INFO - --------------------------------------------------------------
+2024-11-20 23:06:54,178 - INFO - Cargando el archivo de configuración: app/config.json
+2024-11-20 23:06:54,178 - INFO - Archivo de configuración cargado correctamente.
+2024-11-20 23:06:54,179 - INFO - Directorios creados en projects/R-Insurance
+2024-11-20 23:06:54,179 - INFO - Modelo activado: linearRegression
+2024-11-20 23:06:54,179 - INFO - Hiperparametros: {'fit_intercept': [True, False]}
+2024-11-20 23:06:54,179 - INFO - Modelo activado: ridge
+2024-11-20 23:06:54,179 - INFO - Hiperparametros: {'alpha': [0.001, 0.01, 0.1, 1.0, 10.0, 100.0, 1000.0]}
+2024-11-20 23:06:54,179 - INFO - Modelo activado: random_forest
+2024-11-20 23:06:54,179 - INFO - Hiperparametros: {'n_estimators': [20, 50, 100, 200], 'max_depth': [5, 10, 20], 'max_features': ['None', 'log2', 'sqrt'], 'criterion': ['squared_error', 'absolute_error', 'friedman_mse', 'poisson']}
+2024-11-20 23:06:54,179 - INFO - Modelo activado: ada_boost
+2024-11-20 23:06:54,179 - INFO - Hiperparametros: {'n_estimators': [10, 30, 50, 70, 100], 'learning_rate': [0.001, 0.01, 0.1]}
+2024-11-20 23:06:54,179 - INFO - Modelo activado: gradient_boosting
+2024-11-20 23:06:54,179 - INFO - Hiperparametros: {'n_estimators': [10, 30, 50, 70, 100], 'learning_rate': [0.1, 0.01, 0.001], 'max_depth': [3, 5, 7]}
+2024-11-20 23:06:54,179 - INFO - --------------------------------------------------------------
+2024-11-20 23:06:54,180 - INFO - ------------ Preprocesamiento de los datos -------------------
+2024-11-20 23:06:54,180 - INFO - --------------------------------------------------------------
+2024-11-20 23:06:54,180 - INFO - Cargando dataset desde projects/R-Insurance/insurance.csv
+2024-11-20 23:06:54,185 - INFO - Archivo CSV cargado correctamente con separador ','
+2024-11-20 23:06:54,221 - INFO - Dataset cargado y procesado. Dimensiones: (1337, 7)
+2024-11-20 23:06:54,221 - INFO - Separando datos para predicciones...
+2024-11-20 23:06:54,223 - INFO - Datos para predicciones guardados en 'projects/R-Insurance/predict.csv'
+2024-11-20 23:06:54,223 - INFO - Eliminando valores atípicos usando Z-score...
+2024-11-20 23:06:54,225 - INFO - Cantidad de datos después de eliminar atípicos: (1337, 6)
+2024-11-20 23:06:54,225 - INFO - Finaliza eliminación de valores atípicos exitosamente!
+2024-11-20 23:06:54,225 - INFO - Inicia el entrenamiento y ajuste de transformadores...
+2024-11-20 23:06:54,225 - INFO - Imputando datos numéricos...
+2024-11-20 23:06:54,225 - INFO - No hay datos faltantes en las columnas numéricas.
+2024-11-20 23:06:54,225 - INFO - Imputando datos categóricos...
+2024-11-20 23:06:54,226 - INFO - No hay datos faltantes en las columnas categóricas.
+2024-11-20 23:06:54,226 - INFO - Imputanción de datos realizada exitosamente!
+2024-11-20 23:06:54,226 - INFO - Escalando datos numéricos...
+2024-11-20 23:06:54,226 - INFO - Escalado de datos realizado exitosamente!
+2024-11-20 23:06:54,226 - INFO - Codificando datos categóricos...
+2024-11-20 23:06:54,227 - INFO - Codificación de variables categóricas realizada.
+2024-11-20 23:06:54,227 - INFO - Codificación de datos realizada exitosamente!
+2024-11-20 23:06:54,227 - INFO - Escalando variable objetivo...
+2024-11-20 23:06:54,227 - INFO - Escalado de variable objetivo realizada exitosamente!
+2024-11-20 23:06:54,227 - INFO - Finaliza exitosamente el entrenamiento y ajuste de transformadores!
+2024-11-20 23:06:54,227 - INFO - Inicia la aplicacion de los transformadores...
+2024-11-20 23:06:54,227 - INFO - Imputando datos nulos...
+2024-11-20 23:06:54,227 - INFO - Codificando datos categóricos.
+2024-11-20 23:06:54,228 - INFO - Aplicando el método de escalado 'standard' a la variable objetivo.
+2024-11-20 23:06:54,229 - INFO - Escalado de la variable objetivo completado.
+2024-11-20 23:06:54,229 - INFO - Escalando datos numéricos.
+2024-11-20 23:06:54,229 - INFO - Escalado de la datos numéricos completado.
+2024-11-20 23:06:54,229 - INFO - Finaliza exitosamente la aplicacion de transformadores!
+2024-11-20 23:06:54,229 - INFO - Iniciando la selección de características...
+2024-11-20 23:06:54,229 - INFO - Cantidad de características a seleccionar: 9
+2024-11-20 23:06:54,229 - INFO - Cantidad de características iniciales: 11
+2024-11-20 23:06:54,230 - INFO - Características seleccionadas: ['age', 'bmi', 'children', 'sex_female', 'sex_male', 'smoker_no', 'smoker_yes', 'region_southeast', 'region_southwest']
+2024-11-20 23:06:54,230 - INFO - Finaliza la selección de características exitosamente!
+2024-11-20 23:06:54,230 - INFO - Guardando transformadores...
+2024-11-20 23:06:54,232 - INFO - Las transformaciones se guardaron en 'projects/R-Insurance/transforms/transform.pkl'.
+2024-11-20 23:06:54,232 - INFO - Obteniendo el DataFrame procesado...
+2024-11-20 23:06:54,232 - INFO - Actualizando diccionario...
+2024-11-20 23:06:54,232 - INFO - Configuración guardada en app/config.json.
+2024-11-20 23:06:54,232 - INFO - Preprocesamiento completado con éxito.
+2024-11-20 23:06:54,232 - INFO - --------------------------------------------------------------
+2024-11-20 23:06:54,232 - INFO - --------------- Competencia de Modelos -----------------------
+2024-11-20 23:06:54,232 - INFO - --------------------------------------------------------------
+2024-11-20 23:06:54,232 - INFO - Inicia entrenamiento de Modelos de Regresión
+2024-11-20 23:06:54,232 - INFO - Iniciando búsqueda de hiperparámetros.
+2024-11-20 23:06:54,232 - INFO - --------------------------------------------------------------
+2024-11-20 23:06:54,232 - INFO - Probando hiperparámetros para linearRegression: {'fit_intercept': [True, False]}
+2024-11-20 23:06:56,311 - INFO - Modelo guardado en projects/R-Insurance/models/linearRegression.pkl.
+2024-11-20 23:06:56,311 - INFO - Modelo: linearRegression
+2024-11-20 23:06:56,311 - INFO - Mejores hiperparámetros: {'fit_intercept': False}
+2024-11-20 23:06:56,311 - INFO - Score_neg_mean_squared_error: -0.25197858380227023
+2024-11-20 23:06:56,311 - INFO - Tiempo transcurrido: 0.03 minutos
+2024-11-20 23:06:56,311 - INFO - --------------------------------------------------------------
+2024-11-20 23:06:56,311 - INFO - Probando hiperparámetros para ridge: {'alpha': [0.001, 0.01, 0.1, 1.0, 10.0, 100.0, 1000.0]}
+2024-11-20 23:06:56,744 - INFO - Modelo guardado en projects/R-Insurance/models/ridge.pkl.
+2024-11-20 23:06:56,744 - INFO - Modelo: ridge
+2024-11-20 23:06:56,744 - INFO - Mejores hiperparámetros: {'alpha': 1.0}
+2024-11-20 23:06:56,744 - INFO - Score_neg_mean_squared_error: -0.2519738399342334
+2024-11-20 23:06:56,744 - INFO - Tiempo transcurrido: 0.01 minutos
+2024-11-20 23:06:56,744 - INFO - --------------------------------------------------------------
+2024-11-20 23:06:56,744 - INFO - Probando hiperparámetros para random_forest: {'n_estimators': [20, 50, 100, 200], 'max_depth': [5, 10, 20], 'max_features': ['None', 'log2', 'sqrt'], 'criterion': ['squared_error', 'absolute_error', 'friedman_mse', 'poisson']}
+2024-11-20 23:07:08,738 - INFO - Modelo guardado en projects/R-Insurance/models/random_forest.pkl.
+2024-11-20 23:07:08,739 - INFO - Modelo: random_forest
+2024-11-20 23:07:08,739 - INFO - Mejores hiperparámetros: {'criterion': 'absolute_error', 'max_depth': 10, 'max_features': 'log2', 'n_estimators': 200}
+2024-11-20 23:07:08,739 - INFO - Score_neg_mean_squared_error: -0.14898546755092687
+2024-11-20 23:07:08,739 - INFO - Tiempo transcurrido: 0.20 minutos
+2024-11-20 23:07:08,739 - INFO - --------------------------------------------------------------
+2024-11-20 23:07:08,739 - INFO - Probando hiperparámetros para ada_boost: {'n_estimators': [10, 30, 50, 70, 100], 'learning_rate': [0.001, 0.01, 0.1]}
+2024-11-20 23:07:09,418 - INFO - Modelo guardado en projects/R-Insurance/models/ada_boost.pkl.
+2024-11-20 23:07:09,418 - INFO - Modelo: ada_boost
+2024-11-20 23:07:09,418 - INFO - Mejores hiperparámetros: {'learning_rate': 0.001, 'n_estimators': 100}
+2024-11-20 23:07:09,418 - INFO - Score_neg_mean_squared_error: -0.14886825870704828
+2024-11-20 23:07:09,418 - INFO - Tiempo transcurrido: 0.01 minutos
+2024-11-20 23:07:09,418 - INFO - --------------------------------------------------------------
+2024-11-20 23:07:09,418 - INFO - Probando hiperparámetros para gradient_boosting: {'n_estimators': [10, 30, 50, 70, 100], 'learning_rate': [0.1, 0.01, 0.001], 'max_depth': [3, 5, 7]}
+2024-11-20 23:07:10,887 - INFO - Modelo guardado en projects/R-Insurance/models/gradient_boosting.pkl.
+2024-11-20 23:07:10,887 - INFO - Modelo: gradient_boosting
+2024-11-20 23:07:10,887 - INFO - Mejores hiperparámetros: {'learning_rate': 0.1, 'max_depth': 3, 'n_estimators': 50}
+2024-11-20 23:07:10,887 - INFO - Score_neg_mean_squared_error: -0.13842744818500768
+2024-11-20 23:07:10,887 - INFO - Tiempo transcurrido: 0.02 minutos
+2024-11-20 23:07:10,887 - INFO - Entrenamiento completado con éxito.
+2024-11-20 23:07:34,828 - INFO - Actualizando los parámetros para guardar el modelo seleccionado...
+2024-11-20 23:07:34,832 - INFO - JSON guardado en: projects/R-Insurance/config_project.json
+2024-11-20 23:07:39,804 - INFO - Listado de proyectos exitosa
+2024-11-20 23:07:44,212 - INFO - --------------------------------------------------------------
+2024-11-20 23:07:44,212 - INFO - ---------------------- PREDICCION ----------------------------
+2024-11-20 23:07:44,212 - INFO - --------------------------------------------------------------
+2024-11-20 23:07:44,213 - INFO - Cargando el archivo de configuración: projects/R-Insurance/config_project.json
+2024-11-20 23:07:44,214 - INFO - Archivo de configuración cargado correctamente.
+2024-11-20 23:07:44,215 - INFO - Modelo activado: linearRegression
+2024-11-20 23:07:44,215 - INFO - Hiperparametros: {'fit_intercept': [True, False]}
+2024-11-20 23:07:44,215 - INFO - Modelo activado: ridge
+2024-11-20 23:07:44,215 - INFO - Hiperparametros: {'alpha': [0.001, 0.01, 0.1, 1.0, 10.0, 100.0, 1000.0]}
+2024-11-20 23:07:44,215 - INFO - Modelo activado: random_forest
+2024-11-20 23:07:44,215 - INFO - Hiperparametros: {'n_estimators': [20, 50, 100, 200], 'max_depth': [5, 10, 20], 'max_features': ['None', 'log2', 'sqrt'], 'criterion': ['squared_error', 'absolute_error', 'friedman_mse', 'poisson']}
+2024-11-20 23:07:44,215 - INFO - Modelo activado: ada_boost
+2024-11-20 23:07:44,215 - INFO - Hiperparametros: {'n_estimators': [10, 30, 50, 70, 100], 'learning_rate': [0.001, 0.01, 0.1]}
+2024-11-20 23:07:44,216 - INFO - Modelo activado: gradient_boosting
+2024-11-20 23:07:44,216 - INFO - Hiperparametros: {'n_estimators': [10, 30, 50, 70, 100], 'learning_rate': [0.1, 0.01, 0.001], 'max_depth': [3, 5, 7]}
+2024-11-20 23:07:44,216 - INFO - --------------------------------------------------------------
+2024-11-20 23:07:44,216 - INFO - ---------------- Adecuacion de los datos ---------------------
+2024-11-20 23:07:44,216 - INFO - --------------------------------------------------------------
+2024-11-20 23:07:44,216 - INFO - Cargando datos para predicción.
+2024-11-20 23:07:44,216 - INFO - Cargando archivo: projects/R-Insurance/predict.csv
+2024-11-20 23:07:44,223 - INFO - Archivo CSV cargado correctamente con separador ','
+2024-11-20 23:07:44,223 - INFO - Estandarizando columnas categóricas a minúsculas
+2024-11-20 23:07:44,225 - INFO - Tamaño de los datos cargados: (133, 7)
+2024-11-20 23:07:44,226 - INFO - Cargando y aplicando transformadores.
+2024-11-20 23:07:44,226 - INFO - Cargando transformadores desde 'projects/R-Insurance/transforms/transform.pkl'...
+2024-11-20 23:07:44,228 - INFO - Las transformaciones se cargaron desde 'projects/R-Insurance/transforms/transform.pkl'.
+2024-11-20 23:07:44,228 - INFO - Aplicando transformadores a los datos de entrada...
+2024-11-20 23:07:44,238 - INFO - Columnas seleccionadas: Index(['age', 'bmi', 'children', 'sex_female', 'sex_male', 'smoker_no',
+       'smoker_yes', 'region_southeast', 'region_southwest'],
+      dtype='object')
+2024-11-20 23:07:44,239 - INFO - Cargando el modelo gradient_boosting.
+2024-11-20 23:07:44,243 - INFO - Modelo cargado desde projects/R-Insurance/models/gradient_boosting.pkl.
+2024-11-20 23:07:44,243 - INFO - --------------------------------------------------------------
+2024-11-20 23:07:44,243 - INFO - ------------------ Realizar predicción -----------------------
+2024-11-20 23:07:44,243 - INFO - --------------------------------------------------------------
+2024-11-20 23:07:44,243 - INFO - Realizando predicciones con datos etiquetados.
+2024-11-20 23:07:44,243 - INFO - Iniciando predicción en datos de testeo...
+2024-11-20 23:07:44,244 - INFO - Predicciones realizadas.
+2024-11-20 23:07:44,245 - INFO - Cálculo de métricas completado.
+2024-11-20 23:07:44,253 - INFO - Resultados de predicción procesados exitosamente.
+2024-11-20 23:07:44,253 - INFO - Resultados de predicción procesados exitosamente.
+2024-11-20 23:07:44,253 - INFO - Detalles de las predicciones y métricas:
+2024-11-20 23:07:44,253 - INFO - Modelo: regression
+2024-11-20 23:07:44,253 - INFO - Total de predicciones: 133
+2024-11-20 23:07:44,253 - INFO - Métricas de rendimiento:
+2024-11-20 23:07:44,253 - INFO -   Error cuadrático medio: 9873233.45758594
+2024-11-20 23:07:44,253 - INFO -   Error absoluto medio: 1873.6289707870144
+2024-11-20 23:07:44,253 - INFO -   R2: 0.9272724875393091
+2024-11-20 23:07:44,253 - INFO - Primeras 5 predicciones:
+2024-11-20 23:07:44,253 - INFO - {'charges': '36,397.58', 'prediccion_charges': '36,178.34', 'difference': '219.24', 'age': 19, 'sex': 'female', 'bmi': 34.7, 'children': 2, 'smoker': 'yes', 'region': 'southwest'}
+2024-11-20 23:07:44,253 - INFO - {'charges': '4,415.16', 'prediccion_charges': '5,551.95', 'difference': '-1,136.79', 'age': 34, 'sex': 'female', 'bmi': 27.72, 'children': 0, 'smoker': 'no', 'region': 'southeast'}
+2024-11-20 23:07:44,253 - INFO - {'charges': '7,639.42', 'prediccion_charges': '7,910.76', 'difference': '-271.34', 'age': 42, 'sex': 'female', 'bmi': 33.155, 'children': 1, 'smoker': 'no', 'region': 'northeast'}
+2024-11-20 23:07:44,253 - INFO - {'charges': '2,304.00', 'prediccion_charges': '5,088.33', 'difference': '-2,784.33', 'age': 18, 'sex': 'male', 'bmi': 26.18, 'children': 2, 'smoker': 'no', 'region': 'southeast'}
+2024-11-20 23:07:44,253 - INFO - {'charges': '9,563.03', 'prediccion_charges': '10,562.75', 'difference': '-999.72', 'age': 48, 'sex': 'male', 'bmi': 34.3, 'children': 3, 'smoker': 'no', 'region': 'southwest'}
+2024-11-20 23:07:44,253 - INFO - Predicciones realizadas con éxito.
+2024-11-20 23:07:44,253 - INFO - Directorio 'uploads' eliminado exitosamente.

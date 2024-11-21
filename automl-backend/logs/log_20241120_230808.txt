@@ -1,0 +1,330 @@
+2024-11-20 23:09:09,581 - INFO - Recibido el archivo: credit_customers.csv
+2024-11-20 23:09:09,583 - INFO - Archivo guardado en: uploads/credit_customers.csv
+2024-11-20 23:09:09,597 - INFO - CSV cargado exitosamente con el separador: ','
+2024-11-20 23:10:48,816 - INFO - Directorio del proyecto creado en: projects/C-CreditCustomers
+2024-11-20 23:10:48,819 - INFO - JSON guardado en: app/config.json
+2024-11-20 23:10:48,819 - INFO - --------------------------------------------------------------
+2024-11-20 23:10:48,820 - INFO - PROYECTO C-CREDITCUSTOMERS
+2024-11-20 23:10:48,820 - INFO - --------------------------------------------------------------
+2024-11-20 23:10:48,850 - INFO - Datos para la previsualización cargados existosamente
+2024-11-20 23:11:35,758 - INFO - JSON guardado en: app/config.json
+2024-11-20 23:11:35,761 - INFO - --------------------------------------------------------------
+2024-11-20 23:11:35,761 - INFO - --------------- ENTRENAMIENTO DE MODELOS ---------------------
+2024-11-20 23:11:35,761 - INFO - --------------------------------------------------------------
+2024-11-20 23:11:35,761 - INFO - Cargando el archivo de configuración: app/config.json
+2024-11-20 23:11:35,762 - INFO - Archivo de configuración cargado correctamente.
+2024-11-20 23:11:35,762 - INFO - Directorios creados en projects/C-CreditCustomers
+2024-11-20 23:11:35,763 - INFO - Modelo activado: linearRegression
+2024-11-20 23:11:35,763 - INFO - Hiperparametros: {'fit_intercept': [True, False]}
+2024-11-20 23:11:35,763 - INFO - --------------------------------------------------------------
+2024-11-20 23:11:35,763 - INFO - ------------ Preprocesamiento de los datos -------------------
+2024-11-20 23:11:35,763 - INFO - --------------------------------------------------------------
+2024-11-20 23:11:35,763 - INFO - Cargando dataset desde projects/C-CreditCustomers/credit_customers.csv
+2024-11-20 23:11:35,771 - INFO - Archivo CSV cargado correctamente con separador ','
+2024-11-20 23:11:35,817 - INFO - Dataset cargado y procesado. Dimensiones: (1000, 21)
+2024-11-20 23:11:35,817 - INFO - Separando datos para predicciones...
+2024-11-20 23:11:35,819 - INFO - Datos para predicciones guardados en 'projects/C-CreditCustomers/predict.csv'
+2024-11-20 23:11:35,819 - INFO - Eliminando valores atípicos usando Z-score...
+2024-11-20 23:11:35,821 - INFO - Cantidad de datos después de eliminar atípicos: (986, 20)
+2024-11-20 23:11:35,821 - INFO - Finaliza eliminación de valores atípicos exitosamente!
+2024-11-20 23:11:35,821 - INFO - Inicia el entrenamiento y ajuste de transformadores...
+2024-11-20 23:11:35,821 - INFO - Imputando datos numéricos...
+2024-11-20 23:11:35,821 - INFO - No hay datos faltantes en las columnas numéricas.
+2024-11-20 23:11:35,821 - INFO - Imputando datos categóricos...
+2024-11-20 23:11:35,822 - INFO - No hay datos faltantes en las columnas categóricas.
+2024-11-20 23:11:35,822 - INFO - Imputanción de datos realizada exitosamente!
+2024-11-20 23:11:35,822 - INFO - Escalando datos numéricos...
+2024-11-20 23:11:35,822 - INFO - Escalado de datos realizado exitosamente!
+2024-11-20 23:11:35,822 - INFO - Codificando datos categóricos...
+2024-11-20 23:11:35,824 - INFO - Codificación de variables categóricas realizada.
+2024-11-20 23:11:35,824 - INFO - Codificación de datos realizada exitosamente!
+2024-11-20 23:11:35,824 - INFO - Codificando variable objetivo...
+2024-11-20 23:11:35,824 - INFO - Codificación de variable objetivo realizada existosamente!
+2024-11-20 23:11:35,824 - INFO - Finaliza exitosamente el entrenamiento y ajuste de transformadores!
+2024-11-20 23:11:35,824 - INFO - Inicia la aplicacion de los transformadores...
+2024-11-20 23:11:35,824 - INFO - Imputando datos nulos...
+2024-11-20 23:11:35,824 - INFO - Codificando datos categóricos.
+2024-11-20 23:11:35,827 - INFO - Codificando la variable a predecir...
+2024-11-20 23:11:35,827 - INFO - Mapeo de etiquetas originales a códigos numéricos:
+2024-11-20 23:11:35,828 - INFO - bad: 0
+2024-11-20 23:11:35,828 - INFO - good: 1
+2024-11-20 23:11:35,828 - INFO - Codificacion de la variable objetivo completado.
+2024-11-20 23:11:35,828 - INFO - Balanceando datos...
+2024-11-20 23:11:35,828 - INFO - Datos balanceados usando over_sampling con SMOTE()
+2024-11-20 23:11:35,829 - INFO - Cantidad de clases antes del balanceo: 1    694
+0    292
+Name: count, dtype: int64
+2024-11-20 23:11:36,123 - INFO - Cantidad de clases después del balanceo: 1    694
+0    694
+Name: count, dtype: int64
+2024-11-20 23:11:36,123 - INFO - Balanceo de datos completado.
+2024-11-20 23:11:36,123 - INFO - Escalando datos numéricos.
+2024-11-20 23:11:36,124 - INFO - Escalado de la datos numéricos completado.
+2024-11-20 23:11:36,124 - INFO - Finaliza exitosamente la aplicacion de transformadores!
+2024-11-20 23:11:36,124 - INFO - Iniciando la selección de características...
+2024-11-20 23:11:36,124 - INFO - Cantidad de características a seleccionar: 42
+2024-11-20 23:11:36,124 - INFO - Cantidad de características iniciales: 61
+2024-11-20 23:11:36,138 - INFO - Características seleccionadas: ['duration', 'credit_amount', 'installment_commitment', 'age', 'existing_credits', 'checking_status_0<=x<200', 'checking_status_<0', 'checking_status_>=200', 'checking_status_no checking', 'credit_history_all paid', 'credit_history_critical/other existing credit', 'credit_history_existing paid', 'credit_history_no credits/all paid', 'purpose_education', 'purpose_new car', 'purpose_radio/tv', 'purpose_repairs', 'purpose_retraining', 'purpose_used car', 'savings_status_500<=x<1000', 'savings_status_<100', 'savings_status_>=1000', 'savings_status_no known savings', 'employment_4<=x<7', 'employment_<1', 'employment_>=7', 'employment_unemployed', 'personal_status_female div/dep/mar', 'personal_status_male div/sep', 'personal_status_male single', 'other_parties_co applicant', 'other_parties_guarantor', 'property_magnitude_no known property', 'property_magnitude_real estate', 'other_payment_plans_bank', 'other_payment_plans_none', 'other_payment_plans_stores', 'housing_for free', 'housing_own', 'housing_rent', 'foreign_worker_no', 'foreign_worker_yes']
+2024-11-20 23:11:36,138 - INFO - Finaliza la selección de características exitosamente!
+2024-11-20 23:11:36,139 - INFO - Guardando transformadores...
+2024-11-20 23:11:36,142 - INFO - Las transformaciones se guardaron en 'projects/C-CreditCustomers/transforms/transform.pkl'.
+2024-11-20 23:11:36,142 - INFO - Obteniendo el DataFrame procesado...
+2024-11-20 23:11:36,142 - INFO - Actualizando diccionario...
+2024-11-20 23:11:36,143 - INFO - Configuración guardada en app/config.json.
+2024-11-20 23:11:36,143 - INFO - Preprocesamiento completado con éxito.
+2024-11-20 23:11:36,143 - INFO - --------------------------------------------------------------
+2024-11-20 23:11:36,143 - INFO - --------------- Competencia de Modelos -----------------------
+2024-11-20 23:11:36,143 - INFO - --------------------------------------------------------------
+2024-11-20 23:11:36,143 - INFO - Inicia entrenamiento de Modelos de Clasificación
+2024-11-20 23:11:36,143 - INFO - Iniciando búsqueda de hiperparámetros.
+2024-11-20 23:11:36,143 - INFO - --------------------------------------------------------------
+2024-11-20 23:11:36,143 - INFO - Probando hiperparámetros para logisticRegression: {'multi_class': ['ovr', 'multinomial'], 'solver': ['liblinear', 'lbfgs', 'newton-cg', 'newton-cholesky', 'sag', 'saga'], 'class_weight': ['balanced'], 'max_iter': [1000]}
+2024-11-20 23:11:38,335 - INFO - Modelo guardado en projects/C-CreditCustomers/models/logisticRegression.pkl.
+2024-11-20 23:11:38,335 - INFO - Modelo: logisticRegression
+2024-11-20 23:11:38,335 - INFO - Mejores hiperparámetros: {'class_weight': 'balanced', 'max_iter': 1000, 'multi_class': 'ovr', 'solver': 'lbfgs'}
+2024-11-20 23:11:38,335 - INFO - Score_f1: 0.7703978487540685
+2024-11-20 23:11:38,335 - INFO - Tiempo transcurrido: 0.04 minutos
+2024-11-20 23:11:38,335 - INFO - --------------------------------------------------------------
+2024-11-20 23:11:38,335 - INFO - Probando hiperparámetros para random_forest: {'n_estimators': [20, 50, 100, 200, 300], 'max_features': [5, 7, 9], 'max_depth': [5, 10, 20, 30, 40, 50], 'criterion': ['gini', 'entropy']}
+2024-11-20 23:11:55,451 - INFO - Modelo guardado en projects/C-CreditCustomers/models/random_forest.pkl.
+2024-11-20 23:11:55,451 - INFO - Modelo: random_forest
+2024-11-20 23:11:55,451 - INFO - Mejores hiperparámetros: {'criterion': 'entropy', 'max_depth': 20, 'max_features': 5, 'n_estimators': 300}
+2024-11-20 23:11:55,451 - INFO - Score_f1: 0.848763202259093
+2024-11-20 23:11:55,451 - INFO - Tiempo transcurrido: 0.28 minutos
+2024-11-20 23:11:55,451 - INFO - --------------------------------------------------------------
+2024-11-20 23:11:55,451 - INFO - Probando hiperparámetros para SVM: {'kernel': ['linear', 'rbf', 'poly'], 'C': [0.1, 1.0, 10.0], 'gamma': ['scale', 'auto', 1.0], 'degree': [3], 'coef0': [0.0]}
+2024-11-20 23:11:56,340 - INFO - Modelo guardado en projects/C-CreditCustomers/models/SVM.pkl.
+2024-11-20 23:11:56,340 - INFO - Modelo: SVM
+2024-11-20 23:11:56,340 - INFO - Mejores hiperparámetros: {'C': 10.0, 'coef0': 0.0, 'degree': 3, 'gamma': 1.0, 'kernel': 'rbf'}
+2024-11-20 23:11:56,340 - INFO - Score_f1: 0.889506535171896
+2024-11-20 23:11:56,340 - INFO - Tiempo transcurrido: 0.01 minutos
+2024-11-20 23:11:56,340 - INFO - --------------------------------------------------------------
+2024-11-20 23:11:56,340 - INFO - Probando hiperparámetros para KNN: {'n_neighbors': [3, 5, 7, 9], 'weights': ['uniform', 'distance'], 'metric': ['euclidean', 'manhattan', 'minkowski'], 'p': [1, 2]}
+2024-11-20 23:11:56,754 - INFO - Modelo guardado en projects/C-CreditCustomers/models/KNN.pkl.
+2024-11-20 23:11:56,754 - INFO - Modelo: KNN
+2024-11-20 23:11:56,754 - INFO - Mejores hiperparámetros: {'metric': 'manhattan', 'n_neighbors': 7, 'p': 1, 'weights': 'distance'}
+2024-11-20 23:11:56,754 - INFO - Score_f1: 0.8481078702481675
+2024-11-20 23:11:56,754 - INFO - Tiempo transcurrido: 0.01 minutos
+2024-11-20 23:11:56,754 - INFO - --------------------------------------------------------------
+2024-11-20 23:11:56,754 - INFO - Probando hiperparámetros para GaussianNB: {}
+2024-11-20 23:11:56,778 - INFO - Modelo guardado en projects/C-CreditCustomers/models/GaussianNB.pkl.
+2024-11-20 23:11:56,778 - INFO - Modelo: GaussianNB
+2024-11-20 23:11:56,778 - INFO - Mejores hiperparámetros: {}
+2024-11-20 23:11:56,778 - INFO - Score_f1: 0.7178283742213785
+2024-11-20 23:11:56,778 - INFO - Tiempo transcurrido: 0.00 minutos
+2024-11-20 23:11:56,778 - INFO - --------------------------------------------------------------
+2024-11-20 23:11:56,778 - INFO - Probando hiperparámetros para BernoulliNB: {}
+2024-11-20 23:11:56,795 - INFO - Modelo guardado en projects/C-CreditCustomers/models/BernoulliNB.pkl.
+2024-11-20 23:11:56,795 - INFO - Modelo: BernoulliNB
+2024-11-20 23:11:56,795 - INFO - Mejores hiperparámetros: {}
+2024-11-20 23:11:56,795 - INFO - Score_f1: 0.8001405258861242
+2024-11-20 23:11:56,795 - INFO - Tiempo transcurrido: 0.00 minutos
+2024-11-20 23:11:56,795 - INFO - Entrenamiento completado con éxito.
+2024-11-20 23:12:14,252 - INFO - Actualizando los parámetros para guardar el modelo seleccionado...
+2024-11-20 23:12:14,255 - INFO - JSON guardado en: projects/C-CreditCustomers/config_project.json
+2024-11-20 23:12:24,164 - INFO - Actualizando los parámetros para guardar el modelo seleccionado...
+2024-11-20 23:12:24,166 - INFO - JSON guardado en: projects/C-CreditCustomers/config_project.json
+2024-11-20 23:13:29,157 - INFO - Listado de proyectos exitosa
+2024-11-20 23:13:34,098 - INFO - --------------------------------------------------------------
+2024-11-20 23:13:34,098 - INFO - ---------------------- PREDICCION ----------------------------
+2024-11-20 23:13:34,098 - INFO - --------------------------------------------------------------
+2024-11-20 23:13:34,098 - INFO - Cargando el archivo de configuración: projects/C-CreditCustomers/config_project.json
+2024-11-20 23:13:34,099 - INFO - Archivo de configuración cargado correctamente.
+2024-11-20 23:13:34,100 - INFO - --------------------------------------------------------------
+2024-11-20 23:13:34,100 - INFO - ---------------- Adecuacion de los datos ---------------------
+2024-11-20 23:13:34,100 - INFO - --------------------------------------------------------------
+2024-11-20 23:13:34,100 - INFO - Cargando datos para predicción.
+2024-11-20 23:13:34,100 - INFO - Cargando archivo: projects/C-CreditCustomers/predict.csv
+2024-11-20 23:13:34,108 - INFO - Archivo CSV cargado correctamente con separador ','
+2024-11-20 23:13:34,108 - INFO - Estandarizando columnas categóricas a minúsculas
+2024-11-20 23:13:34,113 - INFO - Tamaño de los datos cargados: (100, 21)
+2024-11-20 23:13:34,114 - INFO - Cargando y aplicando transformadores.
+2024-11-20 23:13:34,114 - INFO - Cargando transformadores desde 'projects/C-CreditCustomers/transforms/transform.pkl'...
+2024-11-20 23:13:34,117 - INFO - Las transformaciones se cargaron desde 'projects/C-CreditCustomers/transforms/transform.pkl'.
+2024-11-20 23:13:34,117 - INFO - Aplicando transformadores a los datos de entrada...
+2024-11-20 23:13:34,130 - INFO - Columnas seleccionadas: Index(['duration', 'credit_amount', 'installment_commitment', 'age',
+       'existing_credits', 'checking_status_0<=x<200', 'checking_status_<0',
+       'checking_status_>=200', 'checking_status_no checking',
+       'credit_history_all paid',
+       'credit_history_critical/other existing credit',
+       'credit_history_existing paid', 'credit_history_no credits/all paid',
+       'purpose_education', 'purpose_new car', 'purpose_radio/tv',
+       'purpose_repairs', 'purpose_retraining', 'purpose_used car',
+       'savings_status_500<=x<1000', 'savings_status_<100',
+       'savings_status_>=1000', 'savings_status_no known savings',
+       'employment_4<=x<7', 'employment_<1', 'employment_>=7',
+       'employment_unemployed', 'personal_status_female div/dep/mar',
+       'personal_status_male div/sep', 'personal_status_male single',
+       'other_parties_co applicant', 'other_parties_guarantor',
+       'property_magnitude_no known property',
+       'property_magnitude_real estate', 'other_payment_plans_bank',
+       'other_payment_plans_none', 'other_payment_plans_stores',
+       'housing_for free', 'housing_own', 'housing_rent', 'foreign_worker_no',
+       'foreign_worker_yes'],
+      dtype='object')
+2024-11-20 23:13:34,130 - INFO - Cargando el modelo SVM.
+2024-11-20 23:13:34,132 - INFO - Modelo cargado desde projects/C-CreditCustomers/models/SVM.pkl.
+2024-11-20 23:13:34,132 - INFO - --------------------------------------------------------------
+2024-11-20 23:13:34,132 - INFO - ------------------ Realizar predicción -----------------------
+2024-11-20 23:13:34,132 - INFO - --------------------------------------------------------------
+2024-11-20 23:13:34,132 - INFO - Realizando predicciones con datos etiquetados.
+2024-11-20 23:13:34,132 - INFO - Iniciando predicción en datos de testeo...
+2024-11-20 23:13:34,144 - INFO - Predicciones realizadas.
+2024-11-20 23:13:34,145 - INFO - Etiquetas originales obtenidas.
+2024-11-20 23:13:34,147 - INFO - Cálculo de métricas completado.
+2024-11-20 23:13:34,153 - INFO - Resultados de predicción procesados exitosamente.
+2024-11-20 23:13:34,153 - INFO - Detalles de las predicciones y métricas:
+2024-11-20 23:13:34,153 - INFO - Modelo: classification
+2024-11-20 23:13:34,153 - INFO - Total de predicciones: 100
+2024-11-20 23:13:34,153 - INFO - Métricas de rendimiento:
+2024-11-20 23:13:34,153 - INFO -   accuracy: 0.97
+2024-11-20 23:13:34,153 - INFO -   precision: 0.9538461538461539
+2024-11-20 23:13:34,153 - INFO -   f1_score: 0.9763779527559056
+2024-11-20 23:13:34,153 - INFO -   confusion_matrix: [[35, 3], [0, 62]]
+2024-11-20 23:13:34,153 - INFO - Primeras 5 predicciones:
+2024-11-20 23:13:34,153 - INFO - {'class': 'good', 'prediccion_class': 'good', 'checking_status': '<0', 'duration': 6.0, 'credit_history': 'existing paid', 'purpose': 'furniture/equipment', 'credit_amount': 1374.0, 'savings_status': '<100', 'employment': '1<=x<4', 'installment_commitment': 1.0, 'personal_status': 'male single', 'other_parties': 'none', 'residence_since': 2.0, 'property_magnitude': 'real estate', 'age': 36.0, 'other_payment_plans': 'bank', 'housing': 'own', 'existing_credits': 1.0, 'job': 'unskilled resident', 'num_dependents': 1.0, 'own_telephone': 'yes', 'foreign_worker': 'yes', 'match': True}
+2024-11-20 23:13:34,153 - INFO - {'class': 'good', 'prediccion_class': 'good', 'checking_status': 'no checking', 'duration': 18.0, 'credit_history': 'existing paid', 'purpose': 'business', 'credit_amount': 1950.0, 'savings_status': '<100', 'employment': '4<=x<7', 'installment_commitment': 4.0, 'personal_status': 'male single', 'other_parties': 'none', 'residence_since': 1.0, 'property_magnitude': 'car', 'age': 34.0, 'other_payment_plans': 'stores', 'housing': 'own', 'existing_credits': 2.0, 'job': 'skilled', 'num_dependents': 1.0, 'own_telephone': 'yes', 'foreign_worker': 'yes', 'match': True}
+2024-11-20 23:13:34,153 - INFO - {'class': 'good', 'prediccion_class': 'good', 'checking_status': 'no checking', 'duration': 10.0, 'credit_history': 'critical/other existing credit', 'purpose': 'furniture/equipment', 'credit_amount': 2146.0, 'savings_status': '<100', 'employment': '<1', 'installment_commitment': 1.0, 'personal_status': 'female div/dep/mar', 'other_parties': 'none', 'residence_since': 3.0, 'property_magnitude': 'real estate', 'age': 23.0, 'other_payment_plans': 'none', 'housing': 'rent', 'existing_credits': 2.0, 'job': 'skilled', 'num_dependents': 1.0, 'own_telephone': 'none', 'foreign_worker': 'yes', 'match': True}
+2024-11-20 23:13:34,153 - INFO - {'class': 'good', 'prediccion_class': 'good', 'checking_status': '0<=x<200', 'duration': 24.0, 'credit_history': 'delayed previously', 'purpose': 'radio/tv', 'credit_amount': 6403.0, 'savings_status': '<100', 'employment': '<1', 'installment_commitment': 1.0, 'personal_status': 'male single', 'other_parties': 'none', 'residence_since': 2.0, 'property_magnitude': 'car', 'age': 33.0, 'other_payment_plans': 'none', 'housing': 'own', 'existing_credits': 1.0, 'job': 'skilled', 'num_dependents': 1.0, 'own_telephone': 'none', 'foreign_worker': 'yes', 'match': True}
+2024-11-20 23:13:34,153 - INFO - {'class': 'bad', 'prediccion_class': 'bad', 'checking_status': '>=200', 'duration': 15.0, 'credit_history': 'critical/other existing credit', 'purpose': 'radio/tv', 'credit_amount': 1271.0, 'savings_status': 'no known savings', 'employment': '1<=x<4', 'installment_commitment': 3.0, 'personal_status': 'male single', 'other_parties': 'none', 'residence_since': 4.0, 'property_magnitude': 'no known property', 'age': 39.0, 'other_payment_plans': 'none', 'housing': 'for free', 'existing_credits': 2.0, 'job': 'skilled', 'num_dependents': 1.0, 'own_telephone': 'yes', 'foreign_worker': 'yes', 'match': True}
+2024-11-20 23:13:34,153 - INFO - Predicciones realizadas con éxito.
+2024-11-20 23:13:34,154 - INFO - Directorio 'uploads' eliminado exitosamente.
+2024-11-20 23:19:24,456 - INFO - Recibido el archivo: HRDataset_v14.csv
+2024-11-20 23:19:24,459 - INFO - Archivo guardado en: uploads/HRDataset_v14.csv
+2024-11-20 23:19:24,468 - INFO - CSV cargado exitosamente con el separador: ','
+2024-11-20 23:19:29,873 - INFO - Directorio del proyecto creado en: projects/R-HRDataset
+2024-11-20 23:19:29,874 - INFO - JSON guardado en: app/config.json
+2024-11-20 23:19:29,875 - INFO - --------------------------------------------------------------
+2024-11-20 23:19:29,875 - INFO - PROYECTO R-HRDATASET
+2024-11-20 23:19:29,875 - INFO - --------------------------------------------------------------
+2024-11-20 23:19:29,889 - INFO - Datos para la previsualización cargados existosamente
+2024-11-20 23:20:21,481 - INFO - JSON guardado en: app/config.json
+2024-11-20 23:20:21,486 - INFO - --------------------------------------------------------------
+2024-11-20 23:20:21,486 - INFO - --------------- ENTRENAMIENTO DE MODELOS ---------------------
+2024-11-20 23:20:21,486 - INFO - --------------------------------------------------------------
+2024-11-20 23:20:21,486 - INFO - Cargando el archivo de configuración: app/config.json
+2024-11-20 23:20:21,486 - INFO - Archivo de configuración cargado correctamente.
+2024-11-20 23:20:21,487 - INFO - Directorios creados en projects/R-HRDataset
+2024-11-20 23:20:21,487 - INFO - Modelo activado: linearRegression
+2024-11-20 23:20:21,487 - INFO - Hiperparametros: {'fit_intercept': [True, False]}
+2024-11-20 23:20:21,487 - INFO - --------------------------------------------------------------
+2024-11-20 23:20:21,487 - INFO - ------------ Preprocesamiento de los datos -------------------
+2024-11-20 23:20:21,487 - INFO - --------------------------------------------------------------
+2024-11-20 23:20:21,488 - INFO - Cargando dataset desde projects/R-HRDataset/HRDataset_v14.csv
+2024-11-20 23:20:21,495 - INFO - Archivo CSV cargado correctamente con separador ','
+2024-11-20 23:20:21,518 - INFO - Dataset cargado y procesado. Dimensiones: (311, 34)
+2024-11-20 23:20:21,518 - INFO - Separando datos para predicciones...
+2024-11-20 23:20:21,519 - INFO - Datos para predicciones guardados en 'projects/R-HRDataset/predict.csv'
+2024-11-20 23:20:21,519 - INFO - Eliminando valores atípicos usando Z-score...
+2024-11-20 23:20:21,522 - INFO - Cantidad de datos después de eliminar atípicos: (294, 33)
+2024-11-20 23:20:21,522 - INFO - Finaliza eliminación de valores atípicos exitosamente!
+2024-11-20 23:20:21,522 - INFO - Inicia el entrenamiento y ajuste de transformadores...
+2024-11-20 23:20:21,522 - INFO - Imputando datos numéricos...
+2024-11-20 23:20:21,524 - INFO - Imputación numérica realizada.
+2024-11-20 23:20:21,524 - INFO - Imputando datos categóricos...
+2024-11-20 23:20:21,526 - INFO - Imputación categórica realizada.
+2024-11-20 23:20:21,526 - INFO - Imputanción de datos realizada exitosamente!
+2024-11-20 23:20:21,526 - INFO - Escalando datos numéricos...
+2024-11-20 23:20:21,527 - INFO - Escalado de datos realizado exitosamente!
+2024-11-20 23:20:21,527 - INFO - Codificando datos categóricos...
+2024-11-20 23:20:21,529 - INFO - Codificación de variables categóricas realizada.
+2024-11-20 23:20:21,529 - INFO - Codificación de datos realizada exitosamente!
+2024-11-20 23:20:21,529 - INFO - Escalando variable objetivo...
+2024-11-20 23:20:21,529 - INFO - Escalado de variable objetivo realizada exitosamente!
+2024-11-20 23:20:21,529 - INFO - Finaliza exitosamente el entrenamiento y ajuste de transformadores!
+2024-11-20 23:20:21,529 - INFO - Inicia la aplicacion de los transformadores...
+2024-11-20 23:20:21,529 - INFO - Imputando datos nulos...
+2024-11-20 23:20:21,529 - INFO - Imputando datos nulos en variables numéricas.
+2024-11-20 23:20:21,531 - INFO - Imputando datos nulos en variables categóricas.
+2024-11-20 23:20:21,532 - INFO - Codificando datos categóricos.
+2024-11-20 23:20:21,537 - INFO - Aplicando el método de escalado 'standard' a la variable objetivo.
+2024-11-20 23:20:21,537 - INFO - Escalado de la variable objetivo completado.
+2024-11-20 23:20:21,537 - INFO - Escalando datos numéricos.
+2024-11-20 23:20:21,538 - INFO - Escalado de la datos numéricos completado.
+2024-11-20 23:20:21,538 - INFO - Finaliza exitosamente la aplicacion de transformadores!
+2024-11-20 23:20:21,538 - INFO - Iniciando la selección de características...
+2024-11-20 23:20:21,538 - INFO - Cantidad de características a seleccionar: 380
+2024-11-20 23:20:21,538 - INFO - Cantidad de características iniciales: 761
+2024-11-20 23:20:21,542 - INFO - Características seleccionadas: ['MaritalStatusID', 'GenderID', 'EmpStatusID', 'DeptID', 'PerfScoreID', 'Termd', 'PositionID', 'Zip', 'ManagerID', 'EngagementSurvey', 'EmpSatisfaction', 'SpecialProjectsCount', 'DaysLateLast30', 'Absences', 'Position_administrative assistant', 'Position_bi developer', 'Position_bi director', 'Position_cio', 'Position_data analyst', 'Position_data analyst ', 'Position_data architect', 'Position_database administrator', 'Position_director of operations', 'Position_director of sales', 'Position_enterprise architect', 'Position_it director', 'Position_it manager - db', 'Position_it manager - infra', 'Position_it manager - support', 'Position_it support', 'Position_network engineer', 'Position_president & ceo', 'Position_principal data architect', 'Position_production manager', 'Position_production technician i', 'Position_production technician ii', 'Position_senior bi developer', 'Position_shared services manager', 'Position_software engineer', 'Position_sr. accountant', 'Position_sr. dba', 'Position_sr. network engineer', 'State_ct', 'State_ma', 'State_ri', 'DOB_01/04/64', 'DOB_01/04/84', 'DOB_01/07/74', 'DOB_01/07/88', 'DOB_01/12/73', 'DOB_01/12/74', 'DOB_01/18/52', 'DOB_01/19/76', 'DOB_01/28/91', 'DOB_02/02/83', 'DOB_02/08/70', 'DOB_02/09/72', 'DOB_02/09/83', 'DOB_02/11/70', 'DOB_02/12/79', 'DOB_02/14/73', 'DOB_02/20/79', 'DOB_02/21/74', 'DOB_02/21/84', 'DOB_02/24/79', 'DOB_03/10/75', 'DOB_03/17/66', 'DOB_03/17/88', 'DOB_03/18/87', 'DOB_03/19/83', 'DOB_03/22/66', 'DOB_03/23/77', 'DOB_03/26/81', 'DOB_03/28/83', 'DOB_04/04/79', 'DOB_04/04/86', 'DOB_04/04/87', 'DOB_04/05/73', 'DOB_04/05/87', 'DOB_04/06/79', 'DOB_04/08/77', 'DOB_04/14/81', 'DOB_04/16/79', 'DOB_04/19/67', 'DOB_04/23/86', 'DOB_04/25/70', 'DOB_05/02/78', 'DOB_05/02/89', 'DOB_05/04/82', 'DOB_05/05/75', 'DOB_05/06/83', 'DOB_05/09/65', 'DOB_05/12/80', 'DOB_05/15/70', 'DOB_05/15/87', 'DOB_05/19/88', 'DOB_05/21/79', 'DOB_05/24/79', 'DOB_05/27/73', 'DOB_05/31/74', 'DOB_06/03/67', 'DOB_06/03/86', 'DOB_06/06/68', 'DOB_06/06/86', 'DOB_06/10/84', 'DOB_06/14/83', 'DOB_06/18/87', 'DOB_06/18/92', 'DOB_06/30/89', 'DOB_07/05/79', 'DOB_07/05/80', 'DOB_07/07/86', 'DOB_07/08/81', 'DOB_07/09/70', 'DOB_07/15/77', 'DOB_07/20/86', 'DOB_07/22/82', 'DOB_07/24/86', 'DOB_07/30/64', 'DOB_08/07/86', 'DOB_08/09/74', 'DOB_08/17/78', 'DOB_08/18/52', 'DOB_08/19/59', 'DOB_08/24/85', 'DOB_08/24/90', 'DOB_08/25/78', 'DOB_08/25/82', 'DOB_08/26/80', 'DOB_08/30/79', 'DOB_09/04/83', 'DOB_09/05/84', 'DOB_09/08/89', 'DOB_09/15/85', 'DOB_09/16/84', 'DOB_09/16/85', 'DOB_09/21/54', 'DOB_09/22/70', 'DOB_10/01/90', 'DOB_10/05/86', 'DOB_10/05/88', 'DOB_10/07/86', 'DOB_10/08/70', 'DOB_10/09/74', 'DOB_10/10/68', 'DOB_10/11/81', 'DOB_10/15/84', 'DOB_10/22/75', 'DOB_10/23/71', 'DOB_10/24/87', 'DOB_11/07/86', 'DOB_11/07/87', 'DOB_11/09/72', 'DOB_11/10/77', 'DOB_11/15/82', 'DOB_11/21/72', 'DOB_11/22/77', 'DOB_11/23/81', 'DOB_11/24/79', 'DOB_12/02/83', 'DOB_12/08/73', 'DOB_12/09/86', 'DOB_12/11/76', 'DOB_12/17/87', 'DOB_12/21/74', 'DOB_12/22/70', 'Sex_f', 'Sex_m ', 'MaritalDesc_divorced', 'MaritalDesc_separated', 'MaritalDesc_single', 'CitizenDesc_us citizen', 'HispanicLatino_no', 'HispanicLatino_yes', 'RaceDesc_black or african american', 'RaceDesc_two or more races', 'RaceDesc_white', 'DateofHire_1/10/2011', 'DateofHire_1/20/2013', 'DateofHire_1/21/2011', 'DateofHire_1/5/2009', 'DateofHire_1/5/2014', 'DateofHire_1/5/2015', 'DateofHire_1/5/2016', 'DateofHire_1/6/2014', 'DateofHire_1/7/2017', 'DateofHire_1/9/2012', 'DateofHire_10/2/2016', 'DateofHire_11/10/2014', 'DateofHire_11/28/2011', 'DateofHire_11/5/2007', 'DateofHire_11/7/2011', 'DateofHire_12/1/2014', 'DateofHire_2/10/2017', 'DateofHire_2/15/2012', 'DateofHire_2/15/2017', 'DateofHire_2/16/2015', 'DateofHire_2/20/2012', 'DateofHire_3/30/2015', 'DateofHire_3/31/2014', 'DateofHire_4/1/2013', 'DateofHire_4/10/2010', 'DateofHire_4/15/2011', 'DateofHire_4/2/2012', 'DateofHire_4/20/2017', 'DateofHire_4/4/2011', 'DateofHire_5/1/2015', 'DateofHire_5/12/2014', 'DateofHire_5/16/2011', 'DateofHire_5/2/2011', 'DateofHire_5/31/2011', 'DateofHire_5/5/2014', 'DateofHire_6/30/2016', 'DateofHire_7/11/2011', 'DateofHire_7/2/2012', 'DateofHire_7/4/2016', 'DateofHire_7/5/2011', 'DateofHire_7/6/2009', 'DateofHire_7/6/2016', 'DateofHire_7/8/2013', 'DateofHire_7/9/2012', 'DateofHire_8/1/2011', 'DateofHire_8/13/2012', 'DateofHire_8/19/2013', 'DateofHire_8/30/2010', 'DateofHire_9/2/2008', 'DateofHire_9/24/2012', 'DateofHire_9/26/2011', 'DateofHire_9/29/2014', 'DateofHire_9/30/2013', 'DateofHire_9/30/2014', 'DateofHire_9/6/2016', 'DateofTermination_1/12/2017', 'DateofTermination_1/15/2016', 'DateofTermination_1/26/2016', 'DateofTermination_1/9/2014', 'DateofTermination_10/25/2015', 'DateofTermination_10/31/2015', 'DateofTermination_11/10/2018', 'DateofTermination_11/14/2015', 'DateofTermination_11/15/2016', 'DateofTermination_11/4/2015', 'DateofTermination_12/15/2015', 'DateofTermination_12/28/2017', 'DateofTermination_2/19/2016', 'DateofTermination_2/22/2017', 'DateofTermination_2/8/2016', 'DateofTermination_3/15/2015', 'DateofTermination_4/15/2015', 'DateofTermination_4/15/2018', 'DateofTermination_4/29/2018', 'DateofTermination_4/4/2014', 'DateofTermination_4/6/2017', 'DateofTermination_5/1/2016', 'DateofTermination_5/25/2016', 'DateofTermination_6/15/2013', 'DateofTermination_6/16/2016', 'DateofTermination_6/18/2013', 'DateofTermination_6/25/2015', 'DateofTermination_6/4/2015', 'DateofTermination_6/4/2018', 'DateofTermination_6/5/2013', 'DateofTermination_7/30/2018', 'DateofTermination_8/13/2018', 'DateofTermination_9/12/2015', 'DateofTermination_9/19/2016', 'DateofTermination_9/25/2013', 'DateofTermination_9/26/2017', 'DateofTermination_9/26/2018', 'DateofTermination_9/29/2015', 'DateofTermination_9/5/2016', 'DateofTermination_9/6/2016', 'DateofTermination_9/7/2015', 'TermReason_another position', 'TermReason_gross misconduct', 'TermReason_hours', 'TermReason_learned that he is a gangster', 'TermReason_military', 'TermReason_more money', 'TermReason_n/a-stillemployed', 'TermReason_no-call, no-show', 'TermReason_performance', 'TermReason_relocation out of area', 'TermReason_retiring', 'TermReason_return to school', 'TermReason_unhappy', 'EmploymentStatus_active', 'EmploymentStatus_terminated for cause', 'EmploymentStatus_voluntarily terminated', 'Department_executive office', 'Department_it/is', 'Department_production       ', 'Department_software engineering', 'ManagerName_alex sweetwater', 'ManagerName_amy dunn', 'ManagerName_board of directors', 'ManagerName_brannon miller', 'ManagerName_brian champaigne', 'ManagerName_david stanley', 'ManagerName_elijiah gray', 'ManagerName_janet king', 'ManagerName_jennifer zamora', 'ManagerName_kelley spirea', 'ManagerName_ketsia liebig', 'ManagerName_kissy sullivan', 'ManagerName_michael albert', 'ManagerName_peter monroe', 'ManagerName_simon roup', 'ManagerName_webster butler', 'RecruitmentSource_careerbuilder', 'RecruitmentSource_employee referral', 'RecruitmentSource_google search', 'RecruitmentSource_indeed', 'RecruitmentSource_linkedin', 'RecruitmentSource_on-line web application', 'RecruitmentSource_other', 'RecruitmentSource_website', 'PerformanceScore_exceeds', 'PerformanceScore_fully meets', 'PerformanceScore_pip', 'LastPerformanceReview_Date_1/10/2015', 'LastPerformanceReview_Date_1/10/2016', 'LastPerformanceReview_Date_1/11/2019', 'LastPerformanceReview_Date_1/15/2015', 'LastPerformanceReview_Date_1/16/2016', 'LastPerformanceReview_Date_1/17/2019', 'LastPerformanceReview_Date_1/2/2019', 'LastPerformanceReview_Date_1/20/2015', 'LastPerformanceReview_Date_1/21/2019', 'LastPerformanceReview_Date_1/3/2019', 'LastPerformanceReview_Date_1/30/2013', 'LastPerformanceReview_Date_1/30/2016', 'LastPerformanceReview_Date_1/31/2019', 'LastPerformanceReview_Date_1/4/2015', 'LastPerformanceReview_Date_1/4/2019', 'LastPerformanceReview_Date_1/7/2019', 'LastPerformanceReview_Date_2/1/2015', 'LastPerformanceReview_Date_2/1/2016', 'LastPerformanceReview_Date_2/11/2019', 'LastPerformanceReview_Date_2/12/2017', 'LastPerformanceReview_Date_2/13/2018', 'LastPerformanceReview_Date_2/14/2018', 'LastPerformanceReview_Date_2/15/2017', 'LastPerformanceReview_Date_2/15/2019', 'LastPerformanceReview_Date_2/19/2019', 'LastPerformanceReview_Date_2/2/2015', 'LastPerformanceReview_Date_2/21/2019', 'LastPerformanceReview_Date_2/22/2019', 'LastPerformanceReview_Date_2/24/2016', 'LastPerformanceReview_Date_2/25/2019', 'LastPerformanceReview_Date_2/26/2019', 'LastPerformanceReview_Date_2/28/2019', 'LastPerformanceReview_Date_2/4/2019', 'LastPerformanceReview_Date_2/5/2018', 'LastPerformanceReview_Date_2/5/2019', 'LastPerformanceReview_Date_2/6/2019', 'LastPerformanceReview_Date_2/7/2019', 'LastPerformanceReview_Date_2/8/2019', 'LastPerformanceReview_Date_3/1/2015', 'LastPerformanceReview_Date_3/2/2013', 'LastPerformanceReview_Date_3/2/2016', 'LastPerformanceReview_Date_3/2/2017', 'LastPerformanceReview_Date_3/2/2018', 'LastPerformanceReview_Date_3/30/2015', 'LastPerformanceReview_Date_3/4/2013', 'LastPerformanceReview_Date_3/6/2016', 'LastPerformanceReview_Date_4/1/2017', 'LastPerformanceReview_Date_4/2/2013', 'LastPerformanceReview_Date_4/2/2018', 'LastPerformanceReview_Date_4/20/2015', 'LastPerformanceReview_Date_4/29/2016', 'LastPerformanceReview_Date_4/6/2017', 'LastPerformanceReview_Date_5/13/2014', 'LastPerformanceReview_Date_5/2/2015', 'LastPerformanceReview_Date_5/6/2016', 'LastPerformanceReview_Date_7/2/2018', 'LastPerformanceReview_Date_8/10/2012', 'LastPerformanceReview_Date_8/15/2013', 'LastPerformanceReview_Date_8/16/2015', 'LastPerformanceReview_Date_9/2/2015']
+2024-11-20 23:20:21,545 - INFO - Finaliza la selección de características exitosamente!
+2024-11-20 23:20:21,545 - INFO - Guardando transformadores...
+2024-11-20 23:20:21,548 - INFO - Las transformaciones se guardaron en 'projects/R-HRDataset/transforms/transform.pkl'.
+2024-11-20 23:20:21,549 - INFO - Obteniendo el DataFrame procesado...
+2024-11-20 23:20:21,549 - INFO - Actualizando diccionario...
+2024-11-20 23:20:21,552 - INFO - Configuración guardada en app/config.json.
+2024-11-20 23:20:21,552 - INFO - Preprocesamiento completado con éxito.
+2024-11-20 23:20:21,552 - INFO - --------------------------------------------------------------
+2024-11-20 23:20:21,552 - INFO - --------------- Competencia de Modelos -----------------------
+2024-11-20 23:20:21,552 - INFO - --------------------------------------------------------------
+2024-11-20 23:20:21,552 - INFO - Inicia entrenamiento de Modelos de Regresión
+2024-11-20 23:20:21,552 - INFO - Iniciando búsqueda de hiperparámetros.
+2024-11-20 23:20:21,552 - INFO - --------------------------------------------------------------
+2024-11-20 23:20:21,552 - INFO - Probando hiperparámetros para linearRegression: {'fit_intercept': [True, False]}
+2024-11-20 23:20:23,232 - INFO - Modelo guardado en projects/R-HRDataset/models/linearRegression.pkl.
+2024-11-20 23:20:23,233 - INFO - Modelo: linearRegression
+2024-11-20 23:20:23,233 - INFO - Mejores hiperparámetros: {'fit_intercept': False}
+2024-11-20 23:20:23,233 - INFO - Score_neg_mean_squared_error: -1.0989578901823703e+21
+2024-11-20 23:20:23,233 - INFO - Tiempo transcurrido: 0.03 minutos
+2024-11-20 23:20:23,233 - INFO - Entrenamiento completado con éxito.
+2024-11-20 23:20:35,918 - INFO - Actualizando los parámetros para guardar el modelo seleccionado...
+2024-11-20 23:20:35,920 - INFO - JSON guardado en: projects/R-HRDataset/config_project.json
+2024-11-20 23:20:37,894 - INFO - Listado de proyectos exitosa
+2024-11-20 23:20:42,116 - INFO - --------------------------------------------------------------
+2024-11-20 23:20:42,116 - INFO - ---------------------- PREDICCION ----------------------------
+2024-11-20 23:20:42,116 - INFO - --------------------------------------------------------------
+2024-11-20 23:20:42,117 - INFO - Cargando el archivo de configuración: projects/R-HRDataset/config_project.json
+2024-11-20 23:20:42,117 - INFO - Archivo de configuración cargado correctamente.
+2024-11-20 23:20:42,118 - INFO - Modelo activado: linearRegression
+2024-11-20 23:20:42,118 - INFO - Hiperparametros: {'fit_intercept': [True, False]}
+2024-11-20 23:20:42,118 - INFO - --------------------------------------------------------------
+2024-11-20 23:20:42,118 - INFO - ---------------- Adecuacion de los datos ---------------------
+2024-11-20 23:20:42,118 - INFO - --------------------------------------------------------------
+2024-11-20 23:20:42,118 - INFO - Cargando datos para predicción.
+2024-11-20 23:20:42,119 - INFO - Cargando archivo: projects/R-HRDataset/predict.csv
+2024-11-20 23:20:42,125 - INFO - Archivo CSV cargado correctamente con separador ','
+2024-11-20 23:20:42,125 - INFO - Estandarizando columnas categóricas a minúsculas
+2024-11-20 23:20:42,130 - INFO - Tamaño de los datos cargados: (31, 34)
+2024-11-20 23:20:42,131 - INFO - Cargando y aplicando transformadores.
+2024-11-20 23:20:42,131 - INFO - Cargando transformadores desde 'projects/R-HRDataset/transforms/transform.pkl'...
+2024-11-20 23:20:42,133 - INFO - Las transformaciones se cargaron desde 'projects/R-HRDataset/transforms/transform.pkl'.
+2024-11-20 23:20:42,133 - INFO - Aplicando transformadores a los datos de entrada...
+2024-11-20 23:20:42,144 - INFO - Columnas seleccionadas: Index(['MaritalStatusID', 'GenderID', 'EmpStatusID', 'DeptID', 'PerfScoreID',
+       'Termd', 'PositionID', 'Zip', 'ManagerID', 'EngagementSurvey',
+       ...
+       'LastPerformanceReview_Date_4/29/2016',
+       'LastPerformanceReview_Date_4/6/2017',
+       'LastPerformanceReview_Date_5/13/2014',
+       'LastPerformanceReview_Date_5/2/2015',
+       'LastPerformanceReview_Date_5/6/2016',
+       'LastPerformanceReview_Date_7/2/2018',
+       'LastPerformanceReview_Date_8/10/2012',
+       'LastPerformanceReview_Date_8/15/2013',
+       'LastPerformanceReview_Date_8/16/2015',
+       'LastPerformanceReview_Date_9/2/2015'],
+      dtype='object', length=380)
+2024-11-20 23:20:42,145 - INFO - Cargando el modelo linearRegression.
+2024-11-20 23:20:42,145 - INFO - Modelo cargado desde projects/R-HRDataset/models/linearRegression.pkl.
+2024-11-20 23:20:42,145 - INFO - --------------------------------------------------------------
+2024-11-20 23:20:42,145 - INFO - ------------------ Realizar predicción -----------------------
+2024-11-20 23:20:42,145 - INFO - --------------------------------------------------------------
+2024-11-20 23:20:42,145 - INFO - Realizando predicciones con datos etiquetados.
+2024-11-20 23:20:42,145 - INFO - Iniciando predicción en datos de testeo...
+2024-11-20 23:20:42,147 - INFO - Predicciones realizadas.
+2024-11-20 23:20:42,148 - INFO - Cálculo de métricas completado.
+2024-11-20 23:20:42,160 - INFO - Resultados de predicción procesados exitosamente.
+2024-11-20 23:20:42,160 - INFO - Resultados de predicción procesados exitosamente.
+2024-11-20 23:20:42,160 - INFO - Detalles de las predicciones y métricas:
+2024-11-20 23:20:42,160 - INFO - Modelo: regression
+2024-11-20 23:20:42,161 - INFO - Total de predicciones: 31
+2024-11-20 23:20:42,161 - INFO - Métricas de rendimiento:
+2024-11-20 23:20:42,161 - INFO -   Error cuadrático medio: 7518049.266351438
+2024-11-20 23:20:42,161 - INFO -   Error absoluto medio: 1588.2463818047693
+2024-11-20 23:20:42,161 - INFO -   R2: 0.9942320034456649
+2024-11-20 23:20:42,161 - INFO - Primeras 5 predicciones:
+2024-11-20 23:20:42,161 - INFO - {'Salary': '59,144.00', 'prediccion_Salary': '59,144.56', 'difference': '-0.56', 'MarriedID': 0, 'MaritalStatusID': 0, 'GenderID': 1, 'EmpStatusID': 4, 'DeptID': 5, 'PerfScoreID': 2, 'FromDiversityJobFairID': 0, 'Termd': 1, 'PositionID': 19, 'Position': 'production technician i', 'State': 'ma', 'Zip': 1880, 'DOB': '08/12/79', 'Sex': 'm ', 'MaritalDesc': 'single', 'CitizenDesc': 'us citizen', 'HispanicLatino': 'no', 'RaceDesc': 'black or african american', 'DateofHire': '7/11/2011', 'DateofTermination': '9/23/2016', 'TermReason': 'performance', 'EmploymentStatus': 'terminated for cause', 'Department': 'production       ', 'ManagerName': 'kissy sullivan', 'ManagerID': 20.0, 'RecruitmentSource': 'linkedin', 'PerformanceScore': 'needs improvement', 'EngagementSurvey': 2.0, 'EmpSatisfaction': 3, 'SpecialProjectsCount': 0, 'LastPerformanceReview_Date': '5/1/2016', 'DaysLateLast30': 5, 'Absences': 16}
+2024-11-20 23:20:42,161 - INFO - {'Salary': '250,000.00', 'prediccion_Salary': '249,994.55', 'difference': '5.45', 'MarriedID': 1, 'MaritalStatusID': 1, 'GenderID': 0, 'EmpStatusID': 1, 'DeptID': 2, 'PerfScoreID': 3, 'FromDiversityJobFairID': 0, 'Termd': 0, 'PositionID': 16, 'Position': 'president & ceo', 'State': 'ma', 'Zip': 1902, 'DOB': '09/21/54', 'Sex': 'f', 'MaritalDesc': 'married', 'CitizenDesc': 'us citizen', 'HispanicLatino': 'yes', 'RaceDesc': 'white', 'DateofHire': '7/2/2012', 'DateofTermination': nan, 'TermReason': 'n/a-stillemployed', 'EmploymentStatus': 'active', 'Department': 'executive office', 'ManagerName': 'board of directors', 'ManagerID': 9.0, 'RecruitmentSource': 'indeed', 'PerformanceScore': 'fully meets', 'EngagementSurvey': 4.83, 'EmpSatisfaction': 3, 'SpecialProjectsCount': 0, 'LastPerformanceReview_Date': '1/17/2019', 'DaysLateLast30': 0, 'Absences': 10}
+2024-11-20 23:20:42,161 - INFO - {'Salary': '65,729.00', 'prediccion_Salary': '65,730.78', 'difference': '-1.78', 'MarriedID': 0, 'MaritalStatusID': 0, 'GenderID': 0, 'EmpStatusID': 1, 'DeptID': 6, 'PerfScoreID': 3, 'FromDiversityJobFairID': 0, 'Termd': 0, 'PositionID': 21, 'Position': 'sales manager', 'State': 'vt', 'Zip': 5473, 'DOB': '04/19/90', 'Sex': 'f', 'MaritalDesc': 'single', 'CitizenDesc': 'us citizen', 'HispanicLatino': 'no', 'RaceDesc': 'white', 'DateofHire': '5/5/2014', 'DateofTermination': nan, 'TermReason': 'n/a-stillemployed', 'EmploymentStatus': 'active', 'Department': 'sales', 'ManagerName': 'debra houlihan', 'ManagerID': 15.0, 'RecruitmentSource': 'indeed', 'PerformanceScore': 'fully meets', 'EngagementSurvey': 4.62, 'EmpSatisfaction': 4, 'SpecialProjectsCount': 0, 'LastPerformanceReview_Date': '1/24/2019', 'DaysLateLast30': 0, 'Absences': 8}
+2024-11-20 23:20:42,161 - INFO - {'Salary': '74,241.00', 'prediccion_Salary': '64,130.25', 'difference': '10,110.75', 'MarriedID': 0, 'MaritalStatusID': 0, 'GenderID': 0, 'EmpStatusID': 1, 'DeptID': 6, 'PerfScoreID': 4, 'FromDiversityJobFairID': 0, 'Termd': 0, 'PositionID': 3, 'Position': 'area sales manager', 'State': 'ca', 'Zip': 90007, 'DOB': '11/08/88', 'Sex': 'f', 'MaritalDesc': 'single', 'CitizenDesc': 'us citizen', 'HispanicLatino': 'no', 'RaceDesc': 'white', 'DateofHire': '1/10/2011', 'DateofTermination': nan, 'TermReason': 'n/a-stillemployed', 'EmploymentStatus': 'active', 'Department': 'sales', 'ManagerName': 'lynn daneault', 'ManagerID': 21.0, 'RecruitmentSource': 'indeed', 'PerformanceScore': 'exceeds', 'EngagementSurvey': 4.77, 'EmpSatisfaction': 5, 'SpecialProjectsCount': 0, 'LastPerformanceReview_Date': '1/27/2019', 'DaysLateLast30': 0, 'Absences': 14}
+2024-11-20 23:20:42,161 - INFO - {'Salary': '62,425.00', 'prediccion_Salary': '62,287.45', 'difference': '137.55', 'MarriedID': 0, 'MaritalStatusID': 2, 'GenderID': 0, 'EmpStatusID': 5, 'DeptID': 5, 'PerfScoreID': 4, 'FromDiversityJobFairID': 0, 'Termd': 1, 'PositionID': 19, 'Position': 'production technician i', 'State': 'ma', 'Zip': 2359, 'DOB': '03/26/73', 'Sex': 'f', 'MaritalDesc': 'divorced', 'CitizenDesc': 'us citizen', 'HispanicLatino': 'no', 'RaceDesc': 'white', 'DateofHire': '5/13/2013', 'DateofTermination': '6/29/2015', 'TermReason': 'unhappy', 'EmploymentStatus': 'voluntarily terminated', 'Department': 'production       ', 'ManagerName': 'david stanley', 'ManagerID': 14.0, 'RecruitmentSource': 'linkedin', 'PerformanceScore': 'exceeds', 'EngagementSurvey': 4.1, 'EmpSatisfaction': 4, 'SpecialProjectsCount': 0, 'LastPerformanceReview_Date': '3/2/2015', 'DaysLateLast30': 0, 'Absences': 16}
+2024-11-20 23:20:42,162 - INFO - Predicciones realizadas con éxito.
+2024-11-20 23:20:42,162 - INFO - Directorio 'uploads' eliminado exitosamente.

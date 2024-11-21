@@ -1,7 +1,7 @@
 {
-    "project_name": "C-BankFull",
-    "target_column": "y",
-    "dataset_path": "projects/C-BankFull/bank-full.csv",
+    "project_name": "R-HRDataset",
+    "target_column": "Salary",
+    "dataset_path": "projects/R-HRDataset/HRDataset_v14.csv",
     "split": 0.1,
     "missing_threshold": 0.1,
     "numeric_imputer": "mean",
@@ -14,11 +14,11 @@
     "balance_method": "over_sampling",
     "select_sampler": "SMOTE",
     "balance_threshold": 0.7,
-    "k_features": 0.8,
+    "k_features": 0.5,
     "feature_selector_method": "select_k_best",
     "pca_n_components": 0.9,
     "delete_columns": [],
-    "model_type": "Classification",
+    "model_type": "Regression",
     "function": "training",
     "n_jobs": -1,
     "cv": 5,
@@ -31,15 +31,14 @@
         "ridge": false,
         "random_forest": false,
         "ada_boost": false,
-        "gradient_boosting": false,
-        "lightGBM": false
+        "gradient_boosting": false
     },
     "models_classification": {
-        "logisticRegression": true,
-        "random_forest": true,
+        "logisticRegression": false,
+        "random_forest": false,
         "SVM": false,
-        "KNN": true,
-        "GaussianNB": true,
+        "KNN": false,
+        "GaussianNB": false,
         "BernoulliNB": true
     },
     "params_regression": {
@@ -115,29 +114,6 @@
                 3,
                 5,
                 7
-            ]
-        },
-        "lightGBM": {
-            "n_estimators": [
-                10,
-                50,
-                200,
-                500
-            ],
-            "max_depth": [
-                3,
-                5,
-                9
-            ],
-            "learning_rate": [
-                0.001,
-                0.01,
-                0.1
-            ],
-            "num_leaves": [
-                5,
-                10,
-                15
             ]
         }
     },
@@ -237,21 +213,38 @@
     },
     "advanced_options": false,
     "trained_features": [
-        "age",
-        "job",
-        "marital",
-        "education",
-        "default",
-        "balance",
-        "housing",
-        "loan",
-        "contact",
-        "day",
-        "month",
-        "duration",
-        "campaign",
-        "pdays",
-        "previous",
-        "poutcome"
+        "MarriedID",
+        "MaritalStatusID",
+        "GenderID",
+        "EmpStatusID",
+        "DeptID",
+        "PerfScoreID",
+        "FromDiversityJobFairID",
+        "Termd",
+        "PositionID",
+        "Position",
+        "State",
+        "Zip",
+        "DOB",
+        "Sex",
+        "MaritalDesc",
+        "CitizenDesc",
+        "HispanicLatino",
+        "RaceDesc",
+        "DateofHire",
+        "DateofTermination",
+        "TermReason",
+        "EmploymentStatus",
+        "Department",
+        "ManagerName",
+        "ManagerID",
+        "RecruitmentSource",
+        "PerformanceScore",
+        "EngagementSurvey",
+        "EmpSatisfaction",
+        "SpecialProjectsCount",
+        "LastPerformanceReview_Date",
+        "DaysLateLast30",
+        "Absences"
     ]
 }

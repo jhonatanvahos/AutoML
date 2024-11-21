@@ -1,0 +1,294 @@
+2024-11-20 22:06:00,680 - INFO - Recibido el archivo: bank-full.csv
+2024-11-20 22:06:00,682 - INFO - Archivo guardado en: uploads/bank-full.csv
+2024-11-20 22:06:00,717 - INFO - CSV cargado exitosamente con el separador: ';'
+2024-11-20 22:06:05,576 - INFO - Directorio del proyecto creado en: projects/C-BankFull
+2024-11-20 22:06:05,577 - INFO - JSON guardado en: app/config.json
+2024-11-20 22:06:05,577 - INFO - --------------------------------------------------------------
+2024-11-20 22:06:05,578 - INFO - PROYECTO C-BANKFULL
+2024-11-20 22:06:05,578 - INFO - --------------------------------------------------------------
+2024-11-20 22:06:05,760 - INFO - Datos para la previsualización cargados existosamente
+2024-11-20 22:06:51,057 - INFO - JSON guardado en: app/config.json
+2024-11-20 22:06:51,060 - INFO - --------------------------------------------------------------
+2024-11-20 22:06:51,060 - INFO - --------------- ENTRENAMIENTO DE MODELOS ---------------------
+2024-11-20 22:06:51,060 - INFO - --------------------------------------------------------------
+2024-11-20 22:06:51,060 - INFO - Cargando el archivo de configuración: app/config.json
+2024-11-20 22:06:51,060 - INFO - Archivo de configuración cargado correctamente.
+2024-11-20 22:06:51,061 - INFO - Directorios creados en projects/C-BankFull
+2024-11-20 22:06:51,061 - INFO - --------------------------------------------------------------
+2024-11-20 22:06:51,061 - INFO - ------------ Preprocesamiento de los datos -------------------
+2024-11-20 22:06:51,061 - INFO - --------------------------------------------------------------
+2024-11-20 22:06:51,061 - INFO - Cargando dataset desde projects/C-BankFull/bank-full.csv
+2024-11-20 22:06:51,117 - INFO - Archivo CSV cargado correctamente con separador ';'
+2024-11-20 22:06:51,225 - INFO - Dataset cargado y procesado. Dimensiones: (45211, 17)
+2024-11-20 22:06:51,225 - INFO - Separando datos para predicciones...
+2024-11-20 22:06:51,241 - INFO - Datos para predicciones guardados en 'projects/C-BankFull/predict.csv'
+2024-11-20 22:06:51,242 - INFO - Eliminando valores atípicos usando Z-score...
+2024-11-20 22:06:51,248 - INFO - Cantidad de datos después de eliminar atípicos: (43277, 16)
+2024-11-20 22:06:51,248 - INFO - Finaliza eliminación de valores atípicos exitosamente!
+2024-11-20 22:06:51,248 - INFO - Inicia el entrenamiento y ajuste de transformadores...
+2024-11-20 22:06:51,248 - INFO - Imputando datos numéricos...
+2024-11-20 22:06:51,249 - INFO - No hay datos faltantes en las columnas numéricas.
+2024-11-20 22:06:51,249 - INFO - Imputando datos categóricos...
+2024-11-20 22:06:51,256 - INFO - No hay datos faltantes en las columnas categóricas.
+2024-11-20 22:06:51,257 - INFO - Imputanción de datos realizada exitosamente!
+2024-11-20 22:06:51,257 - INFO - Escalando datos numéricos...
+2024-11-20 22:06:51,258 - INFO - Escalado de datos realizado exitosamente!
+2024-11-20 22:06:51,258 - INFO - Codificando datos categóricos...
+2024-11-20 22:06:51,268 - INFO - Codificación de variables categóricas realizada.
+2024-11-20 22:06:51,269 - INFO - Codificación de datos realizada exitosamente!
+2024-11-20 22:06:51,269 - INFO - Codificando variable objetivo...
+2024-11-20 22:06:51,270 - INFO - Codificación de variable objetivo realizada existosamente!
+2024-11-20 22:06:51,270 - INFO - Finaliza exitosamente el entrenamiento y ajuste de transformadores!
+2024-11-20 22:06:51,270 - INFO - Inicia la aplicacion de los transformadores...
+2024-11-20 22:06:51,270 - INFO - Imputando datos nulos...
+2024-11-20 22:06:51,270 - INFO - Codificando datos categóricos.
+2024-11-20 22:06:51,307 - INFO - Codificando la variable a predecir...
+2024-11-20 22:06:51,309 - INFO - Mapeo de etiquetas originales a códigos numéricos:
+2024-11-20 22:06:51,310 - INFO - no: 0
+2024-11-20 22:06:51,310 - INFO - yes: 1
+2024-11-20 22:06:51,310 - INFO - Codificacion de la variable objetivo completado.
+2024-11-20 22:06:51,310 - INFO - Balanceando datos...
+2024-11-20 22:06:51,311 - INFO - Datos balanceados usando over_sampling con SMOTE()
+2024-11-20 22:06:51,311 - INFO - Cantidad de clases antes del balanceo: 0    38488
+1     4789
+Name: count, dtype: int64
+2024-11-20 22:06:51,667 - INFO - Cantidad de clases después del balanceo: 0    38488
+1    38488
+Name: count, dtype: int64
+2024-11-20 22:06:51,667 - INFO - Balanceo de datos completado.
+2024-11-20 22:06:51,667 - INFO - Escalando datos numéricos.
+2024-11-20 22:06:51,670 - INFO - Escalado de la datos numéricos completado.
+2024-11-20 22:06:51,670 - INFO - Finaliza exitosamente la aplicacion de transformadores!
+2024-11-20 22:06:51,670 - INFO - Iniciando la selección de características...
+2024-11-20 22:06:51,670 - INFO - Cantidad de características a seleccionar: 45
+2024-11-20 22:06:51,670 - INFO - Cantidad de características iniciales: 51
+2024-11-20 22:06:51,686 - INFO - Características seleccionadas: ['balance', 'day', 'duration', 'campaign', 'pdays', 'previous', 'job_blue-collar', 'job_entrepreneur', 'job_housemaid', 'job_management', 'job_retired', 'job_services', 'job_student', 'job_technician', 'job_unemployed', 'marital_married', 'marital_single', 'education_primary', 'education_secondary', 'education_tertiary', 'education_unknown', 'default_no', 'default_yes', 'housing_no', 'housing_yes', 'loan_no', 'loan_yes', 'contact_cellular', 'contact_telephone', 'contact_unknown', 'month_apr', 'month_aug', 'month_dec', 'month_feb', 'month_jan', 'month_jul', 'month_jun', 'month_mar', 'month_may', 'month_nov', 'month_oct', 'month_sep', 'poutcome_other', 'poutcome_success', 'poutcome_unknown']
+2024-11-20 22:06:51,686 - INFO - Finaliza la selección de características exitosamente!
+2024-11-20 22:06:51,686 - INFO - Guardando transformadores...
+2024-11-20 22:06:51,687 - INFO - Las transformaciones se guardaron en 'projects/C-BankFull/transforms/transform.pkl'.
+2024-11-20 22:06:51,687 - INFO - Obteniendo el DataFrame procesado...
+2024-11-20 22:06:51,687 - INFO - Actualizando diccionario...
+2024-11-20 22:06:51,687 - INFO - Configuración guardada en app/config.json.
+2024-11-20 22:06:51,687 - INFO - Preprocesamiento completado con éxito.
+2024-11-20 22:06:51,688 - INFO - --------------------------------------------------------------
+2024-11-20 22:06:51,688 - INFO - --------------- Competencia de Modelos -----------------------
+2024-11-20 22:06:51,688 - INFO - --------------------------------------------------------------
+2024-11-20 22:06:51,688 - INFO - Inicia entrenamiento de Modelos de Clasificación
+2024-11-20 22:06:51,688 - INFO - Iniciando búsqueda de hiperparámetros.
+2024-11-20 22:06:51,688 - INFO - --------------------------------------------------------------
+2024-11-20 22:06:51,688 - INFO - Probando hiperparámetros para logisticRegression: {'multi_class': ['ovr', 'multinomial'], 'solver': ['liblinear', 'lbfgs', 'newton-cg', 'newton-cholesky', 'sag', 'saga'], 'class_weight': ['balanced'], 'max_iter': [1000]}
+2024-11-20 22:07:04,190 - INFO - Modelo guardado en projects/C-BankFull/models/logisticRegression.pkl.
+2024-11-20 22:07:04,191 - INFO - Modelo: logisticRegression
+2024-11-20 22:07:04,191 - INFO - Mejores hiperparámetros: {'class_weight': 'balanced', 'max_iter': 1000, 'multi_class': 'ovr', 'solver': 'newton-cholesky'}
+2024-11-20 22:07:04,191 - INFO - Score_f1: 0.7410504808650409
+2024-11-20 22:07:04,191 - INFO - Tiempo transcurrido: 0.21 minutos
+2024-11-20 22:07:04,191 - INFO - --------------------------------------------------------------
+2024-11-20 22:07:04,191 - INFO - Probando hiperparámetros para random_forest: {'n_estimators': [20, 50, 100, 200, 300], 'max_features': [5, 7, 9], 'max_depth': [5, 10, 20, 30, 40, 50], 'criterion': ['gini', 'entropy']}
+2024-11-20 22:17:35,951 - INFO - Modelo guardado en projects/C-BankFull/models/random_forest.pkl.
+2024-11-20 22:17:35,952 - INFO - Modelo: random_forest
+2024-11-20 22:17:35,952 - INFO - Mejores hiperparámetros: {'criterion': 'gini', 'max_depth': 5, 'max_features': 5, 'n_estimators': 100}
+2024-11-20 22:17:35,952 - INFO - Score_f1: 0.8022910187186294
+2024-11-20 22:17:35,952 - INFO - Tiempo transcurrido: 10.53 minutos
+2024-11-20 22:17:35,952 - INFO - --------------------------------------------------------------
+2024-11-20 22:17:35,952 - INFO - Probando hiperparámetros para KNN: {'n_neighbors': [3, 5, 7, 9], 'weights': ['uniform', 'distance'], 'metric': ['euclidean', 'manhattan', 'minkowski'], 'p': [1, 2]}
+2024-11-20 22:22:55,892 - INFO - Modelo guardado en projects/C-BankFull/models/KNN.pkl.
+2024-11-20 22:22:55,893 - INFO - Modelo: KNN
+2024-11-20 22:22:55,893 - INFO - Mejores hiperparámetros: {'metric': 'manhattan', 'n_neighbors': 3, 'p': 1, 'weights': 'distance'}
+2024-11-20 22:22:55,893 - INFO - Score_f1: 0.8450375271793371
+2024-11-20 22:22:55,893 - INFO - Tiempo transcurrido: 5.33 minutos
+2024-11-20 22:22:55,893 - INFO - --------------------------------------------------------------
+2024-11-20 22:22:55,893 - INFO - Probando hiperparámetros para GaussianNB: {}
+2024-11-20 22:22:56,242 - INFO - Modelo guardado en projects/C-BankFull/models/GaussianNB.pkl.
+2024-11-20 22:22:56,242 - INFO - Modelo: GaussianNB
+2024-11-20 22:22:56,242 - INFO - Mejores hiperparámetros: {}
+2024-11-20 22:22:56,242 - INFO - Score_f1: 0.6305220525402354
+2024-11-20 22:22:56,242 - INFO - Tiempo transcurrido: 0.01 minutos
+2024-11-20 22:22:56,242 - INFO - --------------------------------------------------------------
+2024-11-20 22:22:56,242 - INFO - Probando hiperparámetros para BernoulliNB: {}
+2024-11-20 22:22:56,573 - INFO - Modelo guardado en projects/C-BankFull/models/BernoulliNB.pkl.
+2024-11-20 22:22:56,573 - INFO - Modelo: BernoulliNB
+2024-11-20 22:22:56,573 - INFO - Mejores hiperparámetros: {}
+2024-11-20 22:22:56,573 - INFO - Score_f1: 0.7595037055131229
+2024-11-20 22:22:56,573 - INFO - Tiempo transcurrido: 0.01 minutos
+2024-11-20 22:22:56,573 - INFO - Entrenamiento completado con éxito.
+2024-11-20 22:23:13,106 - INFO - Actualizando los parámetros para guardar el modelo seleccionado...
+2024-11-20 22:23:13,110 - INFO - JSON guardado en: projects/C-BankFull/config_project.json
+2024-11-20 22:23:20,127 - INFO - Listado de proyectos exitosa
+2024-11-20 22:23:23,202 - INFO - --------------------------------------------------------------
+2024-11-20 22:23:23,202 - INFO - ---------------------- PREDICCION ----------------------------
+2024-11-20 22:23:23,202 - INFO - --------------------------------------------------------------
+2024-11-20 22:23:23,202 - INFO - Cargando el archivo de configuración: projects/C-BankFull/config_project.json
+2024-11-20 22:23:23,204 - INFO - Archivo de configuración cargado correctamente.
+2024-11-20 22:23:23,205 - INFO - --------------------------------------------------------------
+2024-11-20 22:23:23,205 - INFO - ---------------- Adecuacion de los datos ---------------------
+2024-11-20 22:23:23,205 - INFO - --------------------------------------------------------------
+2024-11-20 22:23:23,205 - INFO - Cargando datos para predicción.
+2024-11-20 22:23:23,205 - INFO - Cargando archivo: projects/C-BankFull/predict.csv
+2024-11-20 22:23:23,223 - INFO - Archivo CSV cargado correctamente con separador ','
+2024-11-20 22:23:23,224 - INFO - Estandarizando columnas categóricas a minúsculas
+2024-11-20 22:23:23,231 - INFO - Tamaño de los datos cargados: (4521, 17)
+2024-11-20 22:23:23,232 - INFO - Cargando y aplicando transformadores.
+2024-11-20 22:23:23,232 - INFO - Cargando transformadores desde 'projects/C-BankFull/transforms/transform.pkl'...
+2024-11-20 22:23:23,234 - INFO - Las transformaciones se cargaron desde 'projects/C-BankFull/transforms/transform.pkl'.
+2024-11-20 22:23:23,234 - INFO - Aplicando transformadores a los datos de entrada...
+2024-11-20 22:23:23,254 - INFO - Columnas seleccionadas: Index(['balance', 'day', 'duration', 'campaign', 'pdays', 'previous',
+       'job_blue-collar', 'job_entrepreneur', 'job_housemaid',
+       'job_management', 'job_retired', 'job_services', 'job_student',
+       'job_technician', 'job_unemployed', 'marital_married', 'marital_single',
+       'education_primary', 'education_secondary', 'education_tertiary',
+       'education_unknown', 'default_no', 'default_yes', 'housing_no',
+       'housing_yes', 'loan_no', 'loan_yes', 'contact_cellular',
+       'contact_telephone', 'contact_unknown', 'month_apr', 'month_aug',
+       'month_dec', 'month_feb', 'month_jan', 'month_jul', 'month_jun',
+       'month_mar', 'month_may', 'month_nov', 'month_oct', 'month_sep',
+       'poutcome_other', 'poutcome_success', 'poutcome_unknown'],
+      dtype='object')
+2024-11-20 22:23:23,255 - INFO - Cargando el modelo KNN.
+2024-11-20 22:23:23,262 - INFO - Modelo cargado desde projects/C-BankFull/models/KNN.pkl.
+2024-11-20 22:23:23,262 - INFO - --------------------------------------------------------------
+2024-11-20 22:23:23,262 - INFO - ------------------ Realizar predicción -----------------------
+2024-11-20 22:23:23,263 - INFO - --------------------------------------------------------------
+2024-11-20 22:23:23,263 - INFO - Realizando predicciones con datos etiquetados.
+2024-11-20 22:23:23,263 - INFO - Iniciando predicción en datos de testeo...
+2024-11-20 22:23:24,351 - INFO - Predicciones realizadas.
+2024-11-20 22:23:24,352 - INFO - Etiquetas originales obtenidas.
+2024-11-20 22:23:24,355 - INFO - Cálculo de métricas completado.
+2024-11-20 22:23:24,408 - INFO - Resultados de predicción procesados exitosamente.
+2024-11-20 22:23:24,408 - INFO - Detalles de las predicciones y métricas:
+2024-11-20 22:23:24,408 - INFO - Modelo: classification
+2024-11-20 22:23:24,408 - INFO - Total de predicciones: 4521
+2024-11-20 22:23:24,408 - INFO - Métricas de rendimiento:
+2024-11-20 22:23:24,408 - INFO -   accuracy: 0.9904888299048883
+2024-11-20 22:23:24,408 - INFO -   precision: 0.9504587155963303
+2024-11-20 22:23:24,408 - INFO -   f1_score: 0.9601482854494903
+2024-11-20 22:23:24,408 - INFO -   confusion_matrix: [[3960, 27], [16, 518]]
+2024-11-20 22:23:24,408 - INFO - Primeras 5 predicciones:
+2024-11-20 22:23:24,408 - INFO - {'y': 'no', 'prediccion_y': 'no', 'age': 31, 'job': 'management', 'marital': 'single', 'education': 'tertiary', 'default': 'no', 'balance': 78, 'housing': 'yes', 'loan': 'no', 'contact': 'cellular', 'day': 22, 'month': 'jul', 'duration': 369, 'campaign': 2, 'pdays': -1, 'previous': 0, 'poutcome': 'unknown', 'match': True}
+2024-11-20 22:23:24,408 - INFO - {'y': 'no', 'prediccion_y': 'no', 'age': 35, 'job': 'blue-collar', 'marital': 'single', 'education': 'secondary', 'default': 'no', 'balance': 0, 'housing': 'yes', 'loan': 'no', 'contact': 'unknown', 'day': 3, 'month': 'jun', 'duration': 113, 'campaign': 3, 'pdays': -1, 'previous': 0, 'poutcome': 'unknown', 'match': True}
+2024-11-20 22:23:24,408 - INFO - {'y': 'no', 'prediccion_y': 'no', 'age': 41, 'job': 'blue-collar', 'marital': 'married', 'education': 'secondary', 'default': 'no', 'balance': 440, 'housing': 'yes', 'loan': 'no', 'contact': 'cellular', 'day': 5, 'month': 'may', 'duration': 523, 'campaign': 1, 'pdays': 334, 'previous': 2, 'poutcome': 'failure', 'match': True}
+2024-11-20 22:23:24,408 - INFO - {'y': 'no', 'prediccion_y': 'no', 'age': 51, 'job': 'technician', 'marital': 'married', 'education': 'secondary', 'default': 'no', 'balance': 614, 'housing': 'yes', 'loan': 'no', 'contact': 'cellular', 'day': 18, 'month': 'may', 'duration': 9, 'campaign': 4, 'pdays': -1, 'previous': 0, 'poutcome': 'unknown', 'match': True}
+2024-11-20 22:23:24,408 - INFO - {'y': 'no', 'prediccion_y': 'no', 'age': 56, 'job': 'admin.', 'marital': 'married', 'education': 'secondary', 'default': 'no', 'balance': 1290, 'housing': 'no', 'loan': 'no', 'contact': 'unknown', 'day': 12, 'month': 'jun', 'duration': 243, 'campaign': 1, 'pdays': -1, 'previous': 0, 'poutcome': 'unknown', 'match': True}
+2024-11-20 22:23:24,408 - INFO - Predicciones realizadas con éxito.
+2024-11-20 22:23:24,409 - INFO - Directorio 'uploads' eliminado exitosamente.
+2024-11-20 22:24:02,948 - INFO - Recibido el archivo: insurance.csv
+2024-11-20 22:24:02,950 - INFO - Archivo guardado en: uploads/insurance.csv
+2024-11-20 22:24:02,957 - INFO - CSV cargado exitosamente con el separador: ','
+2024-11-20 22:24:07,076 - INFO - Directorio del proyecto creado en: projects/R-Insurance
+2024-11-20 22:24:07,080 - INFO - JSON guardado en: app/config.json
+2024-11-20 22:24:07,080 - INFO - --------------------------------------------------------------
+2024-11-20 22:24:07,080 - INFO - PROYECTO R-INSURANCE
+2024-11-20 22:24:07,080 - INFO - --------------------------------------------------------------
+2024-11-20 22:24:07,098 - INFO - Datos para la previsualización cargados existosamente
+2024-11-20 22:24:45,056 - INFO - JSON guardado en: app/config.json
+2024-11-20 22:24:45,059 - INFO - --------------------------------------------------------------
+2024-11-20 22:24:45,059 - INFO - --------------- ENTRENAMIENTO DE MODELOS ---------------------
+2024-11-20 22:24:45,059 - INFO - --------------------------------------------------------------
+2024-11-20 22:24:45,059 - INFO - Cargando el archivo de configuración: app/config.json
+2024-11-20 22:24:45,060 - INFO - Archivo de configuración cargado correctamente.
+2024-11-20 22:24:45,060 - INFO - Directorios creados en projects/R-Insurance
+2024-11-20 22:24:45,060 - INFO - --------------------------------------------------------------
+2024-11-20 22:24:45,060 - INFO - ------------ Preprocesamiento de los datos -------------------
+2024-11-20 22:24:45,060 - INFO - --------------------------------------------------------------
+2024-11-20 22:24:45,060 - INFO - Cargando dataset desde projects/R-Insurance/insurance.csv
+2024-11-20 22:24:45,067 - INFO - Archivo CSV cargado correctamente con separador ','
+2024-11-20 22:24:45,086 - INFO - Dataset cargado y procesado. Dimensiones: (1337, 7)
+2024-11-20 22:24:45,086 - INFO - Separando datos para predicciones...
+2024-11-20 22:24:45,089 - INFO - Datos para predicciones guardados en 'projects/R-Insurance/predict.csv'
+2024-11-20 22:24:45,089 - INFO - Eliminando valores atípicos usando Z-score...
+2024-11-20 22:24:45,091 - INFO - Cantidad de datos después de eliminar atípicos: (1337, 6)
+2024-11-20 22:24:45,092 - INFO - Finaliza eliminación de valores atípicos exitosamente!
+2024-11-20 22:24:45,092 - INFO - Inicia el entrenamiento y ajuste de transformadores...
+2024-11-20 22:24:45,092 - INFO - Imputando datos numéricos...
+2024-11-20 22:24:45,092 - INFO - No hay datos faltantes en las columnas numéricas.
+2024-11-20 22:24:45,092 - INFO - Imputando datos categóricos...
+2024-11-20 22:24:45,093 - INFO - No hay datos faltantes en las columnas categóricas.
+2024-11-20 22:24:45,093 - INFO - Imputanción de datos realizada exitosamente!
+2024-11-20 22:24:45,093 - INFO - Escalando datos numéricos...
+2024-11-20 22:24:45,093 - INFO - Escalado de datos realizado exitosamente!
+2024-11-20 22:24:45,093 - INFO - Codificando datos categóricos...
+2024-11-20 22:24:45,094 - INFO - Codificación de variables categóricas realizada.
+2024-11-20 22:24:45,094 - INFO - Codificación de datos realizada exitosamente!
+2024-11-20 22:24:45,094 - INFO - Escalando variable objetivo...
+2024-11-20 22:24:45,095 - INFO - Escalado de variable objetivo realizada exitosamente!
+2024-11-20 22:24:45,095 - INFO - Finaliza exitosamente el entrenamiento y ajuste de transformadores!
+2024-11-20 22:24:45,095 - INFO - Inicia la aplicacion de los transformadores...
+2024-11-20 22:24:45,095 - INFO - Imputando datos nulos...
+2024-11-20 22:24:45,095 - INFO - Codificando datos categóricos.
+2024-11-20 22:24:45,097 - INFO - Aplicando el método de escalado 'standard' a la variable objetivo.
+2024-11-20 22:24:45,097 - INFO - Escalado de la variable objetivo completado.
+2024-11-20 22:24:45,097 - INFO - Escalando datos numéricos.
+2024-11-20 22:24:45,097 - INFO - Escalado de la datos numéricos completado.
+2024-11-20 22:24:45,097 - INFO - Finaliza exitosamente la aplicacion de transformadores!
+2024-11-20 22:24:45,097 - INFO - Iniciando la selección de características...
+2024-11-20 22:24:45,097 - INFO - Cantidad de características a seleccionar: 9
+2024-11-20 22:24:45,097 - INFO - Cantidad de características iniciales: 11
+2024-11-20 22:24:45,099 - INFO - Características seleccionadas: ['age', 'bmi', 'children', 'sex_female', 'sex_male', 'smoker_no', 'smoker_yes', 'region_southeast', 'region_southwest']
+2024-11-20 22:24:45,099 - INFO - Finaliza la selección de características exitosamente!
+2024-11-20 22:24:45,099 - INFO - Guardando transformadores...
+2024-11-20 22:24:45,101 - INFO - Las transformaciones se guardaron en 'projects/R-Insurance/transforms/transform.pkl'.
+2024-11-20 22:24:45,101 - INFO - Obteniendo el DataFrame procesado...
+2024-11-20 22:24:45,101 - INFO - Actualizando diccionario...
+2024-11-20 22:24:45,101 - INFO - Configuración guardada en app/config.json.
+2024-11-20 22:24:45,101 - INFO - Preprocesamiento completado con éxito.
+2024-11-20 22:24:45,101 - INFO - --------------------------------------------------------------
+2024-11-20 22:24:45,101 - INFO - --------------- Competencia de Modelos -----------------------
+2024-11-20 22:24:45,101 - INFO - --------------------------------------------------------------
+2024-11-20 22:24:45,101 - INFO - Inicia entrenamiento de Modelos de Regresión
+2024-11-20 22:24:45,102 - INFO - Iniciando búsqueda de hiperparámetros.
+2024-11-20 22:24:45,102 - INFO - --------------------------------------------------------------
+2024-11-20 22:24:45,102 - INFO - Probando hiperparámetros para linearRegression: {'fit_intercept': [True, False]}
+2024-11-20 22:24:45,158 - INFO - Modelo guardado en projects/R-Insurance/models/linearRegression.pkl.
+2024-11-20 22:24:45,158 - INFO - Modelo: linearRegression
+2024-11-20 22:24:45,158 - INFO - Mejores hiperparámetros: {'fit_intercept': False}
+2024-11-20 22:24:45,158 - INFO - Score_neg_mean_squared_error: -0.25197858380227023
+2024-11-20 22:24:45,158 - INFO - Tiempo transcurrido: 0.00 minutos
+2024-11-20 22:24:45,158 - INFO - Entrenamiento completado con éxito.
+2024-11-20 22:25:58,404 - INFO - Actualizando los parámetros para guardar el modelo seleccionado...
+2024-11-20 22:25:58,407 - INFO - JSON guardado en: projects/R-Insurance/config_project.json
+2024-11-20 22:26:01,427 - INFO - Listado de proyectos exitosa
+2024-11-20 22:26:05,441 - INFO - --------------------------------------------------------------
+2024-11-20 22:26:05,442 - INFO - ---------------------- PREDICCION ----------------------------
+2024-11-20 22:26:05,442 - INFO - --------------------------------------------------------------
+2024-11-20 22:26:05,442 - INFO - Cargando el archivo de configuración: projects/R-Insurance/config_project.json
+2024-11-20 22:26:05,442 - INFO - Archivo de configuración cargado correctamente.
+2024-11-20 22:26:05,443 - INFO - --------------------------------------------------------------
+2024-11-20 22:26:05,443 - INFO - ---------------- Adecuacion de los datos ---------------------
+2024-11-20 22:26:05,443 - INFO - --------------------------------------------------------------
+2024-11-20 22:26:05,443 - INFO - Cargando datos para predicción.
+2024-11-20 22:26:05,443 - INFO - Cargando archivo: projects/R-Insurance/predict.csv
+2024-11-20 22:26:05,451 - INFO - Archivo CSV cargado correctamente con separador ','
+2024-11-20 22:26:05,451 - INFO - Estandarizando columnas categóricas a minúsculas
+2024-11-20 22:26:05,453 - INFO - Tamaño de los datos cargados: (133, 7)
+2024-11-20 22:26:05,454 - INFO - Cargando y aplicando transformadores.
+2024-11-20 22:26:05,454 - INFO - Cargando transformadores desde 'projects/R-Insurance/transforms/transform.pkl'...
+2024-11-20 22:26:05,456 - INFO - Las transformaciones se cargaron desde 'projects/R-Insurance/transforms/transform.pkl'.
+2024-11-20 22:26:05,456 - INFO - Aplicando transformadores a los datos de entrada...
+2024-11-20 22:26:05,462 - INFO - Columnas seleccionadas: Index(['age', 'bmi', 'children', 'sex_female', 'sex_male', 'smoker_no',
+       'smoker_yes', 'region_southeast', 'region_southwest'],
+      dtype='object')
+2024-11-20 22:26:05,463 - INFO - Cargando el modelo linearRegression.
+2024-11-20 22:26:05,464 - INFO - Modelo cargado desde projects/R-Insurance/models/linearRegression.pkl.
+2024-11-20 22:26:05,464 - INFO - --------------------------------------------------------------
+2024-11-20 22:26:05,464 - INFO - ------------------ Realizar predicción -----------------------
+2024-11-20 22:26:05,464 - INFO - --------------------------------------------------------------
+2024-11-20 22:26:05,464 - INFO - Realizando predicciones con datos etiquetados.
+2024-11-20 22:26:05,464 - INFO - Iniciando predicción en datos de testeo...
+2024-11-20 22:26:05,465 - INFO - Predicciones realizadas.
+2024-11-20 22:26:05,466 - INFO - Cálculo de métricas completado.
+2024-11-20 22:26:05,476 - INFO - Resultados de predicción procesados exitosamente.
+2024-11-20 22:26:05,476 - INFO - Resultados de predicción procesados exitosamente.
+2024-11-20 22:26:05,476 - INFO - Detalles de las predicciones y métricas:
+2024-11-20 22:26:05,476 - INFO - Modelo: regression
+2024-11-20 22:26:05,476 - INFO - Total de predicciones: 133
+2024-11-20 22:26:05,476 - INFO - Métricas de rendimiento:
+2024-11-20 22:26:05,476 - INFO -   Error cuadrático medio: 20385346.198358554
+2024-11-20 22:26:05,476 - INFO -   Error absoluto medio: 3189.040434656712
+2024-11-20 22:26:05,476 - INFO -   R2: 0.849838907787853
+2024-11-20 22:26:05,476 - INFO - Primeras 5 predicciones:
+2024-11-20 22:26:05,476 - INFO - {'charges': '36,397.58', 'prediccion_charges': '28,552.99', 'difference': '7,844.58', 'age': 19, 'sex': 'female', 'bmi': 34.7, 'children': 2, 'smoker': 'yes', 'region': 'southwest'}
+2024-11-20 22:26:05,476 - INFO - {'charges': '4,415.16', 'prediccion_charges': '5,162.98', 'difference': '-747.82', 'age': 34, 'sex': 'female', 'bmi': 27.72, 'children': 0, 'smoker': 'no', 'region': 'southeast'}
+2024-11-20 22:26:05,476 - INFO - {'charges': '7,639.42', 'prediccion_charges': '10,393.86', 'difference': '-2,754.44', 'age': 42, 'sex': 'female', 'bmi': 33.155, 'children': 1, 'smoker': 'no', 'region': 'northeast'}
+2024-11-20 22:26:05,476 - INFO - {'charges': '2,304.00', 'prediccion_charges': '1,347.26', 'difference': '956.75', 'age': 18, 'sex': 'male', 'bmi': 26.18, 'children': 2, 'smoker': 'no', 'region': 'southeast'}
+2024-11-20 22:26:05,476 - INFO - {'charges': '9,563.03', 'prediccion_charges': '12,353.02', 'difference': '-2,789.99', 'age': 48, 'sex': 'male', 'bmi': 34.3, 'children': 3, 'smoker': 'no', 'region': 'southwest'}
+2024-11-20 22:26:05,476 - INFO - Predicciones realizadas con éxito.
+2024-11-20 22:26:05,477 - INFO - Directorio 'uploads' eliminado exitosamente.

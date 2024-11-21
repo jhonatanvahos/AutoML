@@ -6,6 +6,7 @@
   min-height: 100vh;
   background-color: #e0f2f1;  /* Fondo gris suave */
   padding: 0;
+  padding-bottom: 100px;
   font-family: 'Roboto Mono', monospace;  /* Fuente tecnológica */
 }
 

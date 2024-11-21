@@ -35,8 +35,7 @@ function ConfigForm() {
       ridge: false,
       random_forest: false,
       ada_boost: false,
-      gradient_boosting: false,
-      lightGBM: false
+      gradient_boosting: false
     },
     models_classification: {
       logisticRegression: false,
@@ -60,12 +59,7 @@ function ConfigForm() {
       gradient_boosting: {
         n_estimators: [10,30,50,70,100],
         learning_rate: [0.1, 0.01, 0.001],
-        max_depth: [3, 5, 7]},
-      lightGBM:{
-        n_estimators: [10,50,200,500],
-        max_depth: [3, 5, 9],
-        learning_rate: [0.001, 0.01, 0.1],
-        num_leaves: [5, 10, 15]}
+        max_depth: [3, 5, 7]}
     },
     params_classification: {
       logisticRegression: { 
@@ -99,19 +93,23 @@ function ConfigForm() {
   const navigate = useNavigate();
   const location = useLocation();
   const { columns } = location.state;
-  const [loadingStatus, setLoadingStatus] = useState({
+  const [loadingStatus] = useState({
     message: 'Entrenamiento en proceso, por favor espere...',
     progress: 0,
   });
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setConfig({
-      ...config,
-      [name]: type === "checkbox" ? checked : value,
-      [name]: name === 'imputer_n_neighbors' ? parseInt(value) : value,
-    });
-  };
+  
+    const parsedValue = type === "number" ? parseFloat(value) : value;
+  
+    console.log(`Campo: ${name}, Valor: ${parsedValue}`); // Debug: verifica el valor
+  
+    setConfig((prevConfig) => ({
+      ...prevConfig,
+      [name]: type === "checkbox" ? checked : parsedValue,
+    }));
+  };  
 
   const handleColumnDeleteChange = (column) => {
     setConfig((prevConfig) => {

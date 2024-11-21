@@ -97,7 +97,7 @@ class ConfigData(BaseModel):
     model_competition: str
     models_regression: Dict[str, bool]
     models_classification: Dict[str, bool]
-    params_regression: Dict[str, Union[LinearRegressionParams, RidgeParams, RandomForestParams, AdaBoostParams, GradientBoostingParams, LightGBMParams]]
+    params_regression: Dict[str, Union[LinearRegressionParams, RidgeParams, RandomForestParams, AdaBoostParams, GradientBoostingParams]]
     params_classification: Dict[str, Union[LogisticRegressionParams, RandomForestClassifierParams, SVMParams, KNNParams, ModelParams, ModelParams, ModelParams]]
     advanced_options: bool
 

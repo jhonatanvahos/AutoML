@@ -27,12 +27,14 @@ class GridSearchModelRegression:
         self.scoring = self.config.get('scoring_regression', 'neg_mean_absolute_error')
         self.n_jobs = self.config.get('n_jobs', -1)
         self.model_competition = config.get('model_competition', 'Grid_Search')
-
+ 
         # Configuración de modelos y parámetros
         for model_name, model_flag in self.config['models_regression'].items():
             if model_flag:
+                logging.info(f"Modelo activado: {model_name}")
                 if model_name in self.config["params_regression"]:
                     hiperparameters = self.config["params_regression"][model_name] 
+                    logging.info(f"Hiperparametros: {hiperparameters}")
                     self.models[model_name] = {'model': model_name, 'hiperparameters': hiperparameters}
                 else:
                    logging.warning(f"No se encontraron hiperparámetros para el modelo {model_name}.")
@@ -85,7 +87,7 @@ class GridSearchModelRegression:
             logging.info(f"Score_{self.scoring}: {score}")
             logging.info(f"Tiempo transcurrido: {elapsed_time:.2f} minutos")
 
-            return results
+        return results
         
     def _select_model(self, model_name):
         """
