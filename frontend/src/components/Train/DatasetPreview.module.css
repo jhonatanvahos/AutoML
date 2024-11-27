@@ -57,34 +57,45 @@
   margin: 40px 0;
   font-weight: 700;
 }
-
-/* Tabla de datos */
+/* Tabla de resultados */
 .dataTable {
-  width: 90%;
+  min-width: 600px; /* Ancho mínimo para la tabla */
+  max-width: 100%; /* Limita el ancho para que se ajuste al contenedor */
+  margin: 0 auto; /* Centra la tabla dentro del contenedor */
   border-collapse: collapse;
-  margin: 20px 0;
   background-color: #ffffff;
-  box-shadow: var(--card-shadow);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-.dataTable th, .dataTable td {
-  border: 1px solid #ddd;
-  text-align: center;
-  padding: 10px;
+/* Estilo para la cabecera de la tabla */
+.dataTable thead {
+  background-color: #00796b;
+  color: white;
 }
 
+/* Ajuste del padding y tamaño de texto en las celdas */
 .dataTable th {
-  background-color: var(--header-bg-color);
-  color: var(--text-color);
-  font-weight: bold;
+  padding: 8px 10px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #f1f1f1;
+  white-space: nowrap;
+  border-bottom: 1px solid #ddd;
 }
 
-.dataTable tr:nth-child(even) {
-  background-color: #f2f2f2;
+.dataTable td {
+  padding: 8px 10px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  white-space: nowrap; /* Evita que el texto se desborde */
 }
 
-.dataTable tr:hover {
-  background-color: #d0f0e0;
+.dataTable .tbody .tr:hover {
+  background-color: #f1f1f1;
 }
 
 /* Botón de Continuar */

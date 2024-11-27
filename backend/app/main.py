@@ -197,7 +197,7 @@ async def upload_dataset(file: UploadFile = File(...)):
 @app.get("/preview-dataset")
 async def preview_dataset():
     """
-    Devuelve una vista previa del dataset cargado.
+    Devuelve una vista previa del dataset cargado, con imputación básica para valores nulos.
 
     Returns:
         dict: Vista previa del dataset, columnas numéricas y categóricas.
@@ -205,21 +205,31 @@ async def preview_dataset():
     global DATA
 
     try:
+        # Identificar columnas numéricas y categóricas
         numeric_columns = DATA.select_dtypes(include=["number"]).columns.tolist()
         categorical_columns = DATA.select_dtypes(include=["object", "category"]).columns.tolist()
 
+        # Crear una copia del dataset para evitar modificar el original
+        preview_data = DATA.copy()
+
+        # Imputación sencilla de valores nulos
+        preview_data[numeric_columns] = preview_data[numeric_columns].fillna(0)
+        preview_data[categorical_columns] = preview_data[categorical_columns].fillna("N/A")
+
+        # Preparar la respuesta
         response = {
-            "dataPreview": DATA.to_dict(orient="records"),
+            "dataPreview": preview_data.to_dict(orient="records"),
             "numericColumns": numeric_columns,
             "categoricalColumns": categorical_columns,
         }
-        logging.info("Datos para la previsualización cargados existosamente")
+        logging.info("Datos para la previsualización cargados exitosamente")
 
         return response
-    
+
     except Exception as e:
         logging.error(f"Error en la previsualización del dataset: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error previewing dataset: {str(e)}")
+
 
 @app.post("/update-config")
 async def update_config(config_data: ConfigData):

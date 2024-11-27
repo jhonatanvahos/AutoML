@@ -1,0 +1,197 @@
+2024-11-27 11:33:32,778 - INFO - Recibido el archivo: HRDataset_v14.csv
+2024-11-27 11:33:32,779 - INFO - Archivo guardado en: uploads/HRDataset_v14.csv
+2024-11-27 11:33:32,789 - INFO - CSV cargado exitosamente con el separador: ','
+2024-11-27 11:33:50,268 - INFO - Directorio del proyecto creado en: projects/HR
+2024-11-27 11:33:50,269 - INFO - JSON guardado en: app/config.json
+2024-11-27 11:33:50,270 - INFO - --------------------------------------------------------------
+2024-11-27 11:33:50,270 - INFO - PROYECTO HR
+2024-11-27 11:33:50,270 - INFO - --------------------------------------------------------------
+2024-11-27 11:33:50,301 - INFO - Datos para la previsualización cargados exitosamente
+2024-11-27 11:35:51,134 - INFO - JSON guardado en: app/config.json
+2024-11-27 11:35:51,137 - INFO - --------------------------------------------------------------
+2024-11-27 11:35:51,137 - INFO - --------------- ENTRENAMIENTO DE MODELOS ---------------------
+2024-11-27 11:35:51,137 - INFO - --------------------------------------------------------------
+2024-11-27 11:35:51,137 - INFO - Cargando el archivo de configuración: app/config.json
+2024-11-27 11:35:51,137 - INFO - Archivo de configuración cargado correctamente.
+2024-11-27 11:35:51,138 - INFO - Directorios creados en projects/HR
+2024-11-27 11:35:51,138 - INFO - Modelo activado: linearRegression
+2024-11-27 11:35:51,138 - INFO - Hiperparametros: {'fit_intercept': [True, False]}
+2024-11-27 11:35:51,138 - INFO - --------------------------------------------------------------
+2024-11-27 11:35:51,138 - INFO - ------------ Preprocesamiento de los datos -------------------
+2024-11-27 11:35:51,138 - INFO - --------------------------------------------------------------
+2024-11-27 11:35:51,138 - INFO - Cargando dataset desde projects/HR/HRDataset_v14.csv
+2024-11-27 11:35:51,145 - INFO - Archivo CSV cargado correctamente con separador ','
+2024-11-27 11:35:51,185 - INFO - Dataset cargado y procesado. Dimensiones: (311, 32)
+2024-11-27 11:35:51,185 - INFO - Separando datos para predicciones...
+2024-11-27 11:35:51,187 - INFO - Datos para predicciones guardados en 'projects/HR/predict.csv'
+2024-11-27 11:35:51,187 - INFO - Eliminando valores atípicos usando Z-score...
+2024-11-27 11:35:51,189 - INFO - Cantidad de datos después de eliminar atípicos: (294, 31)
+2024-11-27 11:35:51,189 - INFO - Finaliza eliminación de valores atípicos exitosamente!
+2024-11-27 11:35:51,189 - INFO - Inicia el entrenamiento y ajuste de transformadores...
+2024-11-27 11:35:51,190 - INFO - Imputando datos numéricos...
+2024-11-27 11:35:51,191 - INFO - Imputación numérica realizada.
+2024-11-27 11:35:51,191 - INFO - Imputando datos categóricos...
+2024-11-27 11:35:51,191 - INFO - No hay datos faltantes en las columnas categóricas.
+2024-11-27 11:35:51,191 - INFO - Imputanción de datos realizada exitosamente!
+2024-11-27 11:35:51,191 - INFO - Escalando datos numéricos...
+2024-11-27 11:35:51,192 - INFO - Escalado de datos realizado exitosamente!
+2024-11-27 11:35:51,192 - INFO - Codificando datos categóricos...
+2024-11-27 11:35:51,193 - INFO - Codificación de variables categóricas realizada.
+2024-11-27 11:35:51,193 - INFO - Codificación de datos realizada exitosamente!
+2024-11-27 11:35:51,193 - INFO - Escalando variable objetivo...
+2024-11-27 11:35:51,193 - INFO - Escalado de variable objetivo realizada exitosamente!
+2024-11-27 11:35:51,193 - INFO - Finaliza exitosamente el entrenamiento y ajuste de transformadores!
+2024-11-27 11:35:51,194 - INFO - Inicia la aplicacion de los transformadores...
+2024-11-27 11:35:51,194 - INFO - Imputando datos nulos...
+2024-11-27 11:35:51,194 - INFO - Imputando datos nulos en variables numéricas.
+2024-11-27 11:35:51,195 - INFO - Codificando datos categóricos.
+2024-11-27 11:35:51,198 - INFO - Aplicando el método de escalado 'standard' a la variable objetivo.
+2024-11-27 11:35:51,198 - INFO - Escalado de la variable objetivo completado.
+2024-11-27 11:35:51,198 - INFO - Escalando datos numéricos.
+2024-11-27 11:35:51,199 - INFO - Escalado de la datos numéricos completado.
+2024-11-27 11:35:51,199 - INFO - Finaliza exitosamente la aplicacion de transformadores!
+2024-11-27 11:35:51,199 - INFO - Iniciando la selección de características...
+2024-11-27 11:35:51,199 - INFO - Cantidad de características a seleccionar: 397
+2024-11-27 11:35:51,199 - INFO - Cantidad de características iniciales: 568
+2024-11-27 11:35:51,201 - INFO - Características seleccionadas: ['MarriedID', 'MaritalStatusID', 'GenderID', 'EmpStatusID', 'DeptID', 'PerfScoreID', 'FromDiversityJobFairID', 'Termd', 'PositionID', 'Zip', 'ManagerID', 'EngagementSurvey', 'EmpSatisfaction', 'SpecialProjectsCount', 'DaysLateLast30', 'Absences', 'Position_accountant i', 'Position_administrative assistant', 'Position_area sales manager', 'Position_bi developer', 'Position_bi director', 'Position_cio', 'Position_data analyst', 'Position_data analyst ', 'Position_data architect', 'Position_database administrator', 'Position_director of operations', 'Position_director of sales', 'Position_enterprise architect', 'Position_it director', 'Position_it manager - db', 'Position_it manager - infra', 'Position_it manager - support', 'Position_it support', 'Position_network engineer', 'Position_president & ceo', 'Position_principal data architect', 'Position_production manager', 'Position_production technician i', 'Position_production technician ii', 'Position_senior bi developer', 'Position_shared services manager', 'Position_software engineer', 'Position_software engineering manager', 'Position_sr. accountant', 'Position_sr. dba', 'Position_sr. network engineer', 'State_ct', 'State_ma', 'State_me', 'State_mt', 'State_oh', 'State_ri', 'DOB_01/04/64', 'DOB_01/04/84', 'DOB_01/07/74', 'DOB_01/07/88', 'DOB_01/12/73', 'DOB_01/12/74', 'DOB_01/16/67', 'DOB_01/18/52', 'DOB_01/19/76', 'DOB_01/28/91', 'DOB_01/31/87', 'DOB_02/02/65', 'DOB_02/02/83', 'DOB_02/08/70', 'DOB_02/09/72', 'DOB_02/09/83', 'DOB_02/11/70', 'DOB_02/12/79', 'DOB_02/14/73', 'DOB_02/18/83', 'DOB_02/20/79', 'DOB_02/21/74', 'DOB_02/21/84', 'DOB_02/24/79', 'DOB_02/25/51', 'DOB_03/10/75', 'DOB_03/16/81', 'DOB_03/17/66', 'DOB_03/17/88', 'DOB_03/18/87', 'DOB_03/19/83', 'DOB_03/22/66', 'DOB_03/23/77', 'DOB_03/26/81', 'DOB_03/28/83', 'DOB_04/03/75', 'DOB_04/04/79', 'DOB_04/04/86', 'DOB_04/04/87', 'DOB_04/05/73', 'DOB_04/05/87', 'DOB_04/06/79', 'DOB_04/08/77', 'DOB_04/10/87', 'DOB_04/13/64', 'DOB_04/14/55', 'DOB_04/14/81', 'DOB_04/15/88', 'DOB_04/16/79', 'DOB_04/17/86', 'DOB_04/18/80', 'DOB_04/19/67', 'DOB_04/20/85', 'DOB_04/23/86', 'DOB_04/25/70', 'DOB_04/26/86', 'DOB_05/02/78', 'DOB_05/02/89', 'DOB_05/04/82', 'DOB_05/05/75', 'DOB_05/06/83', 'DOB_05/06/89', 'DOB_05/08/80', 'DOB_05/09/65', 'DOB_05/12/80', 'DOB_05/12/89', 'DOB_05/15/70', 'DOB_05/15/87', 'DOB_05/19/88', 'DOB_05/21/79', 'DOB_05/21/87', 'DOB_05/22/77', 'DOB_05/24/79', 'DOB_05/24/87', 'DOB_05/27/73', 'DOB_05/31/74', 'DOB_06/03/67', 'DOB_06/03/86', 'DOB_06/05/67', 'DOB_06/06/68', 'DOB_06/06/86', 'DOB_06/10/84', 'DOB_06/10/86', 'DOB_06/14/83', 'DOB_06/18/87', 'DOB_06/18/92', 'DOB_06/19/61', 'DOB_06/30/89', 'DOB_07/01/72', 'DOB_07/03/72', 'DOB_07/05/79', 'DOB_07/05/80', 'DOB_07/07/84', 'DOB_07/07/86', 'DOB_07/08/81', 'DOB_07/09/70', 'DOB_07/10/71', 'DOB_07/10/88', 'DOB_07/11/89', 'DOB_07/15/77', 'DOB_07/18/89', 'DOB_07/20/83', 'DOB_07/20/86', 'DOB_07/22/82', 'DOB_07/24/86', 'DOB_07/30/64', 'DOB_07/30/83', 'DOB_08/07/86', 'DOB_08/09/74', 'DOB_08/10/81', 'DOB_08/12/79', 'DOB_08/15/68', 'DOB_08/17/78', 'DOB_08/17/86', 'DOB_08/17/92', 'DOB_08/18/52', 'DOB_08/19/59', 'DOB_08/24/83', 'DOB_08/24/85', 'DOB_08/24/90', 'DOB_08/25/78', 'DOB_08/25/82', 'DOB_08/25/89', 'DOB_08/26/80', 'DOB_08/26/86', 'DOB_08/30/79', 'DOB_09/02/83', 'DOB_09/04/83', 'DOB_09/05/84', 'DOB_09/05/91', 'DOB_09/08/89', 'DOB_09/14/79', 'DOB_09/15/85', 'DOB_09/16/84', 'DOB_09/16/85', 'DOB_09/21/54', 'DOB_09/22/70', 'DOB_09/22/76', 'DOB_09/29/69', 'DOB_10/01/90', 'DOB_10/02/69', 'DOB_10/05/86', 'DOB_10/05/88', 'DOB_10/07/86', 'DOB_10/08/70', 'DOB_10/09/74', 'DOB_10/10/68', 'DOB_10/11/81', 'DOB_10/15/84', 'DOB_10/18/81', 'DOB_10/22/75', 'DOB_10/23/71', 'DOB_10/24/87', 'DOB_10/26/81', 'DOB_10/27/70', 'DOB_10/30/63', 'DOB_10/31/77', 'DOB_11/05/78', 'DOB_11/06/84', 'DOB_11/06/86', 'DOB_11/07/86', 'DOB_11/07/87', 'DOB_11/08/83', 'DOB_11/09/72', 'DOB_11/10/77', 'DOB_11/14/55', 'DOB_11/15/76', 'DOB_11/15/82', 'DOB_11/21/72', 'DOB_11/22/66', 'DOB_11/22/77', 'DOB_11/23/81', 'DOB_11/24/79', 'DOB_11/25/78', 'DOB_12/02/83', 'DOB_12/05/74', 'DOB_12/08/73', 'DOB_12/09/86', 'DOB_12/11/76', 'DOB_12/17/87', 'DOB_12/21/74', 'DOB_12/22/70', 'Sex_f', 'Sex_m ', 'MaritalDesc_divorced', 'MaritalDesc_married', 'MaritalDesc_separated', 'MaritalDesc_single', 'MaritalDesc_widowed', 'CitizenDesc_eligible noncitizen', 'CitizenDesc_us citizen', 'HispanicLatino_no', 'HispanicLatino_yes', 'RaceDesc_black or african american', 'RaceDesc_hispanic', 'RaceDesc_two or more races', 'RaceDesc_white', 'TermReason_another position', 'TermReason_gross misconduct', 'TermReason_hours', 'TermReason_learned that he is a gangster', 'TermReason_maternity leave - did not return', 'TermReason_military', 'TermReason_more money', 'TermReason_n/a-stillemployed', 'TermReason_no-call, no-show', 'TermReason_performance', 'TermReason_relocation out of area', 'TermReason_retiring', 'TermReason_return to school', 'TermReason_unhappy', 'EmploymentStatus_active', 'EmploymentStatus_terminated for cause', 'EmploymentStatus_voluntarily terminated', 'Department_executive office', 'Department_it/is', 'Department_production       ', 'Department_sales', 'Department_software engineering', 'ManagerName_alex sweetwater', 'ManagerName_amy dunn', 'ManagerName_board of directors', 'ManagerName_brandon r. leblanc', 'ManagerName_brannon miller', 'ManagerName_brian champaigne', 'ManagerName_david stanley', 'ManagerName_elijiah gray', 'ManagerName_eric dougall', 'ManagerName_janet king', 'ManagerName_jennifer zamora', 'ManagerName_kelley spirea', 'ManagerName_ketsia liebig', 'ManagerName_kissy sullivan', 'ManagerName_lynn daneault', 'ManagerName_michael albert', 'ManagerName_peter monroe', 'ManagerName_simon roup', 'ManagerName_webster butler', 'RecruitmentSource_careerbuilder', 'RecruitmentSource_diversity job fair', 'RecruitmentSource_employee referral', 'RecruitmentSource_google search', 'RecruitmentSource_indeed', 'RecruitmentSource_linkedin', 'RecruitmentSource_on-line web application', 'RecruitmentSource_other', 'RecruitmentSource_website', 'PerformanceScore_exceeds', 'PerformanceScore_fully meets', 'PerformanceScore_pip', 'LastPerformanceReview_Date_1/10/2013', 'LastPerformanceReview_Date_1/10/2015', 'LastPerformanceReview_Date_1/10/2016', 'LastPerformanceReview_Date_1/10/2019', 'LastPerformanceReview_Date_1/11/2019', 'LastPerformanceReview_Date_1/15/2014', 'LastPerformanceReview_Date_1/15/2015', 'LastPerformanceReview_Date_1/15/2017', 'LastPerformanceReview_Date_1/15/2019', 'LastPerformanceReview_Date_1/16/2016', 'LastPerformanceReview_Date_1/16/2019', 'LastPerformanceReview_Date_1/17/2019', 'LastPerformanceReview_Date_1/18/2019', 'LastPerformanceReview_Date_1/2/2012', 'LastPerformanceReview_Date_1/2/2019', 'LastPerformanceReview_Date_1/20/2015', 'LastPerformanceReview_Date_1/21/2019', 'LastPerformanceReview_Date_1/24/2019', 'LastPerformanceReview_Date_1/25/2019', 'LastPerformanceReview_Date_1/28/2019', 'LastPerformanceReview_Date_1/29/2019', 'LastPerformanceReview_Date_1/3/2019', 'LastPerformanceReview_Date_1/30/2013', 'LastPerformanceReview_Date_1/30/2016', 'LastPerformanceReview_Date_1/31/2019', 'LastPerformanceReview_Date_1/4/2015', 'LastPerformanceReview_Date_1/4/2019', 'LastPerformanceReview_Date_1/6/2012', 'LastPerformanceReview_Date_1/7/2012', 'LastPerformanceReview_Date_1/7/2019', 'LastPerformanceReview_Date_2/1/2015', 'LastPerformanceReview_Date_2/1/2016', 'LastPerformanceReview_Date_2/11/2019', 'LastPerformanceReview_Date_2/12/2017', 'LastPerformanceReview_Date_2/13/2018', 'LastPerformanceReview_Date_2/13/2019', 'LastPerformanceReview_Date_2/14/2018', 'LastPerformanceReview_Date_2/15/2012', 'LastPerformanceReview_Date_2/15/2017', 'LastPerformanceReview_Date_2/15/2019', 'LastPerformanceReview_Date_2/18/2019', 'LastPerformanceReview_Date_2/19/2019', 'LastPerformanceReview_Date_2/2/2015', 'LastPerformanceReview_Date_2/21/2019', 'LastPerformanceReview_Date_2/22/2019', 'LastPerformanceReview_Date_2/24/2016', 'LastPerformanceReview_Date_2/25/2019', 'LastPerformanceReview_Date_2/26/2019', 'LastPerformanceReview_Date_2/28/2019', 'LastPerformanceReview_Date_2/3/2016', 'LastPerformanceReview_Date_2/4/2016', 'LastPerformanceReview_Date_2/4/2019', 'LastPerformanceReview_Date_2/5/2018', 'LastPerformanceReview_Date_2/5/2019', 'LastPerformanceReview_Date_2/6/2011', 'LastPerformanceReview_Date_2/6/2015', 'LastPerformanceReview_Date_2/6/2019', 'LastPerformanceReview_Date_2/7/2019', 'LastPerformanceReview_Date_2/8/2019', 'LastPerformanceReview_Date_3/1/2015', 'LastPerformanceReview_Date_3/2/2013', 'LastPerformanceReview_Date_3/2/2016', 'LastPerformanceReview_Date_3/2/2017', 'LastPerformanceReview_Date_3/2/2018', 'LastPerformanceReview_Date_3/30/2015', 'LastPerformanceReview_Date_3/4/2013', 'LastPerformanceReview_Date_3/4/2014', 'LastPerformanceReview_Date_3/6/2016', 'LastPerformanceReview_Date_4/1/2017', 'LastPerformanceReview_Date_4/12/2012', 'LastPerformanceReview_Date_4/12/2018', 'LastPerformanceReview_Date_4/15/2015', 'LastPerformanceReview_Date_4/19/2014', 'LastPerformanceReview_Date_4/2/2013', 'LastPerformanceReview_Date_4/2/2016', 'LastPerformanceReview_Date_4/2/2018', 'LastPerformanceReview_Date_4/20/2015', 'LastPerformanceReview_Date_4/29/2016', 'LastPerformanceReview_Date_4/5/2017', 'LastPerformanceReview_Date_4/6/2017', 'LastPerformanceReview_Date_4/9/2017', 'LastPerformanceReview_Date_5/1/2016', 'LastPerformanceReview_Date_5/13/2014', 'LastPerformanceReview_Date_5/15/2014', 'LastPerformanceReview_Date_5/2/2015', 'LastPerformanceReview_Date_5/4/2011', 'LastPerformanceReview_Date_5/6/2015', 'LastPerformanceReview_Date_5/6/2016', 'LastPerformanceReview_Date_6/2/2014', 'LastPerformanceReview_Date_7/2/2018', 'LastPerformanceReview_Date_8/10/2012', 'LastPerformanceReview_Date_8/15/2013', 'LastPerformanceReview_Date_8/16/2015', 'LastPerformanceReview_Date_9/2/2015']
+2024-11-27 11:35:51,202 - INFO - Finaliza la selección de características exitosamente!
+2024-11-27 11:35:51,202 - INFO - Guardando transformadores...
+2024-11-27 11:35:51,205 - INFO - Las transformaciones se guardaron en 'projects/HR/transforms/transform.pkl'.
+2024-11-27 11:35:51,205 - INFO - Obteniendo el DataFrame procesado...
+2024-11-27 11:35:51,205 - INFO - Actualizando diccionario...
+2024-11-27 11:35:51,205 - INFO - Configuración guardada en app/config.json.
+2024-11-27 11:35:51,205 - INFO - Preprocesamiento completado con éxito.
+2024-11-27 11:35:51,205 - INFO - --------------------------------------------------------------
+2024-11-27 11:35:51,205 - INFO - --------------- Competencia de Modelos -----------------------
+2024-11-27 11:35:51,205 - INFO - --------------------------------------------------------------
+2024-11-27 11:35:51,205 - INFO - Inicia entrenamiento de Modelos de Regresión
+2024-11-27 11:35:51,205 - INFO - Iniciando búsqueda de hiperparámetros.
+2024-11-27 11:35:51,205 - INFO - --------------------------------------------------------------
+2024-11-27 11:35:51,205 - INFO - Probando hiperparámetros para linearRegression: {'fit_intercept': [True, False]}
+2024-11-27 11:35:53,003 - INFO - Modelo guardado en projects/HR/models/linearRegression.pkl.
+2024-11-27 11:35:53,004 - INFO - Modelo: linearRegression
+2024-11-27 11:35:53,004 - INFO - Mejores hiperparámetros: {'fit_intercept': False}
+2024-11-27 11:35:53,004 - INFO - Score_neg_mean_squared_error: -0.934310999254459
+2024-11-27 11:35:53,004 - INFO - Tiempo transcurrido: 0.03 minutos
+2024-11-27 11:35:53,004 - INFO - Entrenamiento completado con éxito.
+2024-11-27 11:36:00,197 - INFO - Actualizando los parámetros para guardar el modelo seleccionado...
+2024-11-27 11:36:00,199 - INFO - JSON guardado en: projects/HR/config_project.json
+2024-11-27 11:36:02,769 - INFO - Listado de proyectos exitosa
+2024-11-27 11:36:06,256 - INFO - --------------------------------------------------------------
+2024-11-27 11:36:06,256 - INFO - ---------------------- PREDICCION ----------------------------
+2024-11-27 11:36:06,256 - INFO - --------------------------------------------------------------
+2024-11-27 11:36:06,256 - INFO - Cargando el archivo de configuración: projects/HR/config_project.json
+2024-11-27 11:36:06,257 - INFO - Archivo de configuración cargado correctamente.
+2024-11-27 11:36:06,258 - INFO - Modelo activado: linearRegression
+2024-11-27 11:36:06,258 - INFO - Hiperparametros: {'fit_intercept': [True, False]}
+2024-11-27 11:36:06,258 - INFO - --------------------------------------------------------------
+2024-11-27 11:36:06,258 - INFO - ---------------- Adecuacion de los datos ---------------------
+2024-11-27 11:36:06,258 - INFO - --------------------------------------------------------------
+2024-11-27 11:36:06,258 - INFO - Cargando datos para predicción.
+2024-11-27 11:36:06,258 - INFO - Cargando archivo: projects/HR/predict.csv
+2024-11-27 11:36:06,265 - INFO - Archivo CSV cargado correctamente con separador ','
+2024-11-27 11:36:06,265 - INFO - Estandarizando columnas categóricas a minúsculas
+2024-11-27 11:36:06,271 - INFO - Tamaño de los datos cargados: (31, 32)
+2024-11-27 11:36:06,272 - INFO - Cargando y aplicando transformadores.
+2024-11-27 11:36:06,272 - INFO - Cargando transformadores desde 'projects/HR/transforms/transform.pkl'...
+2024-11-27 11:36:06,275 - INFO - Las transformaciones se cargaron desde 'projects/HR/transforms/transform.pkl'.
+2024-11-27 11:36:06,275 - INFO - Aplicando transformadores a los datos de entrada...
+2024-11-27 11:36:06,292 - INFO - Columnas seleccionadas: Index(['MarriedID', 'MaritalStatusID', 'GenderID', 'EmpStatusID', 'DeptID',
+       'PerfScoreID', 'FromDiversityJobFairID', 'Termd', 'PositionID', 'Zip',
+       ...
+       'LastPerformanceReview_Date_5/2/2015',
+       'LastPerformanceReview_Date_5/4/2011',
+       'LastPerformanceReview_Date_5/6/2015',
+       'LastPerformanceReview_Date_5/6/2016',
+       'LastPerformanceReview_Date_6/2/2014',
+       'LastPerformanceReview_Date_7/2/2018',
+       'LastPerformanceReview_Date_8/10/2012',
+       'LastPerformanceReview_Date_8/15/2013',
+       'LastPerformanceReview_Date_8/16/2015',
+       'LastPerformanceReview_Date_9/2/2015'],
+      dtype='object', length=397)
+2024-11-27 11:36:06,292 - INFO - Cargando el modelo linearRegression.
+2024-11-27 11:36:06,293 - INFO - Modelo cargado desde projects/HR/models/linearRegression.pkl.
+2024-11-27 11:36:06,293 - INFO - --------------------------------------------------------------
+2024-11-27 11:36:06,293 - INFO - ------------------ Realizar predicción -----------------------
+2024-11-27 11:36:06,293 - INFO - --------------------------------------------------------------
+2024-11-27 11:36:06,293 - INFO - Realizando predicciones con datos etiquetados.
+2024-11-27 11:36:06,293 - INFO - Iniciando predicción en datos de testeo...
+2024-11-27 11:36:06,295 - INFO - Predicciones realizadas.
+2024-11-27 11:36:06,296 - INFO - Cálculo de métricas completado.
+2024-11-27 11:36:06,305 - INFO - Resultados de predicción procesados exitosamente.
+2024-11-27 11:36:06,305 - INFO - Resultados de predicción procesados exitosamente.
+2024-11-27 11:36:06,305 - INFO - Detalles de las predicciones y métricas:
+2024-11-27 11:36:06,305 - INFO - Modelo: regression
+2024-11-27 11:36:06,305 - INFO - Total de predicciones: 31
+2024-11-27 11:36:06,305 - INFO - Métricas de rendimiento:
+2024-11-27 11:36:06,305 - INFO -   Error cuadrático medio: 2.1065738815054023e+25
+2024-11-27 11:36:06,305 - INFO -   Error absoluto medio: 824342140001.6614
+2024-11-27 11:36:06,305 - INFO -   R2: -1.6162052760625836e+16
+2024-11-27 11:36:06,305 - INFO - Primeras 5 predicciones:
+2024-11-27 11:36:06,305 - INFO - {'Salary': '59,144.00', 'prediccion_Salary': '59,157.70', 'difference': '-13.70', 'MarriedID': 0, 'MaritalStatusID': 0, 'GenderID': 1, 'EmpStatusID': 4, 'DeptID': 5, 'PerfScoreID': 2, 'FromDiversityJobFairID': 0, 'Termd': 1, 'PositionID': 19, 'Position': 'production technician i', 'State': 'ma', 'Zip': 1880, 'DOB': '08/12/79', 'Sex': 'm ', 'MaritalDesc': 'single', 'CitizenDesc': 'us citizen', 'HispanicLatino': 'no', 'RaceDesc': 'black or african american', 'TermReason': 'performance', 'EmploymentStatus': 'terminated for cause', 'Department': 'production       ', 'ManagerName': 'kissy sullivan', 'ManagerID': 20.0, 'RecruitmentSource': 'linkedin', 'PerformanceScore': 'needs improvement', 'EngagementSurvey': 2.0, 'EmpSatisfaction': 3, 'SpecialProjectsCount': 0, 'LastPerformanceReview_Date': '5/1/2016', 'DaysLateLast30': 5, 'Absences': 16}
+2024-11-27 11:36:06,305 - INFO - {'Salary': '250,000.00', 'prediccion_Salary': '250,037.63', 'difference': '-37.63', 'MarriedID': 1, 'MaritalStatusID': 1, 'GenderID': 0, 'EmpStatusID': 1, 'DeptID': 2, 'PerfScoreID': 3, 'FromDiversityJobFairID': 0, 'Termd': 0, 'PositionID': 16, 'Position': 'president & ceo', 'State': 'ma', 'Zip': 1902, 'DOB': '09/21/54', 'Sex': 'f', 'MaritalDesc': 'married', 'CitizenDesc': 'us citizen', 'HispanicLatino': 'yes', 'RaceDesc': 'white', 'TermReason': 'n/a-stillemployed', 'EmploymentStatus': 'active', 'Department': 'executive office', 'ManagerName': 'board of directors', 'ManagerID': 9.0, 'RecruitmentSource': 'indeed', 'PerformanceScore': 'fully meets', 'EngagementSurvey': 4.83, 'EmpSatisfaction': 3, 'SpecialProjectsCount': 0, 'LastPerformanceReview_Date': '1/17/2019', 'DaysLateLast30': 0, 'Absences': 10}
+2024-11-27 11:36:06,305 - INFO - {'Salary': '65,729.00', 'prediccion_Salary': '64,775.79', 'difference': '953.21', 'MarriedID': 0, 'MaritalStatusID': 0, 'GenderID': 0, 'EmpStatusID': 1, 'DeptID': 6, 'PerfScoreID': 3, 'FromDiversityJobFairID': 0, 'Termd': 0, 'PositionID': 21, 'Position': 'sales manager', 'State': 'vt', 'Zip': 5473, 'DOB': '04/19/90', 'Sex': 'f', 'MaritalDesc': 'single', 'CitizenDesc': 'us citizen', 'HispanicLatino': 'no', 'RaceDesc': 'white', 'TermReason': 'n/a-stillemployed', 'EmploymentStatus': 'active', 'Department': 'sales', 'ManagerName': 'debra houlihan', 'ManagerID': 15.0, 'RecruitmentSource': 'indeed', 'PerformanceScore': 'fully meets', 'EngagementSurvey': 4.62, 'EmpSatisfaction': 4, 'SpecialProjectsCount': 0, 'LastPerformanceReview_Date': '1/24/2019', 'DaysLateLast30': 0, 'Absences': 8}
+2024-11-27 11:36:06,305 - INFO - {'Salary': '74,241.00', 'prediccion_Salary': '71,704.66', 'difference': '2,536.34', 'MarriedID': 0, 'MaritalStatusID': 0, 'GenderID': 0, 'EmpStatusID': 1, 'DeptID': 6, 'PerfScoreID': 4, 'FromDiversityJobFairID': 0, 'Termd': 0, 'PositionID': 3, 'Position': 'area sales manager', 'State': 'ca', 'Zip': 90007, 'DOB': '11/08/88', 'Sex': 'f', 'MaritalDesc': 'single', 'CitizenDesc': 'us citizen', 'HispanicLatino': 'no', 'RaceDesc': 'white', 'TermReason': 'n/a-stillemployed', 'EmploymentStatus': 'active', 'Department': 'sales', 'ManagerName': 'lynn daneault', 'ManagerID': 21.0, 'RecruitmentSource': 'indeed', 'PerformanceScore': 'exceeds', 'EngagementSurvey': 4.77, 'EmpSatisfaction': 5, 'SpecialProjectsCount': 0, 'LastPerformanceReview_Date': '1/27/2019', 'DaysLateLast30': 0, 'Absences': 14}
+2024-11-27 11:36:06,306 - INFO - {'Salary': '62,425.00', 'prediccion_Salary': '62,449.43', 'difference': '-24.43', 'MarriedID': 0, 'MaritalStatusID': 2, 'GenderID': 0, 'EmpStatusID': 5, 'DeptID': 5, 'PerfScoreID': 4, 'FromDiversityJobFairID': 0, 'Termd': 1, 'PositionID': 19, 'Position': 'production technician i', 'State': 'ma', 'Zip': 2359, 'DOB': '03/26/73', 'Sex': 'f', 'MaritalDesc': 'divorced', 'CitizenDesc': 'us citizen', 'HispanicLatino': 'no', 'RaceDesc': 'white', 'TermReason': 'unhappy', 'EmploymentStatus': 'voluntarily terminated', 'Department': 'production       ', 'ManagerName': 'david stanley', 'ManagerID': 14.0, 'RecruitmentSource': 'linkedin', 'PerformanceScore': 'exceeds', 'EngagementSurvey': 4.1, 'EmpSatisfaction': 4, 'SpecialProjectsCount': 0, 'LastPerformanceReview_Date': '3/2/2015', 'DaysLateLast30': 0, 'Absences': 16}
+2024-11-27 11:36:06,306 - INFO - Predicciones realizadas con éxito.
+2024-11-27 11:36:06,306 - INFO - Directorio 'uploads' eliminado exitosamente.
+2024-11-27 11:37:23,917 - INFO - --------------------------------------------------------------
+2024-11-27 11:37:23,917 - INFO - ---------------------- PREDICCION ----------------------------
+2024-11-27 11:37:23,917 - INFO - --------------------------------------------------------------
+2024-11-27 11:37:23,917 - INFO - Cargando el archivo de configuración: projects/HR/config_project.json
+2024-11-27 11:37:23,918 - INFO - Archivo de configuración cargado correctamente.
+2024-11-27 11:37:23,918 - INFO - Modelo activado: linearRegression
+2024-11-27 11:37:23,919 - INFO - Hiperparametros: {'fit_intercept': [True, False]}
+2024-11-27 11:37:23,919 - INFO - --------------------------------------------------------------
+2024-11-27 11:37:23,919 - INFO - ---------------- Adecuacion de los datos ---------------------
+2024-11-27 11:37:23,919 - INFO - --------------------------------------------------------------
+2024-11-27 11:37:23,919 - INFO - Cargando datos para predicción.
+2024-11-27 11:37:23,919 - INFO - Cargando archivo: projects/HR/predict.csv
+2024-11-27 11:37:23,925 - INFO - Archivo CSV cargado correctamente con separador ','
+2024-11-27 11:37:23,925 - INFO - Estandarizando columnas categóricas a minúsculas
+2024-11-27 11:37:23,931 - INFO - Tamaño de los datos cargados: (31, 32)
+2024-11-27 11:37:23,931 - INFO - Cargando y aplicando transformadores.
+2024-11-27 11:37:23,932 - INFO - Cargando transformadores desde 'projects/HR/transforms/transform.pkl'...
+2024-11-27 11:37:23,934 - INFO - Las transformaciones se cargaron desde 'projects/HR/transforms/transform.pkl'.
+2024-11-27 11:37:23,935 - INFO - Aplicando transformadores a los datos de entrada...
+2024-11-27 11:37:23,945 - INFO - Columnas seleccionadas: Index(['MarriedID', 'MaritalStatusID', 'GenderID', 'EmpStatusID', 'DeptID',
+       'PerfScoreID', 'FromDiversityJobFairID', 'Termd', 'PositionID', 'Zip',
+       ...
+       'LastPerformanceReview_Date_5/2/2015',
+       'LastPerformanceReview_Date_5/4/2011',
+       'LastPerformanceReview_Date_5/6/2015',
+       'LastPerformanceReview_Date_5/6/2016',
+       'LastPerformanceReview_Date_6/2/2014',
+       'LastPerformanceReview_Date_7/2/2018',
+       'LastPerformanceReview_Date_8/10/2012',
+       'LastPerformanceReview_Date_8/15/2013',
+       'LastPerformanceReview_Date_8/16/2015',
+       'LastPerformanceReview_Date_9/2/2015'],
+      dtype='object', length=397)
+2024-11-27 11:37:23,945 - INFO - Cargando el modelo linearRegression.
+2024-11-27 11:37:23,946 - INFO - Modelo cargado desde projects/HR/models/linearRegression.pkl.
+2024-11-27 11:37:23,946 - INFO - --------------------------------------------------------------
+2024-11-27 11:37:23,947 - INFO - ------------------ Realizar predicción -----------------------
+2024-11-27 11:37:23,947 - INFO - --------------------------------------------------------------
+2024-11-27 11:37:23,947 - INFO - Realizando predicciones con datos etiquetados.
+2024-11-27 11:37:23,947 - INFO - Iniciando predicción en datos de testeo...
+2024-11-27 11:37:23,949 - INFO - Predicciones realizadas.
+2024-11-27 11:37:23,950 - INFO - Cálculo de métricas completado.
+2024-11-27 11:37:23,957 - INFO - Resultados de predicción procesados exitosamente.
+2024-11-27 11:37:23,957 - INFO - Resultados de predicción procesados exitosamente.
+2024-11-27 11:37:23,957 - INFO - Detalles de las predicciones y métricas:
+2024-11-27 11:37:23,957 - INFO - Modelo: regression
+2024-11-27 11:37:23,957 - INFO - Total de predicciones: 31
+2024-11-27 11:37:23,957 - INFO - Métricas de rendimiento:
+2024-11-27 11:37:23,957 - INFO -   Error cuadrático medio: 2.1065738815054023e+25
+2024-11-27 11:37:23,957 - INFO -   Error absoluto medio: 824342140001.6614
+2024-11-27 11:37:23,957 - INFO -   R2: -1.6162052760625836e+16
+2024-11-27 11:37:23,957 - INFO - Primeras 5 predicciones:
+2024-11-27 11:37:23,958 - INFO - {'Salary': '59,144.00', 'prediccion_Salary': '59,157.70', 'difference': '-13.70', 'MarriedID': 0, 'MaritalStatusID': 0, 'GenderID': 1, 'EmpStatusID': 4, 'DeptID': 5, 'PerfScoreID': 2, 'FromDiversityJobFairID': 0, 'Termd': 1, 'PositionID': 19, 'Position': 'production technician i', 'State': 'ma', 'Zip': 1880, 'DOB': '08/12/79', 'Sex': 'm ', 'MaritalDesc': 'single', 'CitizenDesc': 'us citizen', 'HispanicLatino': 'no', 'RaceDesc': 'black or african american', 'TermReason': 'performance', 'EmploymentStatus': 'terminated for cause', 'Department': 'production       ', 'ManagerName': 'kissy sullivan', 'ManagerID': 20.0, 'RecruitmentSource': 'linkedin', 'PerformanceScore': 'needs improvement', 'EngagementSurvey': 2.0, 'EmpSatisfaction': 3, 'SpecialProjectsCount': 0, 'LastPerformanceReview_Date': '5/1/2016', 'DaysLateLast30': 5, 'Absences': 16}
+2024-11-27 11:37:23,958 - INFO - {'Salary': '250,000.00', 'prediccion_Salary': '250,037.63', 'difference': '-37.63', 'MarriedID': 1, 'MaritalStatusID': 1, 'GenderID': 0, 'EmpStatusID': 1, 'DeptID': 2, 'PerfScoreID': 3, 'FromDiversityJobFairID': 0, 'Termd': 0, 'PositionID': 16, 'Position': 'president & ceo', 'State': 'ma', 'Zip': 1902, 'DOB': '09/21/54', 'Sex': 'f', 'MaritalDesc': 'married', 'CitizenDesc': 'us citizen', 'HispanicLatino': 'yes', 'RaceDesc': 'white', 'TermReason': 'n/a-stillemployed', 'EmploymentStatus': 'active', 'Department': 'executive office', 'ManagerName': 'board of directors', 'ManagerID': 9.0, 'RecruitmentSource': 'indeed', 'PerformanceScore': 'fully meets', 'EngagementSurvey': 4.83, 'EmpSatisfaction': 3, 'SpecialProjectsCount': 0, 'LastPerformanceReview_Date': '1/17/2019', 'DaysLateLast30': 0, 'Absences': 10}
+2024-11-27 11:37:23,958 - INFO - {'Salary': '65,729.00', 'prediccion_Salary': '64,775.79', 'difference': '953.21', 'MarriedID': 0, 'MaritalStatusID': 0, 'GenderID': 0, 'EmpStatusID': 1, 'DeptID': 6, 'PerfScoreID': 3, 'FromDiversityJobFairID': 0, 'Termd': 0, 'PositionID': 21, 'Position': 'sales manager', 'State': 'vt', 'Zip': 5473, 'DOB': '04/19/90', 'Sex': 'f', 'MaritalDesc': 'single', 'CitizenDesc': 'us citizen', 'HispanicLatino': 'no', 'RaceDesc': 'white', 'TermReason': 'n/a-stillemployed', 'EmploymentStatus': 'active', 'Department': 'sales', 'ManagerName': 'debra houlihan', 'ManagerID': 15.0, 'RecruitmentSource': 'indeed', 'PerformanceScore': 'fully meets', 'EngagementSurvey': 4.62, 'EmpSatisfaction': 4, 'SpecialProjectsCount': 0, 'LastPerformanceReview_Date': '1/24/2019', 'DaysLateLast30': 0, 'Absences': 8}
+2024-11-27 11:37:23,958 - INFO - {'Salary': '74,241.00', 'prediccion_Salary': '71,704.66', 'difference': '2,536.34', 'MarriedID': 0, 'MaritalStatusID': 0, 'GenderID': 0, 'EmpStatusID': 1, 'DeptID': 6, 'PerfScoreID': 4, 'FromDiversityJobFairID': 0, 'Termd': 0, 'PositionID': 3, 'Position': 'area sales manager', 'State': 'ca', 'Zip': 90007, 'DOB': '11/08/88', 'Sex': 'f', 'MaritalDesc': 'single', 'CitizenDesc': 'us citizen', 'HispanicLatino': 'no', 'RaceDesc': 'white', 'TermReason': 'n/a-stillemployed', 'EmploymentStatus': 'active', 'Department': 'sales', 'ManagerName': 'lynn daneault', 'ManagerID': 21.0, 'RecruitmentSource': 'indeed', 'PerformanceScore': 'exceeds', 'EngagementSurvey': 4.77, 'EmpSatisfaction': 5, 'SpecialProjectsCount': 0, 'LastPerformanceReview_Date': '1/27/2019', 'DaysLateLast30': 0, 'Absences': 14}
+2024-11-27 11:37:23,958 - INFO - {'Salary': '62,425.00', 'prediccion_Salary': '62,449.43', 'difference': '-24.43', 'MarriedID': 0, 'MaritalStatusID': 2, 'GenderID': 0, 'EmpStatusID': 5, 'DeptID': 5, 'PerfScoreID': 4, 'FromDiversityJobFairID': 0, 'Termd': 1, 'PositionID': 19, 'Position': 'production technician i', 'State': 'ma', 'Zip': 2359, 'DOB': '03/26/73', 'Sex': 'f', 'MaritalDesc': 'divorced', 'CitizenDesc': 'us citizen', 'HispanicLatino': 'no', 'RaceDesc': 'white', 'TermReason': 'unhappy', 'EmploymentStatus': 'voluntarily terminated', 'Department': 'production       ', 'ManagerName': 'david stanley', 'ManagerID': 14.0, 'RecruitmentSource': 'linkedin', 'PerformanceScore': 'exceeds', 'EngagementSurvey': 4.1, 'EmpSatisfaction': 4, 'SpecialProjectsCount': 0, 'LastPerformanceReview_Date': '3/2/2015', 'DaysLateLast30': 0, 'Absences': 16}
+2024-11-27 11:37:23,958 - INFO - Predicciones realizadas con éxito.
+2024-11-27 11:37:23,958 - WARNING - El directorio 'uploads' no existe.

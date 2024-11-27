@@ -208,6 +208,14 @@ class GridSearchModelClassification:
                 f"prediccion_{target}": predictions_decoded 
             })
 
+            # Identificar columnas numéricas y categóricas en X_origin
+            numeric_columns = X_origin.select_dtypes(include=["number"]).columns.tolist()
+            categorical_columns = X_origin.select_dtypes(include=["object", "category"]).columns.tolist()
+
+            # Imputación básica
+            X_origin[numeric_columns] = X_origin[numeric_columns].fillna(0)
+            X_origin[categorical_columns] = X_origin[categorical_columns].fillna("N/A")
+
             for col in X_origin.columns:
                 df_result[col] = X_origin[col].values
             df_result['match'] = df_result[target] == df_result[f"prediccion_{target}"]
@@ -270,9 +278,18 @@ class GridSearchModelClassification:
             label_encoder = transformers["label_encoder_y"]
             predictions_decoded = label_encoder.inverse_transform(predictions) 
             logging.info("Etiquetas originales obtenidas.")
-
+            
             # Crear DataFrame con resultados
             df_result = pd.DataFrame({f"prediccion_{target}": predictions_decoded})
+
+            # Identificar columnas numéricas y categóricas en X_origin
+            numeric_columns = X_origin.select_dtypes(include=["number"]).columns.tolist()
+            categorical_columns = X_origin.select_dtypes(include=["object", "category"]).columns.tolist()
+
+            # Imputación básica
+            X_origin[numeric_columns] = X_origin[numeric_columns].fillna(0)
+            X_origin[categorical_columns] = X_origin[categorical_columns].fillna("N/A")
+            
             for col in X_origin.columns:
                 df_result[col] = X_origin[col].values
 

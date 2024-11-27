@@ -204,6 +204,15 @@ class GridSearchModelRegression:
             })
             df_result['difference'] = df_result[target] - df_result[f"prediccion_{target}"]
             df_result = df_result.applymap(lambda x: '{:,.2f}'.format(x))
+
+            # Identificar columnas numéricas y categóricas en X_origin
+            numeric_columns = X_origin.select_dtypes(include=["number"]).columns.tolist()
+            categorical_columns = X_origin.select_dtypes(include=["object", "category"]).columns.tolist()
+
+            # Imputación básica
+            X_origin[numeric_columns] = X_origin[numeric_columns].fillna(0)
+            X_origin[categorical_columns] = X_origin[categorical_columns].fillna("N/A")
+
             for col in X_origin.columns:
                 df_result[col] = X_origin[col].values
 
@@ -265,6 +274,15 @@ class GridSearchModelRegression:
             # Crear DataFrame con resultados    
             df_result = pd.DataFrame({f"prediccion_{target}": predictions_original_scale })   
             df_result = df_result.applymap(lambda x: '{:,.2f}'.format(x))
+
+            # Identificar columnas numéricas y categóricas en X_origin
+            numeric_columns = X_origin.select_dtypes(include=["number"]).columns.tolist()
+            categorical_columns = X_origin.select_dtypes(include=["object", "category"]).columns.tolist()
+
+            # Imputación básica
+            X_origin[numeric_columns] = X_origin[numeric_columns].fillna(0)
+            X_origin[categorical_columns] = X_origin[categorical_columns].fillna("N/A")
+            
             for col in X_origin.columns:
                 df_result[col] = X_origin[col].values
     
