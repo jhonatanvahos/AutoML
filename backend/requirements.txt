@@ -8,7 +8,7 @@ fastapi==0.115.3
 fonttools==4.51.0
 h11==0.14.0
 idna==3.10
-imbalanced-learn==0.12.2
+imbalanced-learn==0.12.4
 imblearn==0.0
 importlib_resources==6.4.0
 joblib==1.4.2
@@ -28,7 +28,7 @@ python-dateutil==2.9.0.post0
 python-multipart==0.0.12
 pytz==2024.1
 PyYAML==6.0.2
-scikit-learn==1.4.2
+scikit-learn==1.5.0
 scikit-optimize==0.10.2
 scipy==1.13.0
 seaborn==0.13.2
@@ -40,4 +40,4 @@ threadpoolctl==3.5.0
 typing_extensions==4.12.2
 tzdata==2024.1
 uvicorn==0.32.0
-zipp==3.18.1
+zipp==3.19.1

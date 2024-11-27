@@ -101,6 +101,10 @@ class ConfigData(BaseModel):
     params_classification: Dict[str, Union[LogisticRegressionParams, RandomForestClassifierParams, SVMParams, KNNParams, ModelParams, ModelParams, ModelParams]]
     advanced_options: bool
 
+    class Config:
+        # para evitar warning con palabras reservadas model_
+        protected_namespaces = ()
+
 # Clase para selección de modelo para predicción
 class ModelSelection(BaseModel):
     selectedModel: str
