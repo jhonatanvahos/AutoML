@@ -35,7 +35,7 @@ function LoadingScreen() {
 
             <div className={styles.loadingContent}>
                 <h1>Entrenando Modelos...</h1>
-                <div className={styles.progessBar}>
+                <div className={styles.progressBar}>
                     <div className={styles.progress} style={{ width: `${progress}%` }}></div>
                 </div>
                 {/* Temporizador debajo de la barra de carga */}

@@ -7,8 +7,6 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@svgr/plugin-svgo": "^8.1.0",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.7",
     "chart.js": "^4.4.6",
@@ -28,7 +26,8 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "craco test"
+    "test": "jest",
+    "test:watch": "jest --watchAll"
   },
   "eslintConfig": {
     "extends": [
@@ -49,12 +48,40 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.26.0",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@craco/craco": "^7.1.0"
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.25.9",
+    "@craco/craco": "^7.1.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.0.1",
+    "axios-mock-adapter": "^2.1.0",
+    "babel-jest": "^29.7.0",
+    "jest": "^27.5.1"
   },
-
   "overrides": {
     "nth-check": "^2.0.1",
     "postcss": "^8.4.31"
-  } 
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(js|jsx)$": "babel-jest"
+    },
+    "transformIgnorePatterns": [
+        "/node_modules/(?!axios|other-modules)/"
+    ],
+    "moduleNameMapper": {
+        "^axios$": "axios/dist/node/axios.cjs",
+        "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+        "\\.(png|jpg|jpeg|gif|svg)$": "<rootDir>/__mocks__/fileMock.js"
+    },
+    "testEnvironment": "jsdom"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": ["@babel/plugin-transform-modules-commonjs"]
+  }
 }

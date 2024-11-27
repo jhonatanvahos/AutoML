@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from pydantic.config import ConfigDict
 from typing import List, Dict, Union
 
 # Clase base para la configuración inicial del proyecto
@@ -101,9 +102,9 @@ class ConfigData(BaseModel):
     params_classification: Dict[str, Union[LogisticRegressionParams, RandomForestClassifierParams, SVMParams, KNNParams, ModelParams, ModelParams, ModelParams]]
     advanced_options: bool
 
-    class Config:
-        # para evitar warning con palabras reservadas model_
-        protected_namespaces = ()
+    model_config = ConfigDict(
+        protected_namespaces=()  # para evitar conflicto con palabras reservadas
+    )
 
 # Clase para selección de modelo para predicción
 class ModelSelection(BaseModel):
