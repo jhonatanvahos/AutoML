@@ -1,0 +1,94 @@
+2024-11-25 18:08:32,104 - INFO - Recibido el archivo: bank-full.csv
+2024-11-25 18:08:32,106 - INFO - Archivo guardado en: uploads/bank-full.csv
+2024-11-25 18:08:32,146 - INFO - CSV cargado exitosamente con el separador: ';'
+2024-11-25 18:08:35,896 - INFO - Directorio del proyecto creado en: projects/A
+2024-11-25 18:08:35,899 - INFO - JSON guardado en: app/config.json
+2024-11-25 18:08:35,899 - INFO - --------------------------------------------------------------
+2024-11-25 18:08:35,899 - INFO - PROYECTO A
+2024-11-25 18:08:35,899 - INFO - --------------------------------------------------------------
+2024-11-25 18:08:36,070 - INFO - Datos para la previsualización cargados existosamente
+2024-11-25 18:08:45,676 - INFO - JSON guardado en: app/config.json
+2024-11-25 18:08:45,679 - INFO - --------------------------------------------------------------
+2024-11-25 18:08:45,679 - INFO - --------------- ENTRENAMIENTO DE MODELOS ---------------------
+2024-11-25 18:08:45,679 - INFO - --------------------------------------------------------------
+2024-11-25 18:08:45,680 - INFO - Cargando el archivo de configuración: app/config.json
+2024-11-25 18:08:45,680 - INFO - Archivo de configuración cargado correctamente.
+2024-11-25 18:08:45,680 - INFO - Directorios creados en projects/A
+2024-11-25 18:08:45,681 - INFO - Modelo activado: linearRegression
+2024-11-25 18:08:45,681 - INFO - Hiperparametros: {'fit_intercept': [True, False]}
+2024-11-25 18:08:45,681 - INFO - --------------------------------------------------------------
+2024-11-25 18:08:45,681 - INFO - ------------ Preprocesamiento de los datos -------------------
+2024-11-25 18:08:45,681 - INFO - --------------------------------------------------------------
+2024-11-25 18:08:45,681 - INFO - Cargando dataset desde projects/A/bank-full.csv
+2024-11-25 18:08:45,733 - INFO - Archivo CSV cargado correctamente con separador ';'
+2024-11-25 18:08:45,845 - INFO - Dataset cargado y procesado. Dimensiones: (45211, 17)
+2024-11-25 18:08:45,845 - INFO - Separando datos para predicciones...
+2024-11-25 18:08:45,866 - INFO - Datos para predicciones guardados en 'projects/A/predict.csv'
+2024-11-25 18:08:45,866 - INFO - Eliminando valores atípicos usando Z-score...
+2024-11-25 18:08:45,873 - INFO - Cantidad de datos después de eliminar atípicos: (43277, 16)
+2024-11-25 18:08:45,873 - INFO - Finaliza eliminación de valores atípicos exitosamente!
+2024-11-25 18:08:45,873 - INFO - Inicia el entrenamiento y ajuste de transformadores...
+2024-11-25 18:08:45,873 - INFO - Imputando datos numéricos...
+2024-11-25 18:08:45,873 - INFO - No hay datos faltantes en las columnas numéricas.
+2024-11-25 18:08:45,873 - INFO - Imputando datos categóricos...
+2024-11-25 18:08:45,880 - INFO - No hay datos faltantes en las columnas categóricas.
+2024-11-25 18:08:45,881 - INFO - Imputanción de datos realizada exitosamente!
+2024-11-25 18:08:45,881 - INFO - Escalando datos numéricos...
+2024-11-25 18:08:45,882 - INFO - Escalado de datos realizado exitosamente!
+2024-11-25 18:08:45,882 - INFO - Codificando datos categóricos...
+2024-11-25 18:08:45,893 - INFO - Codificación de variables categóricas realizada.
+2024-11-25 18:08:45,893 - INFO - Codificación de datos realizada exitosamente!
+2024-11-25 18:08:45,894 - INFO - Codificando variable objetivo...
+2024-11-25 18:08:45,894 - INFO - Codificación de variable objetivo realizada existosamente!
+2024-11-25 18:08:45,894 - INFO - Finaliza exitosamente el entrenamiento y ajuste de transformadores!
+2024-11-25 18:08:45,894 - INFO - Inicia la aplicacion de los transformadores...
+2024-11-25 18:08:45,894 - INFO - Imputando datos nulos...
+2024-11-25 18:08:45,894 - INFO - Codificando datos categóricos.
+2024-11-25 18:08:45,933 - INFO - Codificando la variable a predecir...
+2024-11-25 18:08:45,935 - INFO - Mapeo de etiquetas originales a códigos numéricos:
+2024-11-25 18:08:45,935 - INFO - no: 0
+2024-11-25 18:08:45,935 - INFO - yes: 1
+2024-11-25 18:08:45,935 - INFO - Codificacion de la variable objetivo completado.
+2024-11-25 18:08:45,936 - INFO - Balanceando datos...
+2024-11-25 18:08:45,936 - INFO - Datos balanceados usando over_sampling con SMOTE()
+2024-11-25 18:08:45,937 - INFO - Cantidad de clases antes del balanceo: 0    38488
+1     4789
+Name: count, dtype: int64
+2024-11-25 18:08:46,309 - INFO - Cantidad de clases después del balanceo: 0    38488
+1    38488
+Name: count, dtype: int64
+2024-11-25 18:08:46,309 - INFO - Balanceo de datos completado.
+2024-11-25 18:08:46,309 - INFO - Escalando datos numéricos.
+2024-11-25 18:08:46,312 - INFO - Escalado de la datos numéricos completado.
+2024-11-25 18:08:46,312 - INFO - Finaliza exitosamente la aplicacion de transformadores!
+2024-11-25 18:08:46,312 - INFO - Iniciando la selección de características...
+2024-11-25 18:08:46,312 - INFO - Cantidad de características a seleccionar: 25
+2024-11-25 18:08:46,312 - INFO - Cantidad de características iniciales: 51
+2024-11-25 18:08:46,329 - INFO - Características seleccionadas: ['balance', 'duration', 'campaign', 'pdays', 'previous', 'job_blue-collar', 'job_retired', 'job_student', 'marital_married', 'marital_single', 'education_tertiary', 'housing_no', 'housing_yes', 'loan_no', 'loan_yes', 'contact_cellular', 'contact_unknown', 'month_apr', 'month_dec', 'month_mar', 'month_may', 'month_oct', 'month_sep', 'poutcome_success', 'poutcome_unknown']
+2024-11-25 18:08:46,329 - INFO - Finaliza la selección de características exitosamente!
+2024-11-25 18:08:46,329 - INFO - Guardando transformadores...
+2024-11-25 18:08:46,331 - INFO - Las transformaciones se guardaron en 'projects/A/transforms/transform.pkl'.
+2024-11-25 18:08:46,331 - INFO - Obteniendo el DataFrame procesado...
+2024-11-25 18:08:46,331 - INFO - Actualizando diccionario...
+2024-11-25 18:08:46,331 - INFO - Configuración guardada en app/config.json.
+2024-11-25 18:08:46,331 - INFO - Preprocesamiento completado con éxito.
+2024-11-25 18:08:46,331 - INFO - --------------------------------------------------------------
+2024-11-25 18:08:46,331 - INFO - --------------- Competencia de Modelos -----------------------
+2024-11-25 18:08:46,331 - INFO - --------------------------------------------------------------
+2024-11-25 18:08:46,332 - INFO - Inicia entrenamiento de Modelos de Clasificación
+2024-11-25 18:08:46,332 - INFO - Iniciando búsqueda de hiperparámetros.
+2024-11-25 18:08:46,332 - INFO - --------------------------------------------------------------
+2024-11-25 18:08:46,332 - INFO - Probando hiperparámetros para KNN: {'n_neighbors': [3, 5, 7, 9], 'weights': ['uniform', 'distance'], 'metric': ['euclidean', 'manhattan', 'minkowski'], 'p': [1, 2]}
+2024-11-25 18:11:51,628 - INFO - Modelo guardado en projects/A/models/KNN.pkl.
+2024-11-25 18:11:51,629 - INFO - Modelo: KNN
+2024-11-25 18:11:51,629 - INFO - Mejores hiperparámetros: {'metric': 'manhattan', 'n_neighbors': 7, 'p': 1, 'weights': 'distance'}
+2024-11-25 18:11:51,629 - INFO - Score_f1: 0.8748634495138019
+2024-11-25 18:11:51,629 - INFO - Tiempo transcurrido: 3.09 minutos
+2024-11-25 18:11:51,629 - INFO - --------------------------------------------------------------
+2024-11-25 18:11:51,629 - INFO - Probando hiperparámetros para BernoulliNB: {}
+2024-11-25 18:11:51,823 - INFO - Modelo guardado en projects/A/models/BernoulliNB.pkl.
+2024-11-25 18:11:51,823 - INFO - Modelo: BernoulliNB
+2024-11-25 18:11:51,823 - INFO - Mejores hiperparámetros: {}
+2024-11-25 18:11:51,823 - INFO - Score_f1: 0.7726460470274914
+2024-11-25 18:11:51,823 - INFO - Tiempo transcurrido: 0.00 minutos
+2024-11-25 18:11:51,823 - INFO - Entrenamiento completado con éxito.

@@ -1,0 +1,4 @@
+2024-11-26 16:39:04,909 - INFO - Recibido el archivo: insurance.csv
+2024-11-26 16:39:04,909 - INFO - Archivo guardado en: uploads/insurance.csv
+2024-11-26 16:39:04,914 - INFO - CSV cargado exitosamente con el separador: ','
+2024-11-26 16:39:33,143 - INFO - Listado de proyectos exitosa

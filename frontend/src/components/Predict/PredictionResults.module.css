@@ -1,0 +1,239 @@
+/* Variables de diseño */
+:root {
+  --main-bg-color: #e0f2f1;
+  --header-bg-color: #00796b;
+  --main-color: #00796b;
+  --second-color: #b2dfdb;
+  --text-color: #ffffff;
+  --card-hover-bg-color: #00796b;
+  --card-hover-text-color: #ffffff;
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --font-family: 'Roboto Mono', monospace;
+}
+
+/* Estilos generales de contenedor y formularios */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--main-bg-color);
+  padding: 0;
+  font-family: var(--font-family);
+}
+
+.header {
+  width: 100%;
+  background-color: var(--header-bg-color);
+  color: var(--text-color);
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--card-shadow);
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 60px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.title {
+  font-size: 2rem;
+  color: var(--header-bg-color);
+  text-align: center;
+  margin: 40px 0;
+  font-weight: 700;
+}
+
+/* Estilo para mostrar métricas */
+.container p {
+  color: #333;
+  font-size: 1.1rem;
+  margin: 5px 0;
+}
+
+/* Contenedor para la tabla */
+.tableContainer {
+  width: 100%;
+  overflow-x: auto; /* Habilita el desplazamiento horizontal */
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* Tabla de resultados */
+.table {
+  min-width: 600px; /* Ancho mínimo para la tabla */
+  max-width: 100%; /* Limita el ancho para que se ajuste al contenedor */
+  margin: 0 auto; /* Centra la tabla dentro del contenedor */
+  border-collapse: collapse;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Estilo para la cabecera de la tabla */
+.table thead {
+  background-color: #00796b;
+  color: white;
+}
+
+/* Ajuste del padding y tamaño de texto en las celdas */
+.table th {
+  padding: 8px 10px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #f1f1f1;
+  white-space: nowrap;
+  border-bottom: 1px solid #ddd;
+}
+
+.table td {
+  padding: 8px 10px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  white-space: nowrap; /* Evita que el texto se desborde */
+}
+
+.table .tbody .tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Paginación */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  list-style: none;
+  padding: 0;
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination li a {
+  color: #00796b;
+  padding: 8px 12px;
+  text-decoration: none;
+  border-radius: 5px;
+  border: 1px solid #00796b;
+  transition: background-color 0.3s ease;
+}
+
+.pagination li a:hover {
+  background-color: #004d40;
+  color: #ffffff;
+}
+
+.pagination .active a {
+  background-color: #004d40;
+  color: white;
+  border-color: #004d40;
+}
+
+/* Botón para volver al inicio */
+.buttonHome {
+  margin: 20px 0;
+  padding: 12px 20px;
+  background-color: #00796b;
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  font-family: var(--font-family);
+}
+
+.buttonHome:hover {
+  background-color: #004d40;
+}
+
+/* Pie de página */
+.footer {
+  margin-top: auto; /* Empuja el footer al final */
+  width: 100%;
+  background-color: #00796b;  /* Azulverdoso */
+  padding: 15px;
+  text-align: center;
+  font-size: 1rem;
+  color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 1rem;
+  color: white; /* Asegura que los párrafos también tengan el color blanco */
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+
+  table th,
+  table td {
+    font-size: 0.9rem;
+    padding: 8px 10px;
+  }
+
+  .buttonHome {
+    font-size: 1rem;
+  }
+
+  /* Ajustar gráficas en pantallas pequeñas */
+  .chartContainer {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .chartContainer .chart {
+    width: 100%;
+    height: 300px; /* Reducir la altura en pantallas pequeñas */
+  }
+}
+
+.heatmap-container {
+  width: 100%;
+  height: auto;
+  max-width: 800px;
+  margin: 20px auto; /* Espacio en los lados */
+  padding: 20px; /* Espacio interno alrededor del gráfico */
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: auto; /* Permite desplazamiento si es necesario */
+}
+
+.heatmap-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.info-icon {
+  font-size: 16px;
+  cursor: pointer; /* Cambia el cursor al pasar sobre el icono */
+  color: #007bff; /* Cambia el color del icono */
+}
+
+.info-icon:hover {
+  color: #0056b3; /* Cambia el color al pasar el ratón por encima */
+}

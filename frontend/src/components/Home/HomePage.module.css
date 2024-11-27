@@ -1,0 +1,138 @@
+/* Variables de diseño */
+:root {
+  --main-bg-color: #e0f2f1;
+  --header-bg-color: #00796b;
+  --text-color: #ffffff;
+  --card-hover-bg-color: #00796b;
+  --card-hover-text-color: #ffffff;
+  --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --font-family: 'Roboto Mono', monospace;
+}
+
+/* Contenedor principal */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--main-bg-color);
+  padding: 0px;
+  font-family: var(--font-family);
+}
+
+/* Encabezado */
+.header {
+  width: 100%;
+  background-color: var(--header-bg-color);
+  color: var(--text-color);
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--card-shadow);
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 60px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+/* Título de configuración */
+.title {
+  font-size: 2rem;
+  color: var(--header-bg-color);
+  text-align: center;
+  margin: 40px 0;
+  font-weight: 700;
+}
+
+/* Contenedor de tarjetas */
+.cardsContainer {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 15px;
+}
+
+/* Tarjetas */
+.card {
+  background-color: var(--text-color);
+  border-radius: 10px;
+  box-shadow: var(--card-shadow);
+  padding: 20px;
+  width: 220px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  background-color: var(--card-hover-bg-color);
+  color: var(--card-hover-text-color);
+}
+
+.card h2 {
+  margin-bottom: 10px;
+  color: var(--header-bg-color);
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.card p {
+  color: #6c757d;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.card:hover h2,
+.card:hover p {
+  color: var(--card-hover-text-color);
+}
+
+/* Pie de página */
+.footer {
+  margin-top: auto;
+  width: 100%;
+  background-color: var(--header-bg-color);
+  padding: 15px;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--text-color);
+  border-top: 1px solid #e0e0e0;
+}
+
+.footer p {
+  margin: 0;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .cardsContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .header {
+    font-size: 1.5rem;
+  }
+}

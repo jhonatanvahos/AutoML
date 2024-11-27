@@ -1,0 +1,214 @@
+/* Variables de diseño */
+:root {
+  --main-bg-color: #e0f2f1;
+  --header-bg-color: #00796b;
+  --main-color: #00796b;
+  --second-color: #b2dfdb;
+  --text-color: #ffffff;
+  --card-hover-bg-color: #00796b;
+  --card-hover-text-color: #ffffff;
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --font-family: 'Roboto Mono', monospace;
+}
+
+/* Estilos generales de contenedor y formularios */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--main-bg-color);
+  padding: 0;
+  font-family: var(--font-family);
+}
+
+.header {
+  width: 100%;
+  background-color: var(--header-bg-color);
+  color: var(--text-color);
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--card-shadow);
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 60px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.title {
+  font-size: 2rem;
+  color: var(--header-bg-color);
+  text-align: center;
+  margin: 40px 0;
+  font-weight: 700;
+}
+
+/* Estilos para el formulario */
+.form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--main-bg-color);
+  box-shadow: var(--shadow);
+  border-radius: 10px;
+  margin-bottom: 4rem;
+}
+
+.form > br {
+  margin: 0.5rem 0;
+}
+
+.fieldset {
+  border: 1px solid var(--second-color);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.legend {
+  font-weight: bold;
+  color: var(--main-color);
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  color: var(--main-color);
+}
+
+/* Estilos generales de inputs */
+.input {
+  margin-left: 1rem;
+  padding: 0.5rem;
+  border: 1px solid var(--second-color);
+  border-radius: 5px;
+  width: 100%;
+  max-width: 250px;
+  transition: border-color 0.3s;
+}
+
+.input:focus {
+  border-color: var(--main-color);
+  outline: none;
+}
+
+/* Estilos de checkbox */
+.checkbox {
+  margin-right: 0.5rem;
+}
+/* Estilos para select */
+.select {
+  margin-left: 1rem;
+  padding: 0.5rem;
+  border: 1px solid var(--second-color);
+  border-radius: 5px;
+  width: 100%;
+  max-width: 250px;
+  transition: border-color 0.3s;
+  margin-right: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.select:focus {
+  border-color: var(--main-color);
+  outline: none;
+}
+
+/* Icono de información */
+.info_icon {
+  font-size: 0.95rem;
+  color:var(--main-color);
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+/* Estilos para los botones */
+.buttonOption {
+  padding: 0.7rem 1.5rem;
+  border: none;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: transparent;
+  color: #6c757d;
+  transition: background-color 0.3s ease;
+  font-family: var(--font-family);
+}
+
+.buttonOption:hover {
+  color: #333;
+}
+
+.buttonOption:focus{
+  outline: none;
+}
+
+/* Botón de Continuar centrado */
+.continueButtonForm {
+  background-color: var(--header-bg-color);
+  color: var(--text-color);
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  font-family: var(--font-family);
+}
+
+.continueButtonForm:hover {
+  background-color: #004d40;
+}
+
+/* Mejora de las secciones específicas */
+.form_group,
+.select{
+  margin-bottom: 1rem;
+}
+
+.form > br {
+  margin: 0.5rem 0;
+}
+
+/* Pie de página */
+.footer {
+  margin-top: auto;
+  width: 100%;
+  background-color: var(--header-bg-color);
+  padding: 15px;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--text-color);
+  border-top: 1px solid #e0e0e0;
+}
+
+.footer p {
+  margin: 0;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .form {
+    padding: 1.5rem;
+  }
+
+  .buttonOption{
+    width: 100%;
+  }
+}

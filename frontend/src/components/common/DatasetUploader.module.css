@@ -1,0 +1,78 @@
+/* Variables de diseño */
+:root {
+  --main-bg-color: #e0f2f1;
+  --header-bg-color: #00796b;
+  --text-color: #ffffff;
+  --button-bg-color: #00796b;
+  --button-hover-bg-color: #004d40;
+  --button-text-color: #ffffff;
+  --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --font-family: 'Roboto Mono', monospace;
+}
+
+/* Formulario de carga de dataset */
+.uploadFormContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--main-bg-color);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  width: 80%;
+  max-width: 500px;
+  margin: 40px auto;
+  font-family: var(--font-family);
+}
+
+.uploadFormContainer label {
+  font-size: 1rem;
+  color: var(--header-bg-color);
+  margin-bottom: 15px;
+}
+
+.uploadFormContainer input[type="file"] {
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  width: 100%;
+  font-family: var(--font-family);
+}
+
+.uploadFormContainer button {
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  font-family: var(--font-family);
+}
+
+.uploadFormContainer button:hover {
+  background-color: var(--button-hover-bg-color);
+}
+
+.uploadFormContainer button:disabled {
+  background-color: #b2dfdb;
+  cursor: not-allowed;
+}
+
+/* Mensajes de error o éxito */
+.uploadFormContainer .errorMessage,
+.uploadFormContainer .successMessage {
+  font-size: 1rem;
+  color: #ff3d00;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.uploadFormContainer .successMessage {
+  color: #388e3c;
+}
+

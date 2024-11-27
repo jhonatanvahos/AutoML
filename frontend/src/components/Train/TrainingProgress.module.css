@@ -1,0 +1,114 @@
+/* Variables de diseño */
+:root {
+  --main-bg-color: #e0f2f1;
+  --header-bg-color: #00796b;
+  --text-color: #ffffff;
+  --card-hover-bg-color: #00796b;
+  --card-hover-text-color: #ffffff;
+  --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --font-family: 'Roboto Mono', monospace;
+}
+
+/* Contenedor principal */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--main-bg-color);
+  padding: 0px;
+  font-family: var(--font-family);
+}
+
+/* Encabezado */
+.header {
+  width: 100%;
+  background-color: var(--header-bg-color);
+  color: var(--text-color);
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--card-shadow);
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 60px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+/* Título de configuración */
+.title {
+  font-size: 2rem;
+  color: var(--header-bg-color);
+  text-align: center;
+  margin: 40px 0;
+  font-weight: 700;
+}
+
+.loadingContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.h1 {
+  font-size: 2rem;
+  color: #00796b;
+  margin-bottom: 30px;
+}
+
+/* Barra de progreso */
+.progressBar {
+  width: 80%;
+  height: 20px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.progress {
+  height: 100%;
+  background-color: #00796b;
+  transition: width 0.02s linear;
+}
+
+.timer {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #00796b;
+  text-align: center;
+}
+
+/* Pie de página */
+.footer {
+  margin-top: auto;
+  width: 100%;
+  background-color: var(--header-bg-color);
+  padding: 15px;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--text-color);
+  border-top: 1px solid #e0e0e0;
+}
+
+.footer p {
+  margin: 0;
+}

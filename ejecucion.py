@@ -9,8 +9,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 VENV_PATH = os.path.join(BASE_DIR, "..", "venvautoml")
 
 # Rutas del backend y frontend
-BACKEND_DIR = os.path.join(BASE_DIR, "automl-backend")
-FRONTEND_DIR = os.path.join(BASE_DIR, "automl-frontend")
+BACKEND_DIR = os.path.join(BASE_DIR, "backend")
+FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
 
 def start_backend():
     """

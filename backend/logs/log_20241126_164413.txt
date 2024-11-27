@@ -1,0 +1,3 @@
+2024-11-26 16:44:36,716 - INFO - Recibido el archivo: insurance.csv
+2024-11-26 16:44:36,716 - INFO - Archivo guardado en: uploads/insurance.csv
+2024-11-26 16:44:36,719 - INFO - CSV cargado exitosamente con el separador: ','

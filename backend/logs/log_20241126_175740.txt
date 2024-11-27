@@ -1,0 +1,9 @@
+2024-11-26 17:59:41,368 - INFO - Recibido el archivo: insurance.csv
+2024-11-26 17:59:41,369 - INFO - Archivo guardado en: uploads/insurance.csv
+2024-11-26 17:59:41,374 - INFO - CSV cargado exitosamente con el separador: ','
+2024-11-26 17:59:45,291 - INFO - Directorio del proyecto creado en: projects/a
+2024-11-26 17:59:45,292 - INFO - JSON guardado en: app/config.json
+2024-11-26 17:59:45,292 - INFO - --------------------------------------------------------------
+2024-11-26 17:59:45,292 - INFO - PROYECTO A
+2024-11-26 17:59:45,292 - INFO - --------------------------------------------------------------
+2024-11-26 17:59:45,304 - INFO - Datos para la previsualización cargados existosamente

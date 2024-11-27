@@ -1,0 +1,159 @@
+/* Variables de diseño */
+:root {
+  --main-bg-color: #e0f2f1;
+  --header-bg-color: #00796b;
+  --main-color: #00796b;
+  --second-color: #b2dfdb;
+  --text-color: #ffffff;
+  --card-hover-bg-color: #00796b;
+  --card-hover-text-color: #ffffff;
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --font-family: 'Roboto Mono', monospace;
+}
+
+/* Estilos generales de contenedor y formularios */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--main-bg-color);
+  padding: 0;
+  font-family: var(--font-family);
+}
+
+.header {
+  width: 100%;
+  background-color: var(--header-bg-color);
+  color: var(--text-color);
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--card-shadow);
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 60px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.title {
+  font-size: 2rem;
+  color: var(--header-bg-color);
+  text-align: center;
+  margin: 40px 0;
+  font-weight: 700;
+}
+/* Estilo del formulario de predicción */
+.predictForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin: 30px auto;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Grupo de campos del formulario */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.formGroup label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #00796b;
+}
+
+.formGroup select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #333;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+}
+
+.formGroup select:focus {
+  border-color: #00796b;
+  outline: none;
+}
+
+/* Estilo para el botón de predicción */
+.predictButton {
+  width: 100%;
+  background-color: #00796b; /* Azulverdoso */
+  color: white;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: var(--font-family);
+}
+
+.predictButton:hover {
+  background-color: #004d40; /* Azulverdoso más oscuro en hover */
+}
+
+.predictButton:active {
+  background-color: #003d33; /* Cambio al hacer clic */
+}
+
+.predictButton:disabled {
+  background-color: #9e9e9e;
+  cursor: not-allowed;
+}
+
+/* Pie de página */
+.footer {
+  margin-top: auto;
+  width: 100%;
+  background-color: var(--header-bg-color);
+  padding: 15px;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--text-color);
+  border-top: 1px solid #e0e0e0;
+}
+
+.footer p {
+  margin: 0;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+
+  .predictForm {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .predictButton {
+    font-size: 1rem;
+  }
+}
